@@ -7,6 +7,23 @@ const MainContent: React.FC = () => {
     <div style={{ paddingTop: "55px" }}>
       <MainCarousel />
       <EventBtn />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   );
 };

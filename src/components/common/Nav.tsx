@@ -39,7 +39,7 @@ const NavWrap = styled.nav`
   align-items: center;
   padding: 0 0.5rem;
   position: fixed;
-  bottom: 70px;
+  bottom: 0;
   left: 0;
   right: 0;
   z-index: 100;
