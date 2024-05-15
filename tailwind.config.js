@@ -6,11 +6,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "main-color": "rgb(73, 45, 40)",
-        "main-light-color": "rgb(129, 111, 107)",
-        "main-gray": "rgb(242, 243, 246)",
-        "main-ivory": "rgb(244, 246, 241)",
-        "common-border-gray": "rgb(136, 136, 136)",
+        transparent: "transparent",
+        current: "currentColor",
+        MAIN_COLOR: "#492D28",
+        MAIN_LIGHT_COLOR: "#816F6B",
+        MAIN_GRAY: "#F2F3F6",
+        MAIN_IVORY: "#F4F6F1",
+        COMMONN_BORDER_GRAY: "#DDDDDD",
       },
     },
   },
