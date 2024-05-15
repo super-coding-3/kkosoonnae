@@ -4,14 +4,9 @@ import styled from "styled-components";
 import { MAIN_LIGHT_COLOR } from "../../constans/color";
 import * as Yup from "yup";
 import Postcode from "./PostCode";
-const formFields = [
-  { name: "id", label: "아이디", type: "text" },
-  { name: "password", label: "패스워드", type: "password" },
-  { name: "email", label: "이메일", type: "email" },
-  { name: "phoneNumber", label: "핸드폰번호", type: "tel" },
-  { name: "nickName", label: "닉네임", type: "text" },
-];
+import formFields from "./FormFields";
 
+//유효성 검사 식과 YUP 을 이용한 유효성 검사  
 const Regex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
 
@@ -19,13 +14,23 @@ const SignupSchema = Yup.object().shape({
   id: Yup.string().matches(
     Regex,
     "아이디는 숫자,대문자, 특수문자 를 포함한 6자리 이상이어야 합니다"
-  ),
+  ).required('아이디는 필수입니다'),
 
   password: Yup.string().matches(
     Regex,
     "비밀번호는 숫자,대문자, 특수문자 를 포함한 6자리 이상이어야 합니다"
-  ),
+  ).required("비밀번호는 필수입니다"),
+  email: Yup.string()
+    .email("올바른 이메일 형식을 입력하세요")
+    .required("이메일은 필수입니다."),
+  phoneNumber: Yup.string().required("핸드폰번호는 필수입니다."),
+  nickName: Yup.string().required("닉네임은 필수입니다."),
+  postCode: Yup.string().required("우편번호는 필수입니다."),
+  address: Yup.string().required("기본주소는 필수입니다."),
+  addressDetail: Yup.string().required("상세주소는 필수입니다."),
 });
+
+// 메인 코드
 
 const Main: React.FC = () => {
   const [showPostcode, setShowPostcode] = useState(false);
@@ -53,7 +58,9 @@ const Main: React.FC = () => {
           email: "",
           phoneNumber: "",
           nickName: "",
+          postCode: "",
           address: "",
+          addressDetail: "",
         }}
         validationSchema={SignupSchema}
         onSubmit={(values, { setSubmitting }) => {
@@ -61,7 +68,7 @@ const Main: React.FC = () => {
           setSubmitting(false);
         }}
       >
-        {({ setFieldValue, isSubmitting }) => (
+        {({ setFieldValue, isValid, dirty }) => (
           <Form>
             {formFields.map((field) => (
               <ForminputDiv key={field.name}>
@@ -70,6 +77,7 @@ const Main: React.FC = () => {
                   <Field
                     type={field.type}
                     name={field.name}
+                    placeholder={field.placeholder}
                     className="rounded-lg mt-2 mb-2 w-full border-solid border-2 h-10 mr-1"
                     style={{ borderColor: MAIN_LIGHT_COLOR }}
                   />
@@ -81,42 +89,41 @@ const Main: React.FC = () => {
                       중복확인
                     </button>
                   )}
+                  {["postCode"].includes(field.name) && (
+                    <button
+                      type="button"
+                      onClick={() => setShowPostcode(true)}
+                      className="rounded-lg border-solid border-main-light-color border-2 text-[10px] w-16 h-10 mt-2 mr-2 "
+                    >
+                      주소찾기
+                    </button>
+                  )}
                 </FieldWithButtonDiv>
-                {["id", "password"].includes(field.name) && (
-                  <ErrorMessage
-                    name={field.name}
-                    component={StyledErrorMessage}
-                    className="error-message"
-                  />
+
+                <ErrorMessage
+                  name={field.name}
+                  component={StyledErrorMessage}
+                  className="error-message"
+                />
+                {showPostcode && (
+                  <div ref={modalRef}>
+                    <Postcode
+                      onAddressSelect={(addressData) => {
+                        setFieldValue("postCode", addressData.postCode);
+                        setFieldValue("address", addressData.address);
+                        setFieldValue(
+                          "addressDetail",
+                          addressData.addressDetail
+                        );
+                        setShowPostcode(false);
+                      }}
+                    />
+                  </div>
                 )}
               </ForminputDiv>
             ))}
-            <ForminputDiv>
-              <label htmlFor="adress">주소</label>
-              <Field
-                type="text"
-                name="address"
-                placeholder="주소창을 클릭하세요"
-                className="rounded-lg mt-2 mb-2 w-full border-solid border-2 h-10 mr-1"
-                style={{ borderColor: MAIN_LIGHT_COLOR }}
-                onClick={() => setShowPostcode(true)}
-              />
-              {showPostcode && (
-                <div ref={modalRef}>
-                  <Postcode
-                    onAddressSelect={(address) => {
-                      setFieldValue("address", address);
-                      setShowPostcode(false);
-                    }}
-                  />
-                </div>
-              )}
-            </ForminputDiv>
-            <button
-              type="submit"
-              className="w-[100%] h-10 bg-MAIN_COLOR rounded-lg text-[17px] text-[#ffffff] mt-2 "
-            >
-              등록하기
+            <button className="w-full bg-MAIN_COLOR text-MAIN_IVORY h-16 rounded-lg text-lg mt-3">
+              제출하기
             </button>
           </Form>
         )}
