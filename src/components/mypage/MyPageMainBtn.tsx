@@ -7,12 +7,13 @@ import { Link } from "react-router-dom";
 
 interface MyPageMainBtnProps {
   title: string;
+  link: string;
 }
 
 const MyPageMainBtn: React.FC<MyPageMainBtnProps> = (props) => {
   return (
     <Link
-      to="/"
+      to={props.link}
       className="flex flex-col justify-center items-center border-2 border-solid border-MAIN_LIGHT_COLOR rounded-2xl w-1/2 h-40"
     >
       <div className="flex justify-center items-center rounded-full bg-MAIN_GRAY p-4 w-28">
