@@ -30,7 +30,7 @@ const SignupSchema = Yup.object().shape({
 const Main: React.FC = () => {
   const [showPostcode, setShowPostcode] = useState(false);
   const modalRef = React.useRef<HTMLDivElement | null>(null);
-  const handleClickOutside = (event:MouseEvent) => {
+  const handleClickOutside = (event: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
       setShowPostcode(false);
     }
@@ -103,18 +103,18 @@ const Main: React.FC = () => {
               />
               {showPostcode && (
                 <div ref={modalRef}>
-                <Postcode
-                  onAddressSelect={(address) => {
-                    setFieldValue("address", address);
-                    setShowPostcode(false);
-                  }}
-                />
-              </div>
+                  <Postcode
+                    onAddressSelect={(address) => {
+                      setFieldValue("address", address);
+                      setShowPostcode(false);
+                    }}
+                  />
+                </div>
               )}
             </ForminputDiv>
             <button
               type="submit"
-              className="w-[100%] h-10 bg-main-color rounded-lg text-[17px] text-[#ffffff] mt-2 "
+              className="w-[100%] h-10 bg-MAIN_COLOR rounded-lg text-[17px] text-[#ffffff] mt-2 "
             >
               등록하기
             </button>
