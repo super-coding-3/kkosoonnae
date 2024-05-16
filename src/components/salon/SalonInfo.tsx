@@ -48,7 +48,7 @@ const SalonInfo: React.FC = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center">
+      <div className="w-full flex items-center gap-2">
         <h2 className="text-black text-xl font-semibold">{salon.name}</h2>
         <FavoriteButton onClick={handleFavoriteClick} />
       </div>
