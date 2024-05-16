@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Main from "./page/Main";
+import Salon from "./page/Salon";
 import Signup from "./page/Signup";
 import MyPage from "./page/MyPage";
 import EditProfile from "./page/EditProfile";
@@ -14,6 +15,7 @@ const App: React.FC = () => {
     <div className="App">
       <Routes>
         <Route path="/" element={<Main />} />
+        <Route path="/salon/:id" element={<Salon />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/editprofile" element={<EditProfile />} />
