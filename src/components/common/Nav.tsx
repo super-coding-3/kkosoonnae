@@ -21,7 +21,7 @@ const Nav: React.FC = () => {
         <img src="/img/nav/icon-book.svg" alt="홈 아이콘" className="block" />
         <span className="text-xs mt-1">예약</span>
       </Link>
-      <Link to="/" className="flex flex-col items-center">
+      <Link to="/mypage" className="flex flex-col items-center">
         <img src="/img/nav/icon-my.svg" alt="홈 아이콘" className="block" />
         <span className="text-xs mt-1">마이</span>
       </Link>

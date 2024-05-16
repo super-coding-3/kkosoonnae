@@ -2,6 +2,13 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Main from "./page/Main";
 import Salon from "./page/Salon";
+import Signup from "./page/Signup";
+import MyPage from "./page/MyPage";
+import EditProfile from "./page/EditProfile";
+import EditMyKkosoonnae from "./page/EditMyKkosoonnae";
+import AddMyKkosoonnae from "./page/AddMyKkosoonnae";
+import MyReservation from "./page/MyReservation";
+import MyReview from "./page/MyReview";
 
 const App: React.FC = () => {
   return (
@@ -9,6 +16,13 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/salon/:id" element={<Salon />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/editprofile" element={<EditProfile />} />
+        <Route path="/editmykkosoonae" element={<EditMyKkosoonnae />} />
+        <Route path="/addmykkosoonae" element={<AddMyKkosoonnae />} />
+        <Route path="/myreservation" element={<MyReservation />} />
+        <Route path="/myreview" element={<MyReview />} />
       </Routes>
     </div>
   );
