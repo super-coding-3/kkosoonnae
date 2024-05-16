@@ -8,9 +8,11 @@ interface pageTitleProps {
 const PageTitle: React.FC<pageTitleProps> = ({ title }) => {
   return (
     <TitleDiv>
-        <img src="img/title/left.svg" alt="back" width={"25px"}/>
-        <p>{title}</p>
-        <div><img src="img/logo.svg" alt="logo" width={"40px"}/></div>
+      <img src="/img/title/left.svg" alt="back" width={"25px"} />
+      <p>{title}</p>
+      <div>
+        <img src="/img/logo.svg" alt="logo" width={"40px"} />
+      </div>
     </TitleDiv>
   );
 };
