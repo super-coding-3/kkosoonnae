@@ -10,6 +10,7 @@ import EditMyKkosoonnae from "./page/EditMyKkosoonnae";
 import AddMyKkosoonnae from "./page/AddMyKkosoonnae";
 import MyReservation from "./page/MyReservation";
 import MyReview from "./page/MyReview";
+import Login from "./page/Login";
 
 const App: React.FC = () => {
   return (
@@ -25,6 +26,7 @@ const App: React.FC = () => {
         <Route path="/addmykkosoonae" element={<AddMyKkosoonnae />} />
         <Route path="/myreservation" element={<MyReservation />} />
         <Route path="/myreview" element={<MyReview />} />
+        <Route path="/Login" element={<Login />} />
       </Routes>
     </div>
   );
