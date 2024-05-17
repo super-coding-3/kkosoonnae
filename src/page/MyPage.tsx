@@ -14,15 +14,15 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const MyPage: React.FC = () => {
-  const [list, setList] = useState([]);
+  // const [list, setList] = useState([]);
 
-  useEffect(() => {
-    fetch("/datas/mypage_point.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setList(data);
-      });
-  });
+  // useEffect(() => {
+  //   fetch("/datas/mypage_point.json")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setList(data);
+  //     });
+  // });
 
   var settings = {
     dots: false,
