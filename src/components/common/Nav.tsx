@@ -6,7 +6,7 @@ const Nav: React.FC = () => {
   return (
     <NavWrap>
       <Link to="/" className="flex flex-col items-center">
-        <img src="img/nav/icon-home.svg" alt="홈 아이콘" className="block" />
+        <img src="/img/nav/icon-home.svg" alt="홈 아이콘" className="block" />
         <span className="text-xs mt-1 ">홈</span>
       </Link>
       <Link to="/about" className="flex flex-col items-center">

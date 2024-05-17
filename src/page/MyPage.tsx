@@ -26,7 +26,7 @@ const MyPage: React.FC = () => {
   return (
     <OuterLayout>
       <PageTitle title="마이페이지" />
-      <div className="mt-5 mb-24 mx-5">
+      <div className="mt-5 pb-24 mx-5">
         <div className="flex justify-between items-center">
           <div className="font-black text-2xl">이효경 집사님</div>
           <Link
@@ -62,6 +62,8 @@ const MyPage: React.FC = () => {
                 name="샤샤"
                 type="샴"
                 age="18년 1개월"
+                gender="여아"
+                weigth="3kg"
               />
             </div>
             <div className="pr-6">
@@ -75,8 +77,8 @@ const MyPage: React.FC = () => {
             <MyPageMainBtn title="내가 쓴 리뷰" link="/myreview" />
           </div>
           <div className="flex justify-center items-center gap-5 w-full">
-            <MyPageMainBtn title="관심매장" link="/" />
-            <MyPageMainBtn title="문의하기" link="/" />
+            <MyPageMainBtn title="관심매장" link="/mylikestore" />
+            <MyPageMainBtn title="문의하기" link="/registerqna" />
           </div>
         </div>
       </div>

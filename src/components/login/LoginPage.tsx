@@ -10,7 +10,7 @@ const LoginPage: React.FC = () => {
     id: Yup.string().required("아이디를 입력해주세요"),
     password: Yup.string().required("비밀번호를 입력해주세요"),
   });
-  
+
   const navigate = useNavigate();
 
   return (

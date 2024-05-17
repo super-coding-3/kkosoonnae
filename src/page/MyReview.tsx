@@ -8,7 +8,7 @@ const MyReview: React.FC = () => {
   return (
     <OuterLayout>
       <PageTitle title="내가 쓴 리뷰" />
-      <div className="mt-5 mb-24 mx-5">
+      <div className="mt-5 pb-24 mx-5">
         <div className="pb-6 font-bold text-xl">내가 쓴 리뷰 총 3개</div>
         <MyReviewCard
           store_name="꼬순이네"

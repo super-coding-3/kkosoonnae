@@ -32,13 +32,8 @@ const SalonStyleCard: React.FC = () => {
   return (
     <>
       {cutStyleData.map((item) => (
-        <CardItem>
-          <Card
-            key={item.id}
-            className=""
-            imgAlt={item.cutTitle}
-            imgSrc={item.imgUrl}
-          >
+        <CardItem key={item.id}>
+          <Card className="" imgAlt={item.cutTitle} imgSrc={item.imgUrl}>
             <p className="font-normal text-gray-700 dark:text-gray-400">
               {item.cutTitle}
             </p>

@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Main from "./page/Main";
 import Salon from "./page/Salon";
 import Signup from "./page/Signup";
+import Reservation from "./page/Reservation";
 import MyPage from "./page/MyPage";
 import EditProfile from "./page/EditProfile";
 import MyLocationStore from "./page/MyLocationStore";
@@ -10,7 +11,6 @@ import EditMyKkosoonnae from "./page/EditMyKkosoonnae";
 import AddMyKkosoonnae from "./page/AddMyKkosoonnae";
 import MyReservation from "./page/MyReservation";
 import MyReview from "./page/MyReview";
-import Login from "./page/Login";
 
 const App: React.FC = () => {
   return (
@@ -18,6 +18,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/salon/:id" element={<Salon />} />
+        <Route path="/reservation/:id" element={<Reservation />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/editprofile" element={<EditProfile />} />
@@ -26,7 +27,6 @@ const App: React.FC = () => {
         <Route path="/addmykkosoonae" element={<AddMyKkosoonnae />} />
         <Route path="/myreservation" element={<MyReservation />} />
         <Route path="/myreview" element={<MyReview />} />
-        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
   );
