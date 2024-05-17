@@ -9,7 +9,7 @@ import SubmitBtn from "../components/common/SubmitBtn";
 const EditProfile: React.FC = () => {
   return (
     <OuterLayout>
-      <PageTitle title="프로필 수정" />
+      <PageTitle title="프로필 수정" leftBtn={true} />
       <div className="flex justify-center items-center mt-5 mb-24 mx-5 font-bold">
         <form className="flex flex-col gap-3 w-full ">
           <div className="flex justify-center items-center">

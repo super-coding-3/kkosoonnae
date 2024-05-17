@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BiDollarCircle } from "react-icons/bi";
 import { SlArrowRight } from "react-icons/sl";
 import { PiPawPrintFill } from "react-icons/pi";
@@ -14,6 +14,16 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const MyPage: React.FC = () => {
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    fetch("/datas/mypage_point.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setList(data);
+      });
+  });
+
   var settings = {
     dots: false,
     infinite: false,
@@ -25,7 +35,7 @@ const MyPage: React.FC = () => {
 
   return (
     <OuterLayout>
-      <PageTitle title="마이페이지" />
+      <PageTitle title="마이페이지" leftBtn={false} />
       <div className="mt-5 pb-24 mx-5">
         <div className="flex justify-between items-center">
           <div className="font-black text-2xl">이효경 집사님</div>

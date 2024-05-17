@@ -9,7 +9,7 @@ import MyKkosoonnaeInput from "../components/mykkosoonae/MyKkosoonnaeInput";
 const AddMyKkosoonnae: React.FC = () => {
   return (
     <OuterLayout>
-      <PageTitle title="내꼬순내 등록" />
+      <PageTitle title="내꼬순내 등록" leftBtn={true} />
       <div className="mt-5 pb-24 mx-5 font-bold">
         <MyKkosoonnaeImg img="/img/common/icon-dog-sitdown.svg" />
         <MyKkosoonnaeInput />
