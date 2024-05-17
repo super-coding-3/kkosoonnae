@@ -56,7 +56,7 @@ const SalonReviewList: React.FC = () => {
   return (
     <div>
       {reviewData.map((item) => (
-        <ReviewItem className="flex items-start gap-2 py-2">
+        <ReviewItem className="flex items-start gap-2 py-2" key={item.id}>
           <Avatar img="/img/salon/sample-pet.png" alt="" rounded />
           <ReviewText>
             <div className="flex items-center justify-between">

@@ -3,6 +3,7 @@ import OuterLayout from "../components/common/OuterLayout";
 import { useParams } from "react-router-dom";
 import SalonCarousel from "../components/salon/SalonCarousel";
 import SalonTab from "../components/salon/SalonTab";
+import PageTitle from "../components/common/PageTitle";
 import Footer from "../components/common/Footer";
 
 const Salon: React.FC = () => {
@@ -10,7 +11,7 @@ const Salon: React.FC = () => {
 
   return (
     <OuterLayout>
-      <div className="text-center text-lg">PageTitle 위치{id}</div>
+      <PageTitle title={""} />
       <SalonCarousel />
       <div className="px-4">
         <SalonTab />

@@ -1,5 +1,6 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import FavoriteButton from "./FavoriteButton";
 
 interface Salon {
@@ -13,6 +14,7 @@ interface Salon {
 
 const SalonInfo: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const salonId = id ? parseInt(id) : undefined;
 
   const salonData: Salon[] = [
@@ -46,6 +48,14 @@ const SalonInfo: React.FC = () => {
     console.log(`${salon.name} 미용실을 즐겨찾기에 추가/제거했습니다.`);
   };
 
+  const goReservation = () => {
+    if (salonId && salon.name) {
+      navigate(`/reservation/${salonId}`, {
+        state: { salonNamefix: salon.name },
+      });
+    }
+  };
+
   return (
     <div>
       <div className="w-full flex items-center gap-2">
@@ -70,8 +80,18 @@ const SalonInfo: React.FC = () => {
           <span>{salon.description}</span>
         </li>
       </ul>
+      <BtnReservation className="my-4" onClick={goReservation}>
+        예약
+      </BtnReservation>
     </div>
   );
 };
+
+const BtnReservation = styled.button`
+  width: 100%;
+  height: 44px;
+  color: #fff;
+  background: #492d28;
+`;
 
 export default SalonInfo;
