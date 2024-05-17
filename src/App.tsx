@@ -26,7 +26,7 @@ const App: React.FC = () => {
         <Route path="/addmykkosoonae" element={<AddMyKkosoonnae />} />
         <Route path="/myreservation" element={<MyReservation />} />
         <Route path="/myreview" element={<MyReview />} />
-        <Route path="/Login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
   );
