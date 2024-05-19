@@ -11,6 +11,7 @@ import EditMyKkosoonnae from "./page/EditMyKkosoonnae";
 import AddMyKkosoonnae from "./page/AddMyKkosoonnae";
 import MyReservation from "./page/MyReservation";
 import MyReview from "./page/MyReview";
+import Notice from "./page/Notice";
 
 const App: React.FC = () => {
   return (
@@ -20,9 +21,10 @@ const App: React.FC = () => {
         <Route path="/salon/:id" element={<Salon />} />
         <Route path="/reservation/:id" element={<Reservation />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/notice" element={<Notice />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/editprofile" element={<EditProfile />} />
-        <Route path="/mylocationStore" element={<MyLocationStore/>}/>
+        <Route path="/mylocationStore" element={<MyLocationStore />} />
         <Route path="/editmykkosoonae" element={<EditMyKkosoonnae />} />
         <Route path="/addmykkosoonae" element={<AddMyKkosoonnae />} />
         <Route path="/myreservation" element={<MyReservation />} />
