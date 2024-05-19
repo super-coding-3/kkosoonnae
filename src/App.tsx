@@ -11,6 +11,7 @@ import EditMyKkosoonnae from "./page/EditMyKkosoonnae";
 import AddMyKkosoonnae from "./page/AddMyKkosoonnae";
 import MyReservation from "./page/MyReservation";
 import MyReview from "./page/MyReview";
+import SearchResult from "./page/SearchResult";
 
 const App: React.FC = () => {
   return (
@@ -19,10 +20,11 @@ const App: React.FC = () => {
         <Route path="/" element={<Main />} />
         <Route path="/salon/:id" element={<Salon />} />
         <Route path="/reservation/:id" element={<Reservation />} />
+        <Route path="/search/result" element={<SearchResult />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/editprofile" element={<EditProfile />} />
-        <Route path="/mylocationStore" element={<MyLocationStore/>}/>
+        <Route path="/mylocationStore" element={<MyLocationStore />} />
         <Route path="/editmykkosoonae" element={<EditMyKkosoonnae />} />
         <Route path="/addmykkosoonae" element={<AddMyKkosoonnae />} />
         <Route path="/myreservation" element={<MyReservation />} />
