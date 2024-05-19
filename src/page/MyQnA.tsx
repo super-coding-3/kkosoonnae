@@ -7,7 +7,7 @@ import MyQnACard from "../components/myqna/MyQnACard";
 const MyQnA: React.FC = () => {
   return (
     <OuterLayout>
-      <PageTitle title="내 문의내역" />
+      <PageTitle title="내 문의내역" leftBtn={true} />
       <div className="mt-5 pb-24 mx-5">
         <div className="flex justify-between items-center pb-3 border-b-2 border-COMMONN_BORDER_GRAY">
           <div className="font-bold text-xl">내 문의내역 총 3개</div>

@@ -7,7 +7,7 @@ import MyReservationCard from "../components/myreservation/MyReservationCard";
 const MyReservation: React.FC = () => {
   return (
     <OuterLayout>
-      <PageTitle title="예약내역" />
+      <PageTitle title="예약내역" leftBtn={true} />
       <div className="mt-5 mb-24 mx-5">
         <MyReservationCard
           date="2024.05.09 (목)"
