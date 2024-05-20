@@ -12,7 +12,7 @@ const Reservation: React.FC = () => {
   const location = useLocation();
   const salonNamefix = location.state?.salonNamefix;
 
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
 
   return (
     <OuterLayout>
@@ -20,7 +20,6 @@ const Reservation: React.FC = () => {
       {step === 1 ? <ReservationForm salonNamefix={salonNamefix} /> : null}
       {step === 2 ? <ReservationCheckList /> : null}
       {step === 3 ? <ReservationOk /> : null}
-
       <Footer />
       <Nav />
     </OuterLayout>
