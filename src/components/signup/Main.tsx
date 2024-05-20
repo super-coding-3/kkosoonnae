@@ -3,32 +3,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { MAIN_LIGHT_COLOR } from "../../constans/color";
 import * as Yup from "yup";
+import { SignupSchema } from "../../schema/formSchema";
 import Postcode from "./PostCode";
 import formFields from "./FormFields";
 
 //유효성 검사 식과 YUP 을 이용한 유효성 검사  
-const Regex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
 
-const SignupSchema = Yup.object().shape({
-  id: Yup.string().matches(
-    Regex,
-    "아이디는 숫자,대문자, 특수문자 를 포함한 6자리 이상이어야 합니다"
-  ).required('아이디는 필수입니다'),
 
-  password: Yup.string().matches(
-    Regex,
-    "비밀번호는 숫자,대문자, 특수문자 를 포함한 6자리 이상이어야 합니다"
-  ).required("비밀번호는 필수입니다"),
-  email: Yup.string()
-    .email("올바른 이메일 형식을 입력하세요")
-    .required("이메일은 필수입니다."),
-  phoneNumber: Yup.string().required("핸드폰번호는 필수입니다."),
-  nickName: Yup.string().required("닉네임은 필수입니다."),
-  postCode: Yup.string().required("우편번호는 필수입니다."),
-  address: Yup.string().required("기본주소는 필수입니다."),
-  addressDetail: Yup.string().required("상세주소는 필수입니다."),
-});
 
 // 메인 코드
 
