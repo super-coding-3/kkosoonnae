@@ -7,7 +7,7 @@ import MyReviewCard from "../components/myreview/MyReviewCard";
 const MyReview: React.FC = () => {
   return (
     <OuterLayout>
-      <PageTitle title="내가 쓴 리뷰" />
+      <PageTitle title="내가 쓴 리뷰" leftBtn={true} />
       <div className="mt-5 pb-24 mx-5">
         <div className="pb-6 font-bold text-xl">내가 쓴 리뷰 총 3개</div>
         <MyReviewCard

@@ -9,7 +9,7 @@ import MyKkosoonnaeInput from "../components/mykkosoonae/MyKkosoonnaeInput";
 const EditMyKkosoonnae: React.FC = () => {
   return (
     <OuterLayout>
-      <PageTitle title="내꼬순내 수정" />
+      <PageTitle title="내꼬순내 수정" leftBtn={true} />
       <div className="mt-5 pb-24 mx-5 font-bold">
         <MyKkosoonnaeImg img="https://cdn.discordapp.com/avatars/745996602560348160/055f94406a145ffa6b7ecf3b6e518fc3.webp?size=128" />
         <MyKkosoonnaeInput

@@ -13,7 +13,7 @@ const RegisterQnA: React.FC = () => {
 
   return (
     <OuterLayout>
-      <PageTitle title="문의하기" />
+      <PageTitle title="문의하기" leftBtn={true} />
       <div className="mt-5 mx-5">
         <div className="flex justify-between items-center pb-3 border-b-2 border-COMMONN_BORDER_GRAY">
           <div className="font-bold text-xl">꼬순내 고객센터</div>
