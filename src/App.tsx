@@ -12,6 +12,9 @@ import AddMyKkosoonnae from "./page/AddMyKkosoonnae";
 import MyReservation from "./page/MyReservation";
 import MyReview from "./page/MyReview";
 import Notice from "./page/Notice";
+import MyLikeStore from "./page/MyLikeStore";
+import RegisterQnA from "./page/RegisterQnA";
+import MyQnA from "./page/MyQnA";
 
 const App: React.FC = () => {
   return (
@@ -29,6 +32,9 @@ const App: React.FC = () => {
         <Route path="/addmykkosoonae" element={<AddMyKkosoonnae />} />
         <Route path="/myreservation" element={<MyReservation />} />
         <Route path="/myreview" element={<MyReview />} />
+        <Route path="/mylikestore" element={<MyLikeStore />} />
+        <Route path="/registerqna" element={<RegisterQnA />} />
+        <Route path="/myqna" element={<MyQnA />} />
       </Routes>
     </div>
   );

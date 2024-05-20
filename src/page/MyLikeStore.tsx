@@ -7,7 +7,7 @@ import MyLikeStoreCard from "../components/mylikestore/MyLikeStoreCard";
 const MyLikeStore: React.FC = () => {
   return (
     <OuterLayout>
-      <PageTitle title="관심매장" />
+      <PageTitle title="관심매장" leftBtn={true} />
       <div className="mt-5 pb-24 mx-5">
         <MyLikeStoreCard
           store_img="/img/common/icon-dog_star.svg"
