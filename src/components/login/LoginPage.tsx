@@ -27,6 +27,7 @@ const LoginPage: React.FC = () => {
             const token = res.data.token;
             console.log(token)
             localStorage.setItem('token',token)
+            navigate('/')
           }).catch((error)=>{
             alert('로그인이 실패하였습니다')
             console.log(error)
