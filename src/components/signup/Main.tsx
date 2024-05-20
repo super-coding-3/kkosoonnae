@@ -1,25 +1,28 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { MAIN_LIGHT_COLOR } from "../../constans/color";
 import * as Yup from "yup";
 import Postcode from "./PostCode";
 import formFields from "./FormFields";
 
-//유효성 검사 식과 YUP 을 이용한 유효성 검사  
+//유효성 검사 식과 YUP 을 이용한 유효성 검사
 const Regex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
 
 const SignupSchema = Yup.object().shape({
-  id: Yup.string().matches(
-    Regex,
-    "아이디는 숫자,대문자, 특수문자 를 포함한 6자리 이상이어야 합니다"
-  ).required('아이디는 필수입니다'),
+  id: Yup.string()
+    .matches(
+      Regex,
+      "아이디는 숫자,대문자, 특수문자 를 포함한 6자리 이상이어야 합니다"
+    )
+    .required("아이디는 필수입니다"),
 
-  password: Yup.string().matches(
-    Regex,
-    "비밀번호는 숫자,대문자, 특수문자 를 포함한 6자리 이상이어야 합니다"
-  ).required("비밀번호는 필수입니다"),
+  password: Yup.string()
+    .matches(
+      Regex,
+      "비밀번호는 숫자,대문자, 특수문자 를 포함한 6자리 이상이어야 합니다"
+    )
+    .required("비밀번호는 필수입니다"),
   email: Yup.string()
     .email("올바른 이메일 형식을 입력하세요")
     .required("이메일은 필수입니다."),
@@ -78,8 +81,7 @@ const Main: React.FC = () => {
                     type={field.type}
                     name={field.name}
                     placeholder={field.placeholder}
-                    className="rounded-lg mt-2 mb-2 w-full border-solid border-2 h-10 mr-1"
-                    style={{ borderColor: MAIN_LIGHT_COLOR }}
+                    className="rounded-lg mt-2 mb-2 w-full border-solid border-2 h-10 mr-1 border-MAIN_LIGHT_COLOR"
                   />
                   {["id", "nickName"].includes(field.name) && (
                     <button
