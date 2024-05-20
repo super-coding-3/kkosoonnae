@@ -16,6 +16,7 @@ import SearchResult from "./page/SearchResult";
 import MyLikeStore from "./page/MyLikeStore";
 import RegisterQnA from "./page/RegisterQnA";
 import MyQnA from "./page/MyQnA";
+import Login from "./page/Login";
 
 
 const App: React.FC = () => {
@@ -26,6 +27,7 @@ const App: React.FC = () => {
         <Route path="/salon/:id" element={<Salon />} />
         <Route path="/reservation/:id" element={<Reservation />} />
         <Route path="/search/result" element={<SearchResult />} />
+        <Route path="/login" element={<Login/>}/>
         <Route path="/signup" element={<Signup />} />
         <Route path="/notice" element={<Notice />} />
         <Route path="/mypage" element={<MyPage />} />
