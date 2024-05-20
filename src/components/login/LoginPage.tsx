@@ -1,14 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+
 import {  useNavigate } from "react-router-dom";
+import { LoginSchema } from "../../schema/formSchema";
 
 const LoginPage: React.FC = () => {
-  const Schema = Yup.object().shape({
-    id: Yup.string().required("아이디를 입력해주세요"),
-    password: Yup.string().required("비밀번호를 입력해주세요"),
-  });
 
   const navigate = useNavigate();
 
@@ -23,7 +20,7 @@ const LoginPage: React.FC = () => {
           alert(JSON.stringify(values, null, 2));
           setSubmitting(false);
         }}
-        validationSchema={Schema}
+        validationSchema={LoginSchema}
       >
          {({ isSubmitting }) => (
         <Form>
