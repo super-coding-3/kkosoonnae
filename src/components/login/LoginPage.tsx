@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { MAIN_LIGHT_COLOR , MAIN_COLOR } from "../../constans/color";
 import {  useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
@@ -34,8 +33,7 @@ const LoginPage: React.FC = () => {
               type="text"
               name="id"
               placeholder="아이디를 입력하세요"
-              style={{ borderColor: MAIN_LIGHT_COLOR }}
-              className="rounded-lg mt-2 mb-2 w-full border-solid border-2 h-10 mr-1"
+              className="rounded-lg mt-2 mb-2 w-full border-solid border-2 h-10 mr-1 border-MAIN_LIGHT_COLOR"
             />
             <ErrorMessage
               name="id"
@@ -49,8 +47,7 @@ const LoginPage: React.FC = () => {
               type="text"
               name="password"
               placeholder="비밀번호를 입력하세요"
-              style={{ borderColor: MAIN_LIGHT_COLOR }}
-              className="rounded-lg mt-2 mb-2 w-full border-solid border-2 h-10 mr-1"
+              className="rounded-lg mt-2 mb-2 w-full border-solid border-2 h-10 mr-1 border-MAIN_COLOR"
             />
             <ErrorMessage
               name="password"

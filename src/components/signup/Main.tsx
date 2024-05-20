@@ -1,15 +1,9 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { MAIN_LIGHT_COLOR } from "../../constans/color";
-import * as Yup from "yup";
 import { SignupSchema } from "../../schema/formSchema";
 import Postcode from "./PostCode";
 import formFields from "./FormFields";
-
-//유효성 검사 식과 YUP 을 이용한 유효성 검사  
-
-
 
 // 메인 코드
 
@@ -59,8 +53,7 @@ const Main: React.FC = () => {
                     type={field.type}
                     name={field.name}
                     placeholder={field.placeholder}
-                    className="rounded-lg mt-2 mb-2 w-full border-solid border-2 h-10 mr-1"
-                    style={{ borderColor: MAIN_LIGHT_COLOR }}
+                    className="rounded-lg mt-2 mb-2 w-full border-solid border-2 h-10 mr-1 border-MAIN_LIGHT_COLOR"
                   />
                   {["id", "nickName"].includes(field.name) && (
                     <button
