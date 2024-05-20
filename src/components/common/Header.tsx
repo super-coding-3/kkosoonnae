@@ -1,16 +1,29 @@
-import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+import SearchModal from "../search/SearchModal";
+
 const Header: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleButtonClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <HeaderWrap>
       <Link to="/">
         <img src="img/logo.svg" alt="꼬순내 로고" />
       </Link>
-      <button>
+      <BtnHeaderSearch onClick={handleButtonClick}>
         <img src="img/nav/icon-search.svg" alt="통합검색 아이콘" />
-      </button>
+      </BtnHeaderSearch>
+      {isModalOpen && <SearchModal onClose={handleModalClose} />}
     </HeaderWrap>
   );
 };
@@ -31,15 +44,16 @@ const HeaderWrap = styled.header`
   left: 0;
   right: 0;
   z-index: 1000;
-  button {
-    width: 55px;
-    height: 55px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    img {
-      display: inline-block;
-    }
+`;
+
+const BtnHeaderSearch = styled.button`
+  width: 55px;
+  height: 55px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  img {
+    display: inline-block;
   }
 `;
 
