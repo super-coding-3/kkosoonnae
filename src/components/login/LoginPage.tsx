@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import HttpClient from "../../api/customAxios"
+import HttpClient from "../../utils/api/customAxios"
 import { useNavigate } from "react-router-dom";
 import { LoginSchema } from "../../schema/formSchema";
 
@@ -40,7 +40,8 @@ const LoginPage: React.FC = () => {
         validationSchema={LoginSchema}
       >
         {({ isSubmitting }) => (
-          <Form>
+          <Form className="mx-auto max-w-xl min-w-[320px] w-full mt-4 mb-4">
+            <h1>로그인</h1>
             <ForminputDiv>
               <label htmlFor="id">아이디</label>
               <Field
@@ -96,7 +97,6 @@ const LogMainDiv = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
-  margin: 10px;
   font-size: 14px;
   font-weight: bold;
 `;
