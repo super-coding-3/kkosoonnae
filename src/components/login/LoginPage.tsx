@@ -95,6 +95,8 @@ const LogMainDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  max-width: 640px;
+  min-width: 375px;
   width: 100%;
   height: 100%;
   font-size: 14px;
