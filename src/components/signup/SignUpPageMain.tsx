@@ -5,7 +5,7 @@ import { SignupSchema } from "../../schema/formSchema";
 import styled from "styled-components";
 import Postcode from "./PostCode";
 import formFields from "./FormFields";
-import HttpClient from "../../api/customAxios";
+import HttpClient from '../../api/customAxios';
 
 // 메인 코드
 

@@ -1,10 +1,19 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import React, { useState } from "react";
 import styled from "styled-components";
+<<<<<<< HEAD
 import { SignupSchema } from "../../schema/formSchema";
+=======
+>>>>>>> 20a066f0fea4b9f749a4edf25d1dd24d478d3a80
 import Postcode from "./PostCode";
 import formFields from "./FormFields";
+import { SignupSchema } from "../../schema/formSchema";
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 20a066f0fea4b9f749a4edf25d1dd24d478d3a80
 // 메인 코드
 
 const Main: React.FC = () => {

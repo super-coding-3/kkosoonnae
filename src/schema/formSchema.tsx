@@ -16,15 +16,19 @@ const Regex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
 
 const SignupSchema = Yup.object().shape({
-  id: Yup.string().matches(
-    Regex,
-    "아이디는 숫자,대문자, 특수문자 를 포함한 6자리 이상이어야 합니다"
-  ).required('아이디는 필수입니다'),
+  id: Yup.string()
+    .matches(
+      Regex,
+      "아이디는 숫자,대문자, 특수문자 를 포함한 6자리 이상이어야 합니다"
+    )
+    .required("아이디는 필수입니다"),
 
-  password: Yup.string().matches(
-    Regex,
-    "비밀번호는 숫자,대문자, 특수문자 를 포함한 6자리 이상이어야 합니다"
-  ).required("비밀번호는 필수입니다"),
+  password: Yup.string()
+    .matches(
+      Regex,
+      "비밀번호는 숫자,대문자, 특수문자 를 포함한 6자리 이상이어야 합니다"
+    )
+    .required("비밀번호는 필수입니다"),
   email: Yup.string()
     .email("올바른 이메일 형식을 입력하세요")
     .required("이메일은 필수입니다."),
@@ -36,4 +40,10 @@ const SignupSchema = Yup.object().shape({
 });
 
 
-export { reservationSchema,SignupSchema };
+const LoginSchema = Yup.object().shape({
+  id: Yup.string().required("아이디를 입력해주세요"),
+  password: Yup.string().required("비밀번호를 입력해주세요"),
+});
+
+
+export { reservationSchema , SignupSchema, LoginSchema };
