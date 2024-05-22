@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import HttpClient from "../../api/customAxios"
+import HttpClient from "../../utils/api/customAxios";
 import { useNavigate } from "react-router-dom";
 import { LoginSchema } from "../../schema/formSchema";
 
@@ -16,27 +16,26 @@ const LoginPage: React.FC = () => {
           password: "",
         }}
         onSubmit={(values, { setSubmitting }) => {
-          const payload= {
+          const payload = {
             loginId: values.id,
-            password:values.password
+            password: values.password,
           };
-          HttpClient.post('/KkoSoonNae/customer/login',payload)
-          .then((response)=>{
-            alert('로그인이 성공하였습니다')
-            const res = response.data;
-            const token = res.data.token;
-            console.log(token)
-            localStorage.setItem('token',token)
-            navigate('/')
-          }).catch((error)=>{
-            alert('로그인이 실패하였습니다')
-            console.log(error)
-          })
+          HttpClient.post("/KkoSoonNae/customer/login", payload)
+            .then((response) => {
+              alert("로그인이 성공하였습니다");
+              const res = response.data;
+              const token = res.data.token;
+              console.log(token);
+              localStorage.setItem("token", token);
+              navigate("/");
+            })
+            .catch((error) => {
+              alert("로그인이 실패하였습니다");
+              console.log(error);
+            });
           alert(JSON.stringify(values, null, 2));
           setSubmitting(false);
         }}
-
-        
         validationSchema={LoginSchema}
       >
         {({ isSubmitting }) => (
