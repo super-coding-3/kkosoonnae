@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import HttpClient from "../../api/customAxios"
+import HttpClient from "../../utils/api/customAxios"
 import { useNavigate } from "react-router-dom";
 import { LoginSchema } from "../../schema/formSchema";
 
@@ -94,6 +94,8 @@ const LogMainDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  max-width: 640px;
+  min-width: 375px;
   width: 100%;
   height: 100%;
   margin: 10px;
