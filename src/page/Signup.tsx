@@ -4,7 +4,6 @@ import Footer from '../components/common/Footer';
 import Nav from '../components/common/Nav';
 import PageTitle from '../components/common/PageTitle';
 import Main from '../components/signup/SignUpPageMain';
-
 const Signup:React.FC = () => {
     return (
         <OuterLayout>
