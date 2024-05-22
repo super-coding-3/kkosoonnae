@@ -7,19 +7,7 @@ interface PostcodeProps {
 
 const Postcode: React.FC<PostcodeProps> = ({ onAddressSelect }) => {
   const handleComplete = (data:any) => {
-    // let fullAddress = data.address;
-    // let extraAddress = '';
-
-    // if (data.addressType === 'R') {/*R은 도로명 주소 를 뜻합니다!  */} {
-    //   if (data.bname !== '') {
-    //     extraAddress += data.bname;
-    //   }
-    //   if (data.buildingName !== '') {
-    //     extraAddress += (extraAddress !== '' ? ` ${data.buildingName}` : data.buildingName);
-    //   }
-    //   fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
-    // }
-
+  
     const addressData = {
       postCode:data.zonecode,
       address:data.address,
