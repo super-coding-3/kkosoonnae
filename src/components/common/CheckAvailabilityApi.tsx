@@ -1,14 +1,14 @@
 import HttpClient from "../../utils/api/customAxios";
 
 const CheckAvailabilityApi = async (
-  field: "id" | "nickName",
+  field: "SignUpId" | "SignUpNickName",
   value: string
 ) => {
   let url = "";
 
-  if (field === "id") {
+  if (field === "SignUpId") {
     url = `/KkoSoonNae/customer/checkLoginId/${value}`;
-  } else if (field === "nickName") {
+  } else if (field === "SignUpNickName") {
     url = `/KkoSoonNae/customer/checkNickName/${value}`;
   }
   try {
