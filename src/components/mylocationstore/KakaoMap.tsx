@@ -23,10 +23,15 @@ const KakaoMap: React.FC = () => {
         33.450701,
         126.570667
       );
+      const markerPosition_one = new window.kakao.maps.LatLng(
+        32.450701,
+        133.570667
+      );
       const marker = new window.kakao.maps.Marker({
-        position: markerPosition,
+        position: markerPosition
       });
       marker.setMap(map);
+     
     }
   }, []);
 
