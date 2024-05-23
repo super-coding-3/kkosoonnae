@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Formik, Form } from "formik";
 import { reservationSchema } from "../../schema/formSchema";
+import HttpClient from "../../utils/api/customAxios";
 
 import ReservationFormGroup from "./ReservationFormGroup";
 import ReservationTimeRadio from "./ReservationTimeRadio";
@@ -16,34 +17,56 @@ interface ReservationFormProps {
   salonNamefix?: string;
 }
 interface reservationFormValues {
-  salonName: string;
-  reservationDate: Date | null;
+  storeNumber: number;
+  storeName: string;
+  reservationDate: string;
   reservationTime: string;
-  style: string;
+  cutStyle: string;
+  petName: string;
   breed: string;
   weight: string;
   characteristics: string;
 }
 
 const ReservationForm: React.FC<ReservationFormProps> = ({ salonNamefix }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { id } = useParams();
 
   const initialValues: reservationFormValues = {
-    salonName: salonNamefix || "",
-    reservationDate: null,
+    storeName: salonNamefix || "",
+    storeNumber: 1,
+    reservationDate: "",
     reservationTime: "",
-    style: "",
+    cutStyle: "",
+    petName: "",
     breed: "",
     weight: "",
     characteristics: "",
   };
 
-  const handleSubmit = (values: reservationFormValues) => {
-    // console.log(values);
-    console.log(salonNamefix);
-  };
+  const reservationHandleSubmit = async (values: reservationFormValues) => {
+    try {
+      const payload = {
+        storeNumber: values.storeNumber,
+        storeName: values.storeName,
+        reservationDate: values.reservationDate,
+        reservationTime: values.reservationTime,
+        cutStyle: values.cutStyle,
+        petName: values.petName,
+        breed: values.breed,
+        weight: values.weight,
+        characteristics: values.characteristics,
+      };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+      const response = await HttpClient.post(
+        "/KkoSoonNae/reservation/make-reservation",
+        payload
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("예약 요청 실패:", error);
+    }
+  };
 
   return (
     <div>
@@ -55,16 +78,25 @@ const ReservationForm: React.FC<ReservationFormProps> = ({ salonNamefix }) => {
 
       <Formik
         initialValues={initialValues}
-        validationSchema={reservationSchema}
-        onSubmit={handleSubmit}
+        // validationSchema={reservationSchema}
+        onSubmit={(values) => reservationHandleSubmit(values)}
       >
         {({ setFieldValue }) => (
           <Form className="px-4 pt-4 pb-8">
             <div className="flex flex-col gap-y-5">
+              {/* 업체 번호  */}
+              <div className="hidden">
+                <ReservationFormGroup
+                  label="업체번호"
+                  name="storeNumber"
+                  readOnly={false}
+                />
+              </div>
+
               {/* 업체명 */}
               <ReservationFormGroup
                 label="업체명"
-                name="salonName"
+                name="storeName"
                 value={salonNamefix}
                 readOnly={true}
               />
@@ -74,6 +106,12 @@ const ReservationForm: React.FC<ReservationFormProps> = ({ salonNamefix }) => {
               <ReservationTimeRadio />
               {/* 스타일 */}
               <ReservationDropDown />
+              {/* 펫 이름 */}
+              <ReservationFormGroup
+                label="펫 이름"
+                name="petName"
+                readOnly={false}
+              />
               {/* 견종/묘종 */}
               <ReservationFormGroup
                 label="견종/묘종"
