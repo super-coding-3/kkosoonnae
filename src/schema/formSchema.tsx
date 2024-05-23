@@ -42,8 +42,8 @@ const SignupSchema = Yup.object().shape({
 });
 
 const LoginSchema = Yup.object().shape({
-  id: Yup.string().required("아이디를 입력해주세요"),
-  password: Yup.string().required("비밀번호를 입력해주세요"),
+  LoginId: Yup.string().required("아이디를 입력해주세요"),
+  LoginPassword: Yup.string().required("비밀번호를 입력해주세요"),
 });
 
 const EditProfileSchema = Yup.object().shape({
