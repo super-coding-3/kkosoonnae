@@ -41,7 +41,7 @@ const LoginPage: React.FC = () => {
       >
         {({ isSubmitting }) => (
           <Form className="mx-auto max-w-xl min-w-[320px] w-full mt-4 mb-4">
-            <h1>로그인</h1>
+            <h1 className="text-[20px] mb-3">로그인</h1>
             <ForminputDiv>
               <label htmlFor="id">아이디</label>
               <Field
