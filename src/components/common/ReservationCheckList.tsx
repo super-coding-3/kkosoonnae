@@ -1,26 +1,37 @@
 import React from "react";
 import styled from "styled-components";
+import { useParams, useLocation } from "react-router-dom";
 
 const reservationData = {
   salonName: "도그 살롱 멍멍이",
-  reservationDate: new Date("2023-06-25"),
+  reservationDate: "2023-06-25",
   reservationTime: "14:00",
   breed: "토이 푸들",
+  petName: "초코",
   weight: "2.5kg",
+  cutStyle: "귀여운 곰돌이 컷",
   characteristics: "활발하고 친화력이 좋아요. 목욕할 때 얌전히 있는 편이에요.",
-  style: "귀여운 곰돌이 컷",
 };
 
 const ReservationCheckList: React.FC = () => {
+  const location = useLocation();
+  const { id } = useParams();
+
+  const showReservationComponent =
+    location.pathname === `{/reservation/:${id}}`;
+
   return (
     <div className="px-4">
-      <CheckTitle className="py-8 flex flex-col items-center">
-        <img
-          src="/img/reservation/icon-reservation.svg"
-          alt="예약확인 아이콘"
-        />
-        <h2 className="text-xl mt-4">예약확인</h2>
-      </CheckTitle>
+      {showReservationComponent && (
+        <CheckTitle className="py-8 flex flex-col items-center">
+          <img
+            src="/img/reservation/icon-reservation.svg"
+            alt="예약확인 아이콘"
+          />
+          <h2 className="text-xl mt-4">예약확인</h2>
+        </CheckTitle>
+      )}
+
       <ReservationCheck className="flex flex-col gap-4">
         <p className="flex justify-between items-center">
           업체명
@@ -43,6 +54,10 @@ const ReservationCheckList: React.FC = () => {
           <span className=" text-zinc-500 text-base">포메라이안</span>
         </p>
         <p className="flex justify-between items-center">
+          펫 이름
+          <span className=" text-zinc-500 text-base">초코</span>
+        </p>
+        <p className="flex justify-between items-center">
           몸무게
           <span className=" text-zinc-500 text-base">5kg</span>
         </p>
@@ -51,12 +66,14 @@ const ReservationCheckList: React.FC = () => {
           <span className=" text-zinc-500 text-base">포메는 참지않쥐,,</span>
         </p>
       </ReservationCheck>
-      <div className="flex items-center gap-1 my-4">
-        <BtnBorder>이전</BtnBorder>
-        <BtnMain className=" bg-MAIN_COLOR text-MAIN_IVORY rounded">
-          예약완료
-        </BtnMain>
-      </div>
+      {showReservationComponent && (
+        <div className="flex items-center gap-1 my-4">
+          <BtnBorder>이전</BtnBorder>
+          <BtnMain className=" bg-MAIN_COLOR text-MAIN_IVORY rounded">
+            예약완료
+          </BtnMain>
+        </div>
+      )}
     </div>
   );
 };

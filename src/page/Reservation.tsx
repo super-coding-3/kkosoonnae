@@ -5,7 +5,7 @@ import Footer from "../components/common/Footer";
 import Nav from "../components/common/Nav";
 import PageTitle from "../components/common/PageTitle";
 import ReservationForm from "../components/reservation/ReservationForm";
-import ReservationCheckList from "../components/reservation/ReservationCheckList";
+import ReservationCheckList from "../components/common/ReservationCheckList";
 import ReservationOk from "../components/reservation/ReservationOk";
 
 const Reservation: React.FC = () => {
