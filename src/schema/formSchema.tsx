@@ -63,7 +63,7 @@ const QnASchema = Yup.object().shape({
   title: Yup.string()
     .required("제목을 입력해주세요")
     .max(20, "최대 20자까지 작성 가능합니다"),
-  contents: Yup.string()
+  content: Yup.string()
     .required("내용을 입력해주세요")
     .min(20, "최소 20자 이상 작성해야 합니다."),
 });
