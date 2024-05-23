@@ -22,14 +22,11 @@ const MyLocationStore:React.FC = () => {
       fetchInitialStores();
     }, []);
 
-    const handleUpdateStores = (newStores: Store[]) => {
-        setStores(newStores);
-      };
 
     return (
         <OuterLayout>
             <PageTitle title="내 주변 미용실"/>
-            <KakaoMap  />
+            <KakaoMap stores={stores} />
             <StoreList stores={stores}/>
             <StyleSlider stores={stores}/>
             <Footer/>

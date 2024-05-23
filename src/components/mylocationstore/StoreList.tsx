@@ -1,5 +1,4 @@
 import { List, Avatar } from "flowbite-react";
-import styled from "styled-components";
 import { Store } from "./LocationApi";
 import React from "react";
 
@@ -90,11 +89,3 @@ const StoreList:React.FC<StoreListProps> = ({stores}) => {
 
 export default StoreList;
 
-const ListDiv = styled.div`
-  width: 500px;
-  height: 70px;
-  padding: 10px;
-  margin-top: 5px;
-  padding-bottom: 5px;
-  border-radius: 4px;
-`;
