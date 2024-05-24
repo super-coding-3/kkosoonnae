@@ -15,7 +15,7 @@ const Main: React.FC = () => {
   const [showPostcode, setShowPostcode] = useState(false);
 
   return (
-    <MainDiv>
+    <MainDiv className="px-2">
       <Formik
         initialValues={{
           SignUpId: "",
@@ -56,7 +56,7 @@ const Main: React.FC = () => {
         }}
       >
         {({ setFieldValue, values }) => (
-          <StyledForm className="mx-auto max-w-xl min-w-[320px] w-full">
+          <Form className="mx-auto max-w-xl min-w-[320px] w-full">
             {formFields.map((field) => (
               <ForminputDiv key={field.name}>
                 <label htmlFor={field.name}>{field.label}</label>
@@ -107,7 +107,7 @@ const Main: React.FC = () => {
             >
               제출하기
             </button>
-          </StyledForm>
+          </Form>
         )}
       </Formik>
     </MainDiv>
@@ -126,23 +126,19 @@ const MainDiv = styled.div`
   margin-top: 10px;
   font-size: 14px;
   font-weight: bold;
-  padding: 0 1rem; /* 전체 패딩 추가 */
+
 `;
 
-const StyledForm = styled(Form)`
-  padding: 0 1rem; /* Form 컴포넌트에 패딩 추가 */
-`;
+
 
 const ForminputDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 0 0.5rem; /* 각 input field에 패딩 추가 */
 `;
 
 const FieldWithButtonDiv = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  gap: 0.5rem; /* 버튼과 필드 사이의 간격 추가 */
 `;
