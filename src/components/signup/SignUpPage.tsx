@@ -20,6 +20,7 @@ const Main: React.FC = () => {
         initialValues={{
           SignUpId: "",
           SignUpPassword: "",
+          SignUpPasswordCheck: "",
           SignUpEmail: "",
           SignUpPhoneNumber: "",
           SignUpNickName: "",

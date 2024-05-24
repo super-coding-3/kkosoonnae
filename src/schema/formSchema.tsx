@@ -12,12 +12,9 @@ const reservationSchema = Yup.object().shape({
     .required("특징을 입력해주세요."),
 });
 
-const SignUpIdRegex =
-/^(?=.*[A-Z])[A-Za-z\d@$!%*?&]{4,}$/
+const SignUpIdRegex = /^(?=.*[A-Z])[A-Za-z\d@$!%*?&]{4,}$/;
 
-const SignUpPasswordRegex=
-/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{4,}$/
-
+const SignUpPasswordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{4,}$/;
 
 const phoneRegex = /[0-9]{3}-[0-9]{4}-[0-9]{4}/;
 
@@ -35,6 +32,9 @@ const SignupSchema = Yup.object().shape({
       "비밀번호는 최소 4자리이상 대문자와 숫자를 포함하여야 합니다"
     )
     .required("비밀번호는 필수입니다"),
+  SignUpPasswordCheck: Yup.string()
+    .oneOf([Yup.ref("SignUpPassword"), undefined], "비밀번호가 일치하지 않습니다")
+    .required("비밀번호 확인은 필수입니다."),
   SignUpEmail: Yup.string()
     .email("올바른 이메일 형식을 입력하세요")
     .required("이메일은 필수입니다."),
