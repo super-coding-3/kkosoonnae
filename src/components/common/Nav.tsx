@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const Nav: React.FC = () => {
+  const token = localStorage.getItem("token");
+
   return (
     <NavWrap>
       <Link to="/" className="flex flex-col items-center">
@@ -21,10 +23,21 @@ const Nav: React.FC = () => {
         <img src="/img/nav/icon-book.svg" alt="홈 아이콘" className="block" />
         <span className="text-xs mt-1">예약</span>
       </Link>
-      <Link to="/mypage" className="flex flex-col items-center">
-        <img src="/img/nav/icon-my.svg" alt="홈 아이콘" className="block" />
-        <span className="text-xs mt-1">마이</span>
-      </Link>
+      {token ? (
+        <Link to="/mypage" className="flex flex-col items-center">
+          <img src="/img/nav/icon-my.svg" alt="마이 아이콘" className="block" />
+          <span className="text-xs mt-1">마이</span>
+        </Link>
+      ) : (
+        <Link to="/login" className="flex flex-col items-center">
+          <img
+            src="/img/nav/icon-login.svg"
+            alt="로그인 아이콘"
+            className="block"
+          />
+          <span className="text-xs mt-1">로그인</span>
+        </Link>
+      )}
     </NavWrap>
   );
 };

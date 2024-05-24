@@ -24,10 +24,7 @@ const LoginPage: React.FC = () => {
             .then((response) => {
               alert("로그인이 성공하였습니다");
               const res = response.data;
-              let token = res.data.token;
-              if (token.startsWith("Bearer ")) {
-                token = token.slice(7);
-              }
+              const token = res.data.token;
               console.log(token);
               localStorage.setItem("token", token);
               navigate("/");
