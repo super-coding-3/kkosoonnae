@@ -12,23 +12,27 @@ const reservationSchema = Yup.object().shape({
     .required("특징을 입력해주세요."),
 });
 
-const Regex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+const SignUpIdRegex =
+/^(?=.*[A-Z])[A-Za-z\d@$!%*?&]{4,}$/
+
+const SignUpPasswordRegex=
+/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{4,}$/
+
 
 const phoneRegex = /[0-9]{3}-[0-9]{4}-[0-9]{4}/;
 
 const SignupSchema = Yup.object().shape({
   SignUpId: Yup.string()
     .matches(
-      Regex,
-      "아이디는 숫자,대문자, 특수문자 를 포함한 6자리 이상이어야 합니다"
+      SignUpIdRegex,
+      "아이디는 최소 4자리이상 대문자를 포함하여야 합니다"
     )
     .required("아이디는 필수입니다"),
 
   SignUpPassword: Yup.string()
     .matches(
-      Regex,
-      "비밀번호는 숫자,대문자, 특수문자 를 포함한 6자리 이상이어야 합니다"
+      SignUpPasswordRegex,
+      "비밀번호는 최소 4자리이상 대문자와 숫자를 포함하여야 합니다"
     )
     .required("비밀번호는 필수입니다"),
   SignUpEmail: Yup.string()
