@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BiDollarCircle } from "react-icons/bi";
 import { SlArrowRight } from "react-icons/sl";
 import { PiPawPrintFill } from "react-icons/pi";
@@ -12,6 +12,7 @@ import MyPagePetAdd from "../components/mypage/MyPagePetAdd";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import BtnLogout from "../components/common/BtnLogut";
 
 const MyPage: React.FC = () => {
   // const [list, setList] = useState([]);
@@ -39,12 +40,15 @@ const MyPage: React.FC = () => {
       <div className="mt-5 pb-24 mx-5">
         <div className="flex justify-between items-center">
           <div className="font-black text-2xl">이효경 집사님</div>
-          <Link
-            to="/editprofile"
-            className="p-1 border-2 border-solid border-MAIN_COLOR rounded text-MAIN_COLOR"
-          >
-            프로필 수정
-          </Link>
+          <div className="flex items-center gap-2">
+          <BtnLogout/>
+            <Link
+              to="/editprofile"
+              className="p-1 border-2 border-solid border-MAIN_COLOR rounded text-MAIN_COLOR"
+            >
+              프로필 수정
+            </Link>
+          </div>
         </div>
         <button className="flex justify-between items-center bg-MAIN_COLOR rounded-xl px-5 py-3 mt-5 w-full">
           <div className="flex justify-between items-center text-MAIN_GRAY gap-1">

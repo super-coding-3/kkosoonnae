@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const Nav: React.FC = () => {
-  const token = localStorage.getItem("token");
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem("token")
+  );
 
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setToken(localStorage.getItem("token"));
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+  }, []);
   return (
     <NavWrap>
       <Link to="/" className="flex flex-col items-center">
