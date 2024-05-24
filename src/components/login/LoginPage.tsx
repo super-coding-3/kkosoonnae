@@ -38,7 +38,7 @@ const LoginPage: React.FC = () => {
         validationSchema={LoginSchema}
       >
         {({ isSubmitting }) => (
-          <Form className="mx-auto max-w-xl min-w-[320px] w-full mt-4 mb-4">
+          <StyledForm className="mx-auto max-w-xl min-w-[320px] w-full mt-4 mb-4">
             <h1 className="text-[20px] mb-3">로그인</h1>
             <ForminputDiv>
               <label htmlFor="id">아이디</label>
@@ -76,7 +76,7 @@ const LoginPage: React.FC = () => {
                 로그인
               </button>
             </ButtonDiv>
-          </Form>
+          </StyledForm>
         )}
       </Formik>
     </LogMainDiv>
@@ -95,12 +95,18 @@ const LogMainDiv = styled.div`
   height: 100%;
   font-size: 14px;
   font-weight: bold;
+  padding: 0 1rem; /* 전체 패딩 추가 */
+`;
+
+const StyledForm = styled(Form)`
+  padding: 0 1rem; /* Form 컴포넌트에 패딩 추가 */
 `;
 
 const ForminputDiv = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
+  padding: 0 0.5rem; /* 각 input field에 패딩 추가 */
 `;
 
 const ButtonDiv = styled.div`
