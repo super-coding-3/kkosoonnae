@@ -5,12 +5,16 @@ import { CiClock2 } from "react-icons/ci";
 import { useField, ErrorMessage, useFormikContext } from "formik";
 
 function ReservationTimeRadio() {
-  const [field] = useField("reservationTime");
-  const { touched, errors } = useFormikContext<{ reservationTime: string }>();
-
+  const [field, , helpers] = useField("reservationTime");
+  const { touched, errors, setFieldValue } = useFormikContext<{
+    reservationTime: string;
+  }>();
   const selectedTime = field.value;
-
   const timeOptions = ["10:00", "12:00", "14:00", "16:00", "18:00"];
+
+  const handleTimeChange = (time: string) => {
+    setFieldValue("reservationTime", time);
+  };
 
   return (
     <TimeRadioGroup>
@@ -30,6 +34,7 @@ function ReservationTimeRadio() {
                   color={selectedTime === time ? "success" : "gray"}
                   icon={CiClock2}
                   size="sm"
+                  onClick={() => handleTimeChange(time)}
                 >
                   {time}
                 </Badge>
