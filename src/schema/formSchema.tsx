@@ -47,8 +47,8 @@ const SignupSchema = Yup.object().shape({
 });
 
 const LoginSchema = Yup.object().shape({
-  id: Yup.string().required("아이디를 입력해주세요"),
-  password: Yup.string().required("비밀번호를 입력해주세요"),
+  LoginId: Yup.string().required("아이디를 입력해주세요"),
+  LoginPassword: Yup.string().required("비밀번호를 입력해주세요"),
 });
 
 const EditProfileSchema = Yup.object().shape({
@@ -68,7 +68,7 @@ const QnASchema = Yup.object().shape({
   title: Yup.string()
     .required("제목을 입력해주세요")
     .max(20, "최대 20자까지 작성 가능합니다"),
-  contents: Yup.string()
+  content: Yup.string()
     .required("내용을 입력해주세요")
     .min(20, "최소 20자 이상 작성해야 합니다."),
 });

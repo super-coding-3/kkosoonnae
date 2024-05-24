@@ -13,8 +13,8 @@ const KakaoMap: React.FC = () => {
     const container = document.getElementById("map");
     if (container && window.kakao && window.kakao.maps) {
       const options = {
-        center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-        level: 3,
+        center: new window.kakao.maps.LatLng(37.5571, 126.9243),
+        level: 4,
       };
       const map = new window.kakao.maps.Map(container, options);
 
@@ -28,10 +28,9 @@ const KakaoMap: React.FC = () => {
         133.570667
       );
       const marker = new window.kakao.maps.Marker({
-        position: markerPosition
+        position: markerPosition,
       });
       marker.setMap(map);
-     
     }
   }, []);
 
