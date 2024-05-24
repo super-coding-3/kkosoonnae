@@ -1,46 +1,87 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { Store } from "./LocationApi";
 
 declare global {
   interface Window {
     kakao: any;
   }
-  const kakao: any;
 }
 
-const KakaoMap: React.FC = () => {
-  useEffect(() => {
-    const container = document.getElementById("map");
-    if (container && window.kakao && window.kakao.maps) {
-      const options = {
-        center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-        level: 3,
-      };
-      const map = new window.kakao.maps.Map(container, options);
+interface KakaoMapProps {
+  stores: Store[];
+}
 
-      // 예시 마커 추가 (원하는 경우)
-      const markerPosition = new window.kakao.maps.LatLng(
-        33.450701,
-        126.570667
-      );
-      const markerPosition_one = new window.kakao.maps.LatLng(
-        32.450701,
-        133.570667
-      );
-      const marker = new window.kakao.maps.Marker({
-        position: markerPosition
-      });
-      marker.setMap(map);
-     
-    }
+const KakaoMap: React.FC<KakaoMapProps> = ({stores}) => {
+  const [map, setMap] = useState<any>(null);
+
+  useEffect(() => {
+    const initializeMap = (latitude: number, longitude: number) => {
+      const script = document.createElement("script");
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_MAP_KEY}&autoload=false`;
+      script.async = true;
+      script.onload = () => {
+        window.kakao.maps.load(() => {
+          const container = document.getElementById("map");
+          const options = {
+            center: new window.kakao.maps.LatLng(latitude, longitude),
+            level: 6,
+          };
+          const mapInstance = new window.kakao.maps.Map(container, options);
+          setMap(mapInstance);
+
+        });
+      };
+      document.head.appendChild(script);
+    };
+
+    // 초기 지도 설정
+    const initialLat = 37.5571;
+    const initialLon = 126.9243;
+    initializeMap(initialLat, initialLon);
   }, []);
 
-  return <MapDiv id="map" />;
+  useEffect(() => {
+    if (map) {
+      stores.forEach((store) => {
+        const markerPosition = new window.kakao.maps.LatLng(store.lat, store.lon);
+        const marker = new window.kakao.maps.Marker({
+          position: markerPosition,
+        });
+        marker.setMap(map);
+
+        const content = `
+          <div style="padding:5px; background: white; border: 1px solid black;">
+            ${store.storeName}
+          </div>
+        `;
+
+        const customOverlay = new window.kakao.maps.CustomOverlay({
+          map: map,
+          position: marker.getPosition(),
+          content: content,
+          yAnchor: 2.3,
+        });
+
+        customOverlay.setMap(map);
+      });
+    }
+  }, [stores, map]);
+
+  return (
+    <>
+      <h1 className="text-[20px] ml-2 mt-2">내 주변 매장 지도</h1>
+      <MapDiv id="map" />
+    </>
+  );
 };
 
 export default KakaoMap;
+
 const MapDiv = styled.div`
-  width: 100%;
+  width: 98%;
   height: 300px;
-  margin-top: 10px;
+  margin-top: 20px;
+  margin-left: 5px;
+  border-radius: 10px;
 `;
