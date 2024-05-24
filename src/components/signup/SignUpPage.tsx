@@ -1,13 +1,12 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import React, { useState } from "react";
 import { SignupSchema } from "../../schema/formSchema";
-
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Postcode from "../common/PostCode";
 import formFields from "./FormFields";
-import HttpClient from "../../utils/api/customAxios";
-import CheckAvailabilityApi from "./CheckAvailabilityApi";
-import { useNavigate } from "react-router-dom";
+import HttpClient from '../../utils/api/customAxios';
+import CheckAvailabilityApi from "../common/CheckAvailabilityApi";
 
 // 메인 코드
 
@@ -19,26 +18,26 @@ const Main: React.FC = () => {
     <MainDiv>
       <Formik
         initialValues={{
-          id: "",
-          password: "",
-          email: "",
-          phoneNumber: "",
-          nickName: "",
-          postCode: "",
-          address: "",
-          addressDetail: "",
+          SignUpId: "",
+          SignUpPassword: "",
+          SignUpEmail: "",
+          SignUpPhoneNumber: "",
+          SignUpNickName: "",
+          SignUpPostCode: "",
+          SignUpAddress: "",
+          SignUpAddressDetail: "",
         }}
         validationSchema={SignupSchema}
         onSubmit={(values, { setSubmitting }) => {
           const payload = {
-            loginId: values.id,
-            email: values.email,
-            password: values.password,
-            phone: values.phoneNumber,
-            nickName: values.nickName,
-            zipCode: values.postCode,
-            address: values.address,
-            addressDtl: values.addressDetail,
+            loginId: values.SignUpId,
+            email:values.SignUpEmail,
+            password: values.SignUpPassword,
+            phone: values.SignUpPhoneNumber,
+            nickName: values.SignUpNickName,
+            zipCode: values.SignUpPostCode,
+            address: values.SignUpAddress,
+            addressDtl: values.SignUpAddressDetail
           };
           HttpClient.post("/KkoSoonNae/customer/signUp", payload)
             .then((response) => {
@@ -65,27 +64,23 @@ const Main: React.FC = () => {
                     type={field.type}
                     name={field.name}
                     placeholder={field.placeholder}
-                    className="rounded-lg mt-2 mb-2 w-full  border-solid border-2 h-10  border-MAIN_LIGHT_COLOR"
+                    className="rounded-lg mt-2 mb-1 w-full  border-solid border-2 h-10  border-MAIN_LIGHT_COLOR"
                   />
-                  {["id", "nickName"].includes(field.name) && (
+                  {["SignUpId", "SignUpNickName"].includes(field.name) && (
+                  
                     <button
                       type="button"
-                      onClick={() =>
-                        CheckAvailabilityApi(
-                          field.name as "id" | "nickName",
-                          values[field.name as "id" | "nickName"]
-                        )
-                      }
-                      className="rounded-lg border-solid border-main-light-color border-2 text-[10px] w-16 h-10 mt-2   "
+                      onClick={()=>CheckAvailabilityApi(field.name as 'SignUpId'| 'SignUpNickName', values[field.name as 'SignUpId' | 'SignUpNickName'])}
+                      className="rounded-lg border-solid border-main-light-color border-2 text-[10px] w-16 h-10 mt-2 ml-1  "
                     >
                       중복확인
                     </button>
                   )}
-                  {["postCode"].includes(field.name) && (
+                  {["SignUpPostCode"].includes(field.name) && (
                     <button
                       type="button"
                       onClick={() => setShowPostcode(true)}
-                      className="rounded-lg border-solid border-main-light-color border-2 text-[10px] w-16 h-10 mt-2   "
+                      className="rounded-lg border-solid border-main-light-color border-2 text-[10px] w-16 h-10 mt-2 ml-1  "
                     >
                       주소찾기
                     </button>
@@ -94,8 +89,7 @@ const Main: React.FC = () => {
 
                 <ErrorMessage
                   name={field.name}
-                  component={StyledErrorMessage}
-                  className="error-message"
+                  render={(msg) => <div className="text-xs ml-2 mb-1 text-red-600">{msg}</div>}
                 />
               </ForminputDiv>
             ))}
@@ -144,11 +138,4 @@ const FieldWithButtonDiv = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-`;
-
-const StyledErrorMessage = styled.div`
-  color: red; // 에러 메시지의 색상을 빨간색으로 설정
-  font-size: 12px; // 폰트 크기를 12px로 설정
-  margin-top: 2px;
-  margin-bottom: 6px;
 `;
