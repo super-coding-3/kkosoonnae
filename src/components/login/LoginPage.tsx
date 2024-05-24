@@ -12,19 +12,22 @@ const LoginPage: React.FC = () => {
     <LogMainDiv>
       <Formik
         initialValues={{
-          id: "",
-          password: "",
+          LoginId: "",
+          LoginPassword: "",
         }}
         onSubmit={(values, { setSubmitting }) => {
           const payload = {
-            loginId: values.id,
-            password: values.password,
+            loginId: values.LoginId,
+            password: values.LoginPassword,
           };
           HttpClient.post("/KkoSoonNae/customer/login", payload)
             .then((response) => {
               alert("로그인이 성공하였습니다");
               const res = response.data;
-              const token = res.data.token;
+              let token = res.data.token;
+              if (token.startsWith("Bearer ")) {
+                token = token.slice(7);
+              }
               console.log(token);
               localStorage.setItem("token", token);
               navigate("/");
@@ -33,40 +36,32 @@ const LoginPage: React.FC = () => {
               alert("로그인이 실패하였습니다");
               console.log(error);
             });
-          alert(JSON.stringify(values, null, 2));
           setSubmitting(false);
         }}
         validationSchema={LoginSchema}
       >
         {({ isSubmitting }) => (
-          <Form>
+          <Form className="mx-auto max-w-xl min-w-[320px] w-full mt-4 mb-4">
+            <h1 className="text-[20px] mb-3">로그인</h1>
             <ForminputDiv>
               <label htmlFor="id">아이디</label>
               <Field
                 type="text"
-                name="id"
+                name="LoginId"
                 placeholder="아이디를 입력하세요"
-                className="rounded-lg mt-2 mb-2 w-full border-solid border-2 h-10 mr-1 border-MAIN_LIGHT_COLOR"
+                className="rounded-lg mt-2 mb-1 w-full border-solid border-2 h-10 mr-1 border-MAIN_LIGHT_COLOR"
               />
-              <ErrorMessage
-                name="id"
-                component={StyledErrorMessage}
-                className="error-message"
-              />
+              <ErrorMessage name="LoginId" component="div" className="text-xs  ml-2 text-red-600 mt-1 mb-2" />
             </ForminputDiv>
             <ForminputDiv>
               <label htmlFor="password">패스워드</label>
               <Field
-                type="text"
-                name="password"
+                type="password"
+                name="LoginPassword"
                 placeholder="비밀번호를 입력하세요"
-                className="rounded-lg mt-2 mb-2 w-full border-solid border-2 h-10 mr-1 border-MAIN_COLOR"
+                className="rounded-lg mt-2 mb-1 w-full border-solid border-2 h-10 mr-1 border-MAIN_COLOR"
               />
-              <ErrorMessage
-                name="password"
-                component={StyledErrorMessage}
-                className="error-message"
-              />
+              <ErrorMessage name="LoginPassword" component="div" className="text-xs ml-2 text-red-600 mt-1 mb-2" />
             </ForminputDiv>
             <ButtonDiv>
               <button
@@ -76,7 +71,11 @@ const LoginPage: React.FC = () => {
               >
                 회원가입
               </button>
-              <button className="w-2/4 bg-MAIN_COLOR text-MAIN_IVORY h-16 rounded-lg text-lg mt-3">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-2/4 bg-MAIN_COLOR text-MAIN_IVORY h-16 rounded-lg text-lg mt-3"
+              >
                 로그인
               </button>
             </ButtonDiv>
@@ -100,20 +99,15 @@ const LogMainDiv = styled.div`
   font-size: 14px;
   font-weight: bold;
 `;
+
 const ForminputDiv = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const StyledErrorMessage = styled.div`
-  color: red;
-  font-size: 12px;
-  margin-top: 2px;
-  margin-bottom: 6px;
-  margin-left: 5px;
+  margin-bottom: 16px;
 `;
 
 const ButtonDiv = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 `;
