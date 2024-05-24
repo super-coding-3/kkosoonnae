@@ -9,13 +9,12 @@ import ToastMessage from "../../components/common/Toast";
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [toastType, setToastType] = useState<"success" | "error">("success");
 
 
   return (
     <LogMainDiv className="px-2">
       {toastMessage && (
-        <ToastMessage message={toastMessage} type={toastType} />
+        <ToastMessage message={toastMessage} />
       )}
       <Formik
         initialValues={{
@@ -29,8 +28,8 @@ const LoginPage: React.FC = () => {
           };
           HttpClient.post("/KkoSoonNae/customer/login", payload)
             .then((response) => {
-              setToastType("success");
-              setToastMessage("로그인이 성공하였습니다");
+              
+              setToastMessage("로그인이 성공하였습니다!");
               const res = response.data;
               const token = res.data.token;
               console.log(token);
@@ -40,7 +39,6 @@ const LoginPage: React.FC = () => {
               }, 1000); // 3초 후에 페이지 이동
             })
             .catch((error) => {
-              setToastType("error");
               setToastMessage("로그인이 실패하였습니다");
               console.log(error);
             });
@@ -82,8 +80,6 @@ const LoginPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => {
-                  setToastType("success");
-                  setToastMessage("회원가입 페이지로 이동합니다.");
                   navigate("/signup");
                 }}
                 className="w-full text-MAIN_COLOR h-16 rounded-lg text-lg mt-3 mr-2 border-solid border-2 border-MAIN_COLOR"

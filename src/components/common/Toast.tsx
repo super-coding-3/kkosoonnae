@@ -1,20 +1,21 @@
 import React from "react";
-
+import { Toast } from "flowbite-react";
+import { FaTelegramPlane } from "react-icons/fa";
 interface ToastMessageProps {
   message: string;
-  type: "success" | "error";
  
 }
 
-const ToastMessage: React.FC<ToastMessageProps> = ({ message, type,  }) => {
+const ToastMessage: React.FC<ToastMessageProps> = ({ message  }) => {
 
 
   return (
-    <div className="fixed top-60 left-1/2 -translate-x-1/2 -translate-y-1/2">
-      <div className={`flex items-center p-4 w-full max-w-xs text-white rounded-lg shadow-lg ${type === "success" ? "bg-green-500" : "bg-red-500"}`}>
-        <span className="flex-1">{message}</span>
-      </div>
-    </div>
+    
+    <Toast className="fixed top-[60px] left-1/2 transform -translate-x-1/2 z-50 border-2 boder-black">
+      <FaTelegramPlane className="h-5 w-5 ml-8 text-cyan-600 dark:text-cyan-500 border-solid" />
+      <div className="pl-2 text-[15px] font-bold flex-1 text-center ">{message}</div>
+    </Toast>
+ 
   );
 };
 
