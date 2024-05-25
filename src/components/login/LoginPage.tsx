@@ -4,18 +4,15 @@ import { LoginSchema } from "../../schema/formSchema";
 import React, { useState } from "react";
 import styled from "styled-components";
 import HttpClient from "../../utils/api/customAxios";
-import ToastMessage from "../../components/common/Toast";
+import ToastMessage from "../common/ToastMessage";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-
   return (
     <LogMainDiv className="px-2">
-      {toastMessage && (
-        <ToastMessage message={toastMessage} />
-      )}
+      {toastMessage && <ToastMessage message={toastMessage} />}
       <Formik
         initialValues={{
           LoginId: "",
@@ -28,7 +25,6 @@ const LoginPage: React.FC = () => {
           };
           HttpClient.post("/KkoSoonNae/customer/login", payload)
             .then((response) => {
-              
               setToastMessage("로그인이 성공하였습니다!");
               const res = response.data;
               const token = res.data.token;
