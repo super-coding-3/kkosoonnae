@@ -1,17 +1,29 @@
 import React from "react";
 import styled from "styled-components";
-import { Field, ErrorMessage } from "formik";
+import { Field, ErrorMessage, useFormikContext } from "formik";
 
 function ReservationDropDown() {
+  const { setFieldValue } = useFormikContext();
+
+  const handleStyleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedStyle = event.target.value;
+    setFieldValue("cutStyle", selectedStyle);
+  };
+
   return (
     <DropDowngroup>
-      <label htmlFor="style">스타일</label>
+      <label htmlFor="cutStyle">스타일</label>
       <div>
-        <Field as="select" id="style" name="style">
+        <Field
+          as="select"
+          id="cutStyle"
+          name="cutStyle"
+          onChange={handleStyleChange}
+        >
           <option value="">선택해주세요</option>
-          <option value="스타일1">스타일1</option>
-          <option value="스타일2">스타일2</option>
-          <option value="스타일3">스타일3</option>
+          <option value="곰돌이컷">곰돌이컷</option>
+          <option value="양컷">양컷</option>
+          <option value="진도컷">진도컷</option>
         </Field>
         <ErrorMessage name="style" component="p" />
       </div>

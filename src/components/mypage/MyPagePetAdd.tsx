@@ -2,7 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { PiPawPrintLight } from "react-icons/pi";
 
-const MyPagePetAdd: React.FC = () => {
+interface MyPagePetAddProps {
+  userName: string;
+}
+
+const MyPagePetAdd: React.FC<MyPagePetAddProps> = (props) => {
   return (
     <div className="flex items-center border-2 border-dashed border-MAIN_LIGHT_COLOR rounded-2xl w-full h-36">
       <div className="flex justify-start items-center px-5 py-3 gap-3">
@@ -18,7 +22,7 @@ const MyPagePetAdd: React.FC = () => {
         </Link>
         <div>
           <div className="text-MAIN_LIGHT_COLOR">
-            <div>이효경님과 함께 사는</div>
+            <div>{props.userName}님과 함께 사는</div>
             <div>꼬순내는 어떤 친구인가요? 🤔</div>
           </div>
         </div>

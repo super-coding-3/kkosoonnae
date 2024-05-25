@@ -14,6 +14,11 @@ const formFields =  [
       placeholder: "비밀번호를 입력하세요",
     },
     {
+      name: "SignUpPasswordCheck",
+      type: "password",
+      placeholder: "비밀번호를 확인합니다",
+    },
+    {
       name: "SignUpEmail",
       label: "이메일",
       type: "email",

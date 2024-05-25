@@ -4,6 +4,7 @@ import { Avatar } from "flowbite-react";
 import { TbGenderFemale, TbGenderMale } from "react-icons/tb";
 
 interface MyPagePetInfoProps {
+  petNo?: number;
   img: string;
   name: string;
   type: string;
@@ -32,7 +33,7 @@ const MyPagePetInfo: React.FC<MyPagePetInfoProps> = (props) => {
           </div>
           <div className="text-gray-400">{props.type}</div>
           <div className="text-gray-400">
-            {props.age} • {props.weigth}
+            {props.age} • {props.weigth}kg
           </div>
         </div>
       </div>
@@ -40,7 +41,7 @@ const MyPagePetInfo: React.FC<MyPagePetInfoProps> = (props) => {
         {location.pathname === `/reservation/${id}` ? (
           <Link to="/editmykkosoonae">선택하기</Link>
         ) : (
-          <Link to="/editmykkosoonae">수정하기</Link>
+          <Link to={"/editmykkosoonae/" + props.petNo}>수정하기</Link>
         )}
       </div>
     </div>
