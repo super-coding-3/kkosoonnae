@@ -15,11 +15,12 @@ const Main: React.FC = () => {
   const [showPostcode, setShowPostcode] = useState(false);
 
   return (
-    <MainDiv>
+    <MainDiv className="px-2">
       <Formik
         initialValues={{
           SignUpId: "",
           SignUpPassword: "",
+          SignUpPasswordCheck: "",
           SignUpEmail: "",
           SignUpPhoneNumber: "",
           SignUpNickName: "",
@@ -31,13 +32,13 @@ const Main: React.FC = () => {
         onSubmit={(values, { setSubmitting }) => {
           const payload = {
             loginId: values.SignUpId,
-            email:values.SignUpEmail,
+            email: values.SignUpEmail,
             password: values.SignUpPassword,
             phone: values.SignUpPhoneNumber,
             nickName: values.SignUpNickName,
             zipCode: values.SignUpPostCode,
             address: values.SignUpAddress,
-            addressDtl: values.SignUpAddressDetail
+            addressDtl: values.SignUpAddressDetail,
           };
           HttpClient.post("/KkoSoonNae/customer/signUp", payload)
             .then((response) => {
@@ -64,14 +65,13 @@ const Main: React.FC = () => {
                     type={field.type}
                     name={field.name}
                     placeholder={field.placeholder}
-                    className="rounded-lg mt-2 mb-1 w-full  border-solid border-2 h-10  border-MAIN_LIGHT_COLOR"
+                    className="rounded-lg mt-2 mb-1 w-full border-solid border-2 h-10 border-MAIN_LIGHT_COLOR"
                   />
                   {["SignUpId", "SignUpNickName"].includes(field.name) && (
-                  
                     <button
                       type="button"
-                      onClick={()=>CheckAvailabilityApi(field.name as 'SignUpId'| 'SignUpNickName', values[field.name as 'SignUpId' | 'SignUpNickName'])}
-                      className="rounded-lg border-solid border-main-light-color border-2 text-[10px] w-16 h-10 mt-2 ml-1  "
+                      onClick={() => CheckAvailabilityApi(field.name as 'SignUpId' | 'SignUpNickName', values[field.name as 'SignUpId' | 'SignUpNickName'])}
+                      className="rounded-lg border-solid border-main-light-color border-2 text-[10px] w-16 h-10 mt-2 ml-1"
                     >
                       중복확인
                     </button>
@@ -80,13 +80,12 @@ const Main: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setShowPostcode(true)}
-                      className="rounded-lg border-solid border-main-light-color border-2 text-[10px] w-16 h-10 mt-2 ml-1  "
+                      className="rounded-lg border-solid border-main-light-color border-2 text-[10px] w-16 h-10 mt-2 ml-1"
                     >
                       주소찾기
                     </button>
                   )}
                 </FieldWithButtonDiv>
-
                 <ErrorMessage
                   name={field.name}
                   render={(msg) => <div className="text-xs ml-2 mb-1 text-red-600">{msg}</div>}
@@ -104,7 +103,7 @@ const Main: React.FC = () => {
             />
             <button
               type="submit"
-              className="w-full max-w-l  bg-MAIN_COLOR text-MAIN_IVORY h-16 rounded-lg text-lg mt-3"
+              className="w-full max-w-l bg-MAIN_COLOR text-MAIN_IVORY h-16 rounded-lg text-lg mt-3"
             >
               제출하기
             </button>
@@ -116,6 +115,7 @@ const Main: React.FC = () => {
 };
 
 export default Main;
+
 const MainDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -126,7 +126,10 @@ const MainDiv = styled.div`
   margin-top: 10px;
   font-size: 14px;
   font-weight: bold;
+
 `;
+
+
 
 const ForminputDiv = styled.div`
   display: flex;
