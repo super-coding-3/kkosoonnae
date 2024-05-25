@@ -11,7 +11,7 @@ const BtnSubmit: React.FC<BtnSubmitProps> = (props) => {
     <button
       type={props.type}
       onClick={props.onclick}
-      className="w-full bg-MAIN_COLOR text-MAIN_IVORY h-16 rounded-lg text-lg mt-3"
+      className="w-full bg-MAIN_COLOR text-MAIN_IVORY h-14 rounded-lg text-lg mt-3"
     >
       {props.value}
     </button>

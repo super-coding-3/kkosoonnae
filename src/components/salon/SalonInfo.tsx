@@ -2,6 +2,7 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import FavoriteButton from "./FavoriteButton";
+import HttpClient from "../../utils/api/customAxios";
 
 interface Salon {
   id?: number;
@@ -48,7 +49,15 @@ const SalonInfo: React.FC = () => {
     console.log(`${salon.name} 미용실을 즐겨찾기에 추가/제거했습니다.`);
   };
 
+  const getSalonNumber = async (storeNo: number) => {
+    const res = await HttpClient.get(
+      `/KkoSoonNae/reservation/store-name/${storeNo}`
+    );
+    return res.data;
+  };
+
   const goReservation = () => {
+    getSalonNumber();
     if (salonId && salon.name) {
       navigate(`/reservation/${salonId}`, {
         state: { salonNamefix: salon.name },

@@ -15,11 +15,7 @@ const reservationData = {
 
 const ReservationCheckList: React.FC = () => {
   const location = useLocation();
-  // TODO id값 쓰지않고 변경하기 location.pathname.startsWith('/product');
-  const { id } = useParams();
-
-  const showReservationComponent =
-    location.pathname === `{/reservation/:${id}}`;
+  const showReservationComponent = location.pathname.startsWith("/reservation");
 
   return (
     <div className="px-4">
