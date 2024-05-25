@@ -76,11 +76,23 @@ const QnASchema = Yup.object().shape({
     .min(20, "최소 20자 이상 작성해야 합니다."),
 });
 
+const EditMyPetSchema = Yup.object().shape({
+  name: Yup.string()
+    .required("이름을 입력해주세요")
+    .max(20, "최대 20자까지 작성 가능합니다"),
+  type: Yup.string()
+    .required("종을 입력해주세요")
+    .max(20, "최대 20자까지 작성 가능합니다"),
+  weight: Yup.number()
+    .required("몸무게를 작성해주세요")
+    .positive("양수만 입력해주세요"),
+});
+
 export {
   reservationSchema,
   SignupSchema,
   LoginSchema,
   EditProfileSchema,
   QnASchema,
+  EditMyPetSchema,
 };
-
