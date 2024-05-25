@@ -5,8 +5,8 @@ import Signup from "../page/Signup";
 import MyPage from "../page/MyPage";
 import EditProfile from "../page/EditProfile";
 import MyLocationStore from "../page/MyLocationStore";
-import EditMyKkosoonnae from "../page/EditMyKkosoonnae";
-import AddMyKkosoonnae from "../page/AddMyKkosoonnae";
+import EditMyPet from "../page/EditMyPet";
+import AddMyPet from "../page/AddMyPet";
 import MyReservation from "../page/MyReservation";
 import MyReview from "../page/MyReview";
 import Notice from "../page/Notice";
@@ -27,8 +27,8 @@ export const ROUTER_INFOS = [
   { path: "/mypage", element: <MyPage /> },
   { path: "/editprofile", element: <EditProfile /> },
   { path: "/mylocationStore", element: <MyLocationStore /> },
-  { path: "/editmykkosoonae", element: <EditMyKkosoonnae /> },
-  { path: "/addmykkosoonae", element: <AddMyKkosoonnae /> },
+  { path: "/editmykkosoonae/:petNo", element: <EditMyPet /> },
+  { path: "/addmykkosoonae", element: <AddMyPet /> },
   { path: "/myreservation", element: <MyReservation /> },
   { path: "/myreview", element: <MyReview /> },
   { path: "/mylikestore", element: <MyLikeStore /> },
