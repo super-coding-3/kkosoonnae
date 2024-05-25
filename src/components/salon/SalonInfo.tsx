@@ -57,7 +57,6 @@ const SalonInfo: React.FC = () => {
   };
 
   const goReservation = () => {
-    getSalonNumber();
     if (salonId && salon.name) {
       navigate(`/reservation/${salonId}`, {
         state: { salonNamefix: salon.name },
