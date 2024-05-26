@@ -13,19 +13,10 @@ const Reservation: React.FC = () => {
   const salonNamefix = location.state?.salonNamefix;
   const salonNumber = location.state?.salonNumber;
 
-  const [step, setStep] = useState(1);
-
   return (
     <OuterLayout>
       <PageTitle title={"예약하기"} />
-      {step === 1 ? (
-        <ReservationForm
-          salonNamefix={salonNamefix}
-          salonNumber={salonNumber}
-        />
-      ) : null}
-      {step === 2 ? <ReservationCheckList /> : null}
-      {step === 3 ? <ReservationOk /> : null}
+      <ReservationForm salonNamefix={salonNamefix} salonNumber={salonNumber} />
       <Footer />
       <Nav />
     </OuterLayout>
