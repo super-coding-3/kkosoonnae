@@ -37,7 +37,6 @@ function SalonCarousel() {
       "/KkoSoonNae/store/allStore"
     );
     setSalonNumber(data);
-    console.log(data, "getSalonNumber");
     return data;
   };
 
@@ -47,7 +46,6 @@ function SalonCarousel() {
         `KkoSoonNae/store/${storeNo}`
       );
       setSalonInfo(data.storeDetail);
-      console.log(data, "getSalonInfo");
     }
   };
 

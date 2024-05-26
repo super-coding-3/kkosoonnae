@@ -49,7 +49,6 @@ const SalonReviewList: React.FC = () => {
   ];
 
   const handleReviewSubmit = (review: { rating: number; content: string }) => {
-    // 리뷰 데이터를 서버로 전송하거나 상태 업데이트 등의 작업 수행
     console.log("Submitted review:", review);
   };
 

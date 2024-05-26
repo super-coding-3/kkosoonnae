@@ -44,7 +44,6 @@ const SalonInfo: React.FC = () => {
       "/KkoSoonNae/store/allStore"
     );
     setSalonNumber(data);
-    console.log(data, "getSalonNumber");
     return data;
   };
 
@@ -54,9 +53,15 @@ const SalonInfo: React.FC = () => {
         `KkoSoonNae/store/${storeNo}`
       );
       setSalonInfo(data.storeDetail);
-      console.log(data, "getSalonInfo");
     }
   };
+
+  function formatTime(timeString: string): string {
+    const [hours, minutes, seconds] = timeString.split(":").map(Number);
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
+  }
 
   useEffect(() => {
     getSalonNumber();
@@ -94,7 +99,8 @@ const SalonInfo: React.FC = () => {
             <li className="flex items-center gap-2 mb-2">
               <img src="/img/salon/icon-clock.svg" alt="" />
               <span>
-                {salonInfo.openingTime} - {salonInfo.closingTime}
+                {formatTime(salonInfo.openingTime)} -{" "}
+                {formatTime(salonInfo.closingTime)}
               </span>
             </li>
             <li className="flex items-center gap-2 mb-2">

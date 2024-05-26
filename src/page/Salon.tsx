@@ -10,7 +10,7 @@ const Salon: React.FC = () => {
     <OuterLayout>
       <PageTitle title={""} />
       <SalonCarousel />
-      <div className="px-4">
+      <div className="px-4 mb-12">
         <SalonTab />
       </div>
       <Footer />
