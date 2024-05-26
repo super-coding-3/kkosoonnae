@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Card } from "flowbite-react";
+import { RiScissorsFill } from "react-icons/ri";
+
 import HttpClient from "../../utils/api/customAxios";
 
 interface CutStyleItem {
@@ -33,11 +35,12 @@ const SalonStyleCard: React.FC = () => {
       {salonCutStyle.map((item, index) => (
         <CardItem key={index}>
           <Card className="" imgAlt={item.styleName} imgSrc={item.img}>
-            <p className="font-normal text-gray-700 dark:text-gray-400">
-              {item.styleName}
+            <p className="font-normal text-gray-700 dark:text-gray-400 flex items-center gap-1">
+              {item.styleName} <RiScissorsFill />
             </p>
-            <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-              기본 {item.price}
+            <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white flex items-center gap-1">
+              <p className="text-xs">기본</p>
+              {item.price}원 ~
             </h5>
           </Card>
         </CardItem>
