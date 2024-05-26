@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Field, ErrorMessage, useFormikContext } from "formik";
+import HttpClient from "../../utils/api/customAxios";
+
+interface CutStyleItem {
+  cutStyle: string;
+}
 
 function ReservationDropDown() {
+  const [cutStyleState, setCutStyleState] = useState<CutStyleItem[]>([]);
+
+  const { storeNo } = useParams<{ storeNo: string }>();
+
   const { setFieldValue } = useFormikContext();
 
   const handleStyleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedStyle = event.target.value;
     setFieldValue("cutStyle", selectedStyle);
   };
+
+  const getCutstyle = async () => {
+    const { data } = await HttpClient.get<CutStyleItem[]>(
+      `/KkoSoonNae/reservation/style-list/${storeNo}`
+    );
+    setCutStyleState(data);
+    return data;
+  };
+
+  useEffect(() => {
+    getCutstyle();
+  }, [storeNo]);
 
   return (
     <DropDowngroup>
@@ -21,9 +43,11 @@ function ReservationDropDown() {
           onChange={handleStyleChange}
         >
           <option value="">선택해주세요</option>
-          <option value="곰돌이컷">곰돌이컷</option>
-          <option value="양컷">양컷</option>
-          <option value="진도컷">진도컷</option>
+          {cutStyleState.map((item, index) => (
+            <option key={index} value={item.cutStyle}>
+              {item.cutStyle}
+            </option>
+          ))}
         </Field>
         <ErrorMessage name="style" component="p" />
       </div>

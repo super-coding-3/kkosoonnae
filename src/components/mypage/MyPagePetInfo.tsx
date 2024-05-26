@@ -15,7 +15,7 @@ interface MyPagePetInfoProps {
 
 const MyPagePetInfo: React.FC<MyPagePetInfoProps> = (props) => {
   // TODO 예약하기 - 내 꼬순내 불러오기에서 선택하기 변경위함
-  const { id } = useParams<{ id: string }>();
+  const { storeNo } = useParams<{ storeNo: string }>();
   const location = useLocation();
 
   return (
@@ -38,7 +38,7 @@ const MyPagePetInfo: React.FC<MyPagePetInfoProps> = (props) => {
         </div>
       </div>
       <div className="w-full text-center border-t-2 border-solid border-MAIN_LIGHT_COLOR pt-1">
-        {location.pathname === `/reservation/${id}` ? (
+        {location.pathname === `/reservation/${storeNo}` ? (
           <Link to="/editmykkosoonae">선택하기</Link>
         ) : (
           <Link to={"/editmykkosoonae/" + props.petNo}>수정하기</Link>

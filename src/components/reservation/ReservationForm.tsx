@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Formik, Form } from "formik";
 import { reservationSchema } from "../../schema/formSchema";
@@ -17,6 +16,7 @@ interface ReservationFormProps {
   salonNamefix?: string;
   salonNumber: number;
 }
+
 interface reservationFormValues {
   storeNumber: number;
   storeName: string;
@@ -34,7 +34,6 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
   salonNumber,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { id } = useParams();
 
   const initialValues: reservationFormValues = {
     storeName: salonNamefix || "",

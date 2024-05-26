@@ -21,7 +21,6 @@ const SalonStyleCard: React.FC = () => {
       `/KkoSoonNae/store/${storeNo}/pethair`
     );
     setSalonCutStyle(data);
-    console.log(data, "setSalonCutStyle");
     return data;
   };
 
