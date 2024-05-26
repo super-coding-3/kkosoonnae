@@ -50,7 +50,7 @@ const MyKkosoonaeModal: React.FC<MyKkosoonaeModalProps> = ({
             {petInfo.map((pet, index) => (
               <div
                 key={index}
-                className="border border-gray-400 rounded mb-2 flex gap-4 px-2 py-2"
+                className="border border-gray-400 rounded mb-2 flex items-center gap-4 px-2 py-2"
               >
                 <Avatar img={pet.img} size="lg" alt={pet.name} rounded />
                 <div>
@@ -73,7 +73,12 @@ const MyKkosoonaeModal: React.FC<MyKkosoonaeModalProps> = ({
                     몸무게: {pet.weight} kg
                   </p>
                 </div>
-                <button onClick={() => handlePetSelect(pet)}>선택하기</button>
+                <button
+                  className="h-10 border border-gray-800 rounded text-xs text-gray-800 px-4 py-2"
+                  onClick={() => handlePetSelect(pet)}
+                >
+                  선택하기
+                </button>
               </div>
             ))}
           </div>
