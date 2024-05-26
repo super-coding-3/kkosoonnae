@@ -15,6 +15,7 @@ import MyKkosoonaeModal from "./MyKkosoonaeModal";
 
 interface ReservationFormProps {
   salonNamefix?: string;
+  salonNumber: number;
 }
 interface reservationFormValues {
   storeNumber: number;
@@ -28,13 +29,16 @@ interface reservationFormValues {
   characteristics: string;
 }
 
-const ReservationForm: React.FC<ReservationFormProps> = ({ salonNamefix }) => {
+const ReservationForm: React.FC<ReservationFormProps> = ({
+  salonNamefix,
+  salonNumber,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { id } = useParams();
 
   const initialValues: reservationFormValues = {
     storeName: salonNamefix || "",
-    storeNumber: 1,
+    storeNumber: salonNumber,
     reservationDate: "",
     reservationTime: "",
     cutStyle: "",

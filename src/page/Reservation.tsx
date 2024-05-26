@@ -11,13 +11,19 @@ import ReservationOk from "../components/reservation/ReservationOk";
 const Reservation: React.FC = () => {
   const location = useLocation();
   const salonNamefix = location.state?.salonNamefix;
+  const salonNumber = location.state?.salonNumber;
 
   const [step, setStep] = useState(1);
 
   return (
     <OuterLayout>
       <PageTitle title={"예약하기"} />
-      {step === 1 ? <ReservationForm salonNamefix={salonNamefix} /> : null}
+      {step === 1 ? (
+        <ReservationForm
+          salonNamefix={salonNamefix}
+          salonNumber={salonNumber}
+        />
+      ) : null}
       {step === 2 ? <ReservationCheckList /> : null}
       {step === 3 ? <ReservationOk /> : null}
       <Footer />

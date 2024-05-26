@@ -18,8 +18,8 @@ import Login from "../page/Login";
 
 export const ROUTER_INFOS = [
   { path: "/", element: <Main /> },
-  { path: "/salon/:id", element: <Salon /> },
-  { path: "/reservation/:id", element: <Reservation /> },
+  { path: "/salon/:storeNo", element: <Salon /> },
+  { path: "/reservation/:storeNo", element: <Reservation /> },
   { path: "/signup", element: <Signup /> },
   { path: "/notice", element: <Notice /> },
   { path: "/search/result", element: <SearchResult /> },
