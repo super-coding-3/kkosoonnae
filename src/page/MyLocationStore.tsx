@@ -26,7 +26,7 @@ const MyLocationStore:React.FC = () => {
     return (
         <OuterLayout>
           <PageTitle title="내 주변 미용실"/>
-          <div className='px-2'>
+          <div className='px-4'>
             <KakaoMap stores={stores} />
             <StoreList stores={stores}/>
             <StyleSlider stores={stores}/>
