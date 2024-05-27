@@ -28,7 +28,6 @@ const SearchInput: React.FC<SearchInputProps> = ({
         `/KkoSoonNae/search/stores/?nameAddressKeyword=${searchKeywordQuery}`
       );
       onSearchComplete(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("검색 요청 실패:", error);
     }

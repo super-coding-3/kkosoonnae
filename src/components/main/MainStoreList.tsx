@@ -57,7 +57,6 @@ const MainStoreList: React.FC = () => {
                   </span>
                 </strong>
                 <span className="text-gray-500 text-xs">
-                  {" "}
                   {item.roadAddress}
                 </span>
               </p>

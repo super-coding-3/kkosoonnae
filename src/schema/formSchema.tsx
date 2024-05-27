@@ -7,7 +7,7 @@ const reservationSchema = Yup.object().shape({
   cutStyle: Yup.string().required("스타일을 선택해주세요."),
   petName: Yup.string().required("반려동물의 이름을 입력해주세요"),
   breed: Yup.string().required("견종/묘종을 입력해주세요."),
-  weight: Yup.number()
+  weight: Yup.string()
     .typeError("숫자만 입력해주세요.")
     .required("몸무게를 입력해주세요."),
   characteristics: Yup.string()
@@ -36,7 +36,10 @@ const SignupSchema = Yup.object().shape({
     )
     .required("비밀번호는 필수입니다"),
   SignUpPasswordCheck: Yup.string()
-    .oneOf([Yup.ref("SignUpPassword"), undefined], "비밀번호가 일치하지 않습니다")
+    .oneOf(
+      [Yup.ref("SignUpPassword"), undefined],
+      "비밀번호가 일치하지 않습니다"
+    )
     .required("비밀번호 확인은 필수입니다."),
   SignUpEmail: Yup.string()
     .email("올바른 이메일 형식을 입력하세요")
