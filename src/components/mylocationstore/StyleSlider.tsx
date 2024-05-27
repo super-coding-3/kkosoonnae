@@ -59,10 +59,9 @@ const StyleSlider: React.FC<StoreListProps> = ({ stores }) => {
                 <p className="font-normal text-gray-700 dark:text-gray-400 flex items-center gap-1">
                   {style.styleName} 
                 </p>
-                <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white flex items-center gap-1">
-                  <span className="text-xs">기본</span>
-                  {style.price}원 ~
-                </h5>
+                <p className="text-l font-bold tracking-tight text-gray-900 dark:text-white flex items-center gap-1">
+                  {style.price}원 
+                </p>
                 <button className="w-full bg-MAIN_COLOR text-MAIN_IVORY h-10 mt-4 rounded-lg text-lg">
                   매장방문
                 </button>
