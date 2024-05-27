@@ -27,7 +27,7 @@ const SalonTabWrap = styled.div`
     button[role="tab"] {
       width: 50%;
       color: #dddddd;
-      font-size: 14px;
+      font-size: 1.2rem;
       &[aria-selected="true"] {
         font-weight: bold;
         color: #816f6b;

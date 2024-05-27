@@ -64,7 +64,7 @@ const NavWrap = styled.nav`
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 5;
   border-top: 1px solid #ddd;
   background: #fff;
   a {

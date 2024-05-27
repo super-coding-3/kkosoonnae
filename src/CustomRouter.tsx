@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useParams } from "react-router-dom";
 import { ROUTER_INFOS } from "./constants/constants";
 
 const CustomRouter: React.FC = () => {

@@ -21,7 +21,6 @@ function NoticeAccordion() {
       "/KkoSoonNae/notice/all"
     );
     setData(response.data);
-    console.log(data);
   };
 
   useEffect(() => {

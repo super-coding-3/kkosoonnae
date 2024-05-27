@@ -32,7 +32,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
     <ReviewFormWrap>
       <form onSubmit={handleSubmit}>
         <div className="flex items-center gap-2">
-          <strong>별점</strong>
+          <strong>총점</strong>
           <p className="flex items-center gap-1">
             {[...Array(5)].map((_, index) => {
               const starValue = index + 1;

@@ -1,44 +1,46 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Card } from "flowbite-react";
+import { RiScissorsFill } from "react-icons/ri";
+
+import HttpClient from "../../utils/api/customAxios";
+
+interface CutStyleItem {
+  styleId: number | null;
+  styleName: string;
+  img: string;
+  price: number;
+}
 
 const SalonStyleCard: React.FC = () => {
-  const cutStyleData = [
-    {
-      id: 1,
-      imgUrl: "/img/salon/cut1.png",
-      cutTitle: "가위-곰돌이컷",
-      cutPrice: "45000원~",
-    },
-    {
-      id: 2,
-      imgUrl: "/img/salon/cut2.png",
-      cutTitle: "진도컷",
-      cutPrice: "45000원~",
-    },
-    {
-      id: 3,
-      imgUrl: "/img/salon/cut3.png",
-      cutTitle: "가위-양컷",
-      cutPrice: "55000원~",
-    },
-    {
-      id: 4,
-      imgUrl: "/img/salon/cut4.png",
-      cutTitle: "스타일문의",
-      cutPrice: "65000원~",
-    },
-  ];
+  const [salonCutStyle, setSalonCutStyle] = useState<CutStyleItem[]>([]);
+  const { storeNo } = useParams<{ storeNo: string }>();
+  const navigate = useNavigate();
+
+  const getSalonCutStyle = async () => {
+    const { data } = await HttpClient.get<CutStyleItem[]>(
+      `/KkoSoonNae/store/${storeNo}/pethair`
+    );
+    setSalonCutStyle(data);
+    return data;
+  };
+
+  useEffect(() => {
+    getSalonCutStyle();
+  }, [storeNo]);
+
   return (
     <>
-      {cutStyleData.map((item) => (
-        <CardItem key={item.id}>
-          <Card className="" imgAlt={item.cutTitle} imgSrc={item.imgUrl}>
-            <p className="font-normal text-gray-700 dark:text-gray-400">
-              {item.cutTitle}
+      {salonCutStyle.map((item, index) => (
+        <CardItem key={index}>
+          <Card className="" imgAlt={item.styleName} imgSrc={item.img}>
+            <p className="font-normal text-gray-700 dark:text-gray-400 flex items-center gap-1">
+              {item.styleName} <RiScissorsFill />
             </p>
-            <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-              기본 {item.cutPrice}
+            <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white flex items-center gap-1">
+              <p className="text-xs">기본</p>
+              {item.price}원 ~
             </h5>
           </Card>
         </CardItem>
@@ -56,4 +58,5 @@ const CardItem = styled.div`
     }
   }
 `;
+
 export default SalonStyleCard;
