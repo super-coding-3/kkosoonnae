@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal } from "flowbite-react";
-import { Avatar } from "flowbite-react";
+import { Modal, Avatar } from "flowbite-react";
 import HttpClient from "../../utils/api/customAxios";
 import { TbGenderFemale, TbGenderMale } from "react-icons/tb";
 
