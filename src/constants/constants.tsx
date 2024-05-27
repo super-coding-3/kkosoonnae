@@ -10,7 +10,6 @@ import AddMyPet from "../page/AddMyPet";
 import MyReservation from "../page/MyReservation";
 import MyReview from "../page/MyReview";
 import Notice from "../page/Notice";
-import SearchResult from "../page/SearchResult";
 import MyLikeStore from "../page/MyLikeStore";
 import RegisterQnA from "../page/RegisterQnA";
 import MyQnA from "../page/MyQnA";
@@ -22,7 +21,6 @@ export const ROUTER_INFOS = [
   { path: "/reservation/:storeNo", element: <Reservation /> },
   { path: "/signup", element: <Signup /> },
   { path: "/notice", element: <Notice /> },
-  { path: "/search/result", element: <SearchResult /> },
   { path: "/login", element: <Login /> },
   { path: "/mypage", element: <MyPage /> },
   { path: "/editprofile", element: <EditProfile /> },
