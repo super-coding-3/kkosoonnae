@@ -22,7 +22,7 @@ const SignUpPasswordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{4,}$/;
 const phoneRegex = /[0-9]{3}-[0-9]{4}-[0-9]{4}/;
 
 const SignupSchema = Yup.object().shape({
-  SignUpId: Yup.string()
+  Id: Yup.string()
     .matches(
       SignUpIdRegex,
       "아이디는 최소 4자리이상 대문자를 포함하여야 합니다"
@@ -47,7 +47,7 @@ const SignupSchema = Yup.object().shape({
       "전화번호 형식에 맞지 않습니다. 000-0000-0000 형식으로 입력해주세요."
     )
     .required("핸드폰번호는 필수입니다."),
-  SignUpNickName: Yup.string().required("닉네임은 필수입니다."),
+  NickName: Yup.string().required("닉네임은 필수입니다."),
   SignUpPostCode: Yup.string().required("우편번호는 필수입니다."),
   SignUpAddress: Yup.string().required("기본주소는 필수입니다."),
   SignUpAddressDetail: Yup.string().required("상세주소는 필수입니다."),

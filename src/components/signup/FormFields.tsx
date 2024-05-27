@@ -1,8 +1,6 @@
-
-
 const formFields =  [
     {
-      name: "SignUpId",
+      name: "Id",
       label: "아이디",
       type: "text",
       placeholder: "아이디를 입력하세요",
@@ -31,7 +29,7 @@ const formFields =  [
       placeholder: "핸드폰번호를 입력하세요",
     },
     {
-      name: "SignUpNickName",
+      name: "NickName",
       label: "닉네임",
       type: "text",
       placeholder: "닉네임을 입력하세요",

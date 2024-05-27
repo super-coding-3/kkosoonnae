@@ -16,16 +16,16 @@ const Main: React.FC = () => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   return (
-    <MainDiv className="px-2">
+    <MainDiv className="px-4">
       {toastMessage && (<ToastMessage message={toastMessage}  />)}
       <Formik
         initialValues={{
-          SignUpId: "",
+          Id: "",
           SignUpPassword: "",
           SignUpPasswordCheck: "",
           SignUpEmail: "",
           SignUpPhoneNumber: "",
-          SignUpNickName: "",
+          NickName: "",
           SignUpPostCode: "",
           SignUpAddress: "",
           SignUpAddressDetail: "",
@@ -33,11 +33,11 @@ const Main: React.FC = () => {
         validationSchema={SignupSchema}
         onSubmit={(values, { setSubmitting }) => {
           const payload = {
-            loginId: values.SignUpId,
+            loginId: values.Id,
             email: values.SignUpEmail,
             password: values.SignUpPassword,
             phone: values.SignUpPhoneNumber,
-            nickName: values.SignUpNickName,
+            nickName: values.NickName,
             zipCode: values.SignUpPostCode,
             address: values.SignUpAddress,
             addressDtl: values.SignUpAddressDetail,
@@ -71,10 +71,10 @@ const Main: React.FC = () => {
                     placeholder={field.placeholder}
                     className="rounded-lg mt-2 mb-1 w-full border-solid border-2 h-10 border-MAIN_LIGHT_COLOR"
                   />
-                  {["SignUpId", "SignUpNickName"].includes(field.name) && (
+                  {["Id", "NickName"].includes(field.name) && (
                     <button
                       type="button"
-                      onClick={() => CheckAvailabilityApi(field.name as 'SignUpId' | 'SignUpNickName', values[field.name as 'SignUpId' | 'SignUpNickName'])}
+                      onClick={() => CheckAvailabilityApi(field.name as 'Id' | 'NickName', values[field.name as 'Id' | 'NickName'])}
                       className="rounded-lg border-solid border-main-light-color border-2 text-[10px] w-16 h-10 mt-2 ml-1"
                     >
                       중복확인
