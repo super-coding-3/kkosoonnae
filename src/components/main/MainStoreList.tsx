@@ -56,7 +56,10 @@ const MainStoreList: React.FC = () => {
                     <FaRegHeart /> 관심수 10
                   </span>
                 </strong>
-                <p className="text-gray-500 text-xs"> {item.roadAddress}</p>
+                <span className="text-gray-500 text-xs">
+                  {" "}
+                  {item.roadAddress}
+                </span>
               </p>
             </Link>
           </li>
