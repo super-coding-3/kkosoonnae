@@ -16,6 +16,7 @@ import PageTitle from "../components/common/PageTitle";
 import MyPageMainBtn from "../components/mypage/MyPageMainBtn";
 import MyPagePetInfo from "../components/mypage/MyPagePetInfo";
 import MyPagePetAdd from "../components/mypage/MyPagePetAdd";
+import BtnLogout from "../components/common/BtnLogut";
 
 interface MyPageInfosType {
   userNickname: string;
@@ -99,12 +100,15 @@ const MyPage: React.FC = () => {
               <div>{mypageInfos.userNickname} 집사님</div>
             )}
           </div>
+          <div className="flex gap-2">
+            <BtnLogout/>
           <Link
             to="/editprofile"
             className="p-1 border-2 border-solid border-MAIN_COLOR rounded text-MAIN_COLOR"
           >
             프로필 수정
           </Link>
+          </div>
         </div>
         <button className="flex justify-between items-center bg-MAIN_COLOR rounded-xl px-5 py-3 mt-5 w-full">
           <div className="flex justify-between items-center text-MAIN_GRAY gap-1">

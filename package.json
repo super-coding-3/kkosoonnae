@@ -53,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@types/date-fns": "^2.6.0",
     "@types/react-datepicker": "^6.2.0",
     "@types/react-slick": "^0.23.13",
     "tailwindcss": "^3.4.3"
