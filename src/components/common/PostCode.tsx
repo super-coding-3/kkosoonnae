@@ -20,7 +20,7 @@ const Postcode: React.FC<PostcodeProps> = ({
     const addressData = {
       postCode: data.zonecode,
       address: data.address,
-      addressDetail: "",
+      addressDetail:"",
     };
 
     onAddressSelect(addressData);

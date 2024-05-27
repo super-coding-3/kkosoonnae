@@ -32,7 +32,7 @@ const LoginPage: React.FC = () => {
               localStorage.setItem("token", token);
               setTimeout(() => {
                 navigate("/");
-              }, 1000); // 3초 후에 페이지 이동
+              }, 1000); // 1초 후에 페이지 이동
             })
             .catch((error) => {
               setToastMessage("로그인이 실패하였습니다");

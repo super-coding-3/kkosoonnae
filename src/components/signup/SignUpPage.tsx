@@ -7,15 +7,17 @@ import Postcode from "../common/PostCode";
 import formFields from "./FormFields";
 import HttpClient from '../../utils/api/customAxios';
 import CheckAvailabilityApi from "../common/CheckAvailabilityApi";
-
+import ToastMessage from "../common/ToastMessage";
 // 메인 코드
 
 const Main: React.FC = () => {
   const navigate = useNavigate();
   const [showPostcode, setShowPostcode] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   return (
     <MainDiv className="px-2">
+      {toastMessage && (<ToastMessage message={toastMessage}  />)}
       <Formik
         initialValues={{
           SignUpId: "",
@@ -42,13 +44,15 @@ const Main: React.FC = () => {
           };
           HttpClient.post("/KkoSoonNae/customer/signUp", payload)
             .then((response) => {
-              alert("회원가입이 완료 되었습니다");
+              setToastMessage('회원가입이 완료되었습니다!')
               const res = response.data;
               console.log(res);
-              navigate("/");
+              setTimeout(() => {
+                navigate("/");
+              }, 1000); // 1초 후에 페이지 이동
             })
             .catch((error) => {
-              alert("오류 발생");
+              setToastMessage('회원가입이 정상적으로 되지 않았습니다')
               console.log(error);
             });
           alert(JSON.stringify(values, null, 2));
@@ -94,9 +98,9 @@ const Main: React.FC = () => {
             ))}
             <Postcode
               onAddressSelect={(addressData) => {
-                setFieldValue("postCode", addressData.postCode);
-                setFieldValue("address", addressData.address);
-                setFieldValue("addressDetail", addressData.addressDetail);
+                setFieldValue("SignUpPostCode", addressData.postCode);
+                setFieldValue("SignUpAddress", addressData.address);
+                setFieldValue("SignUpAddressDetail", addressData.addressDetail);
               }}
               showPostcode={showPostcode}
               setShowPostcode={setShowPostcode}
@@ -126,7 +130,6 @@ const MainDiv = styled.div`
   margin-top: 10px;
   font-size: 14px;
   font-weight: bold;
-
 `;
 
 
