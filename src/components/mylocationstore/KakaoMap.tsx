@@ -36,8 +36,8 @@ const KakaoMap: React.FC<KakaoMapProps> = ({stores}) => {
     };
 
     // 초기 지도 설정
-    const initialLat = 37.5571;
-    const initialLon = 126.9243;
+    const initialLat = 37.4995;
+    const initialLon = 127.0332;
     initializeMap(initialLat, initialLon);
   }, []);
 
@@ -70,7 +70,7 @@ const KakaoMap: React.FC<KakaoMapProps> = ({stores}) => {
 
   return (
     <>
-      <h1 className="text-[20px] ml-2 mt-2">내 주변 매장 지도</h1>
+      <h1 className="text-xl mb-4 mt-4 ml-2 font-semibold">내 주변 매장 지도</h1>
       <MapDiv id="map" />
     </>
   );
