@@ -11,7 +11,7 @@ const LoginPage: React.FC = () => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   return (
-    <LogMainDiv className="px-2">
+    <LogMainDiv className="px-4">
       {toastMessage && <ToastMessage message={toastMessage} />}
       <Formik
         initialValues={{
