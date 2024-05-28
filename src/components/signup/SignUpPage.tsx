@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Postcode from "../common/PostCode";
 import formFields from "./FormFields";
-import HttpClient from '../../utils/api/customAxios';
+import HttpClient from "../../utils/api/customAxios";
 import CheckAvailabilityApi from "../common/CheckAvailabilityApi";
 import ToastMessage from "../common/ToastMessage";
 // 메인 코드
@@ -17,7 +17,7 @@ const Main: React.FC = () => {
 
   return (
     <MainDiv className="px-4">
-      {toastMessage && (<ToastMessage message={toastMessage}  />)}
+      {toastMessage && <ToastMessage message={toastMessage} />}
       <Formik
         initialValues={{
           Id: "",
@@ -44,7 +44,7 @@ const Main: React.FC = () => {
           };
           HttpClient.post("/KkoSoonNae/customer/signUp", payload)
             .then((response) => {
-              setToastMessage('회원가입이 완료되었습니다!')
+              setToastMessage("회원가입이 완료되었습니다!");
               const res = response.data;
               console.log(res);
               setTimeout(() => {
@@ -52,8 +52,9 @@ const Main: React.FC = () => {
               }, 1000); // 1초 후에 페이지 이동
             })
             .catch((error) => {
-              setToastMessage('회원가입이 정상적으로 되지 않았습니다')
-              console.log(error);
+              setTimeout(() => {
+                setToastMessage(error.response.data.message);
+              }, 2000);
             });
           alert(JSON.stringify(values, null, 2));
           setSubmitting(false);
@@ -74,7 +75,12 @@ const Main: React.FC = () => {
                   {["Id", "NickName"].includes(field.name) && (
                     <button
                       type="button"
-                      onClick={() => CheckAvailabilityApi(field.name as 'Id' | 'NickName', values[field.name as 'Id' | 'NickName'])}
+                      onClick={() =>
+                        CheckAvailabilityApi(
+                          field.name as "Id" | "NickName",
+                          values[field.name as "Id" | "NickName"]
+                        )
+                      }
                       className="rounded-lg border-solid border-main-light-color border-2 text-[10px] w-16 h-10 mt-2 ml-1"
                     >
                       중복확인
@@ -92,7 +98,9 @@ const Main: React.FC = () => {
                 </FieldWithButtonDiv>
                 <ErrorMessage
                   name={field.name}
-                  render={(msg) => <div className="text-xs ml-2 mb-1 text-red-600">{msg}</div>}
+                  render={(msg) => (
+                    <div className="text-xs ml-2 mb-1 text-red-600">{msg}</div>
+                  )}
                 />
               </ForminputDiv>
             ))}
@@ -131,8 +139,6 @@ const MainDiv = styled.div`
   font-size: 14px;
   font-weight: bold;
 `;
-
-
 
 const ForminputDiv = styled.div`
   display: flex;

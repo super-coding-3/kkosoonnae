@@ -7,9 +7,9 @@ const CheckAvailabilityApi = async (
   let url = "";
 
   if (field === "Id") {
-    url = `/KkoSoonNae/customer/checkLoginId/${value}`;
+    url = `/KkoSoonNae/customer/${value}`;
   } else if (field === "NickName") {
-    url = `/KkoSoonNae/customer/checkNickName/${value}`;
+    url = `/KkoSoonNae/customer/${value}`;
   }
   try {
     const response = await HttpClient.get(url);
@@ -17,6 +17,7 @@ const CheckAvailabilityApi = async (
     alert(message);
   } catch (error) {
     alert("전송 오류!");
+    console.log(error)
   }
 };
 export default CheckAvailabilityApi;
