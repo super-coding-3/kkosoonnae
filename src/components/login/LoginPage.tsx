@@ -11,7 +11,7 @@ const LoginPage: React.FC = () => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   return (
-    <LogMainDiv className="px-2">
+    <LogMainDiv className="px-4">
       {toastMessage && <ToastMessage message={toastMessage} />}
       <Formik
         initialValues={{
@@ -28,11 +28,10 @@ const LoginPage: React.FC = () => {
               setToastMessage("로그인이 성공하였습니다!");
               const res = response.data;
               const token = res.data.token;
-              console.log(token);
               localStorage.setItem("token", token);
               setTimeout(() => {
                 navigate("/");
-              }, 1000); // 3초 후에 페이지 이동
+              }, 1000); // 1"초 후에 페이지 이동
             })
             .catch((error) => {
               setToastMessage("로그인이 실패하였습니다");
