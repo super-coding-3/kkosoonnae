@@ -36,6 +36,6 @@ export const fetchStores = async (
   }
 };
 
-const initialLat = 37.4995;
-const initialLon = 127.0332;
+const initialLat = 37.5022;
+const initialLon = 127.0321;
 fetchStores(initialLat, initialLon);
