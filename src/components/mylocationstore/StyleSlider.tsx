@@ -60,7 +60,7 @@ const StyleSlider: React.FC<StoreListProps> = ({ stores }) => {
                 className="w-full h-60 object-cover"
               />
               <div className="p-4">
-                <p className=" text-[20px] font-bold text-gray-700 dark:text-gray-400 flex items-center gap-1">
+                <p className=" text-[17px] font-bold text-gray-700 dark:text-gray-400 flex items-center gap-1">
                   {style.storeName}
                 </p>
                 <p className="font-xl text-gray-700 dark:text-gray-400 flex items-center gap-1">
