@@ -7,12 +7,13 @@ const formFields =  [
     },
     {
       name: "SignUpPassword",
-      label: "패스워드",
+      label: "비밀번호",
       type: "password",
       placeholder: "비밀번호를 입력하세요",
     },
     {
       name: "SignUpPasswordCheck",
+      label: "비밀번호 확인",
       type: "password",
       placeholder: "비밀번호를 확인합니다",
     },

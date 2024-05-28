@@ -61,10 +61,10 @@ const Main: React.FC = () => {
         }}
       >
         {({ setFieldValue, values }) => (
-          <Form className="mx-auto max-w-xl min-w-[320px] w-full">
+          <Form className="mx-auto max-w-xl min-w-[320px] w-full ">
             {formFields.map((field) => (
               <ForminputDiv key={field.name}>
-                <label htmlFor={field.name}>{field.label}</label>
+                <label className="mt-1" htmlFor={field.name}>{field.label}</label>
                 <FieldWithButtonDiv>
                   <Field
                     type={field.type}
