@@ -28,7 +28,6 @@ const LoginPage: React.FC = () => {
               setToastMessage("로그인이 성공하였습니다!");
               const res = response.data;
               const token = res.data.token;
-              console.log(token);
               localStorage.setItem("token", token);
               setTimeout(() => {
                 navigate("/");
