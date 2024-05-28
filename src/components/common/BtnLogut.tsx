@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ToastMessage from "./ToastMessage";
 
@@ -8,22 +8,21 @@ const BtnLogout: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setToastMessage('로그아웃 되셨습니다')
+    setToastMessage("로그아웃 되셨습니다");
     setTimeout(() => {
       navigate("/login");
-    }, 1000); 
+    }, 1000);
   };
 
   return (
     <>
-    {toastMessage && <ToastMessage message={toastMessage}/>}
-    <button
-      onClick={handleLogout}
-      className="p-1 border-2 border-solid border-MAIN_COLOR rounded text-MAIN_COLOR"
-    >
-      로그아웃
-    </button>
-    
+      {toastMessage && <ToastMessage message={toastMessage} />}
+      <button
+        onClick={handleLogout}
+        className="p-1 border-2 border-solid border-MAIN_COLOR rounded text-MAIN_COLOR"
+      >
+        로그아웃
+      </button>
     </>
   );
 };
