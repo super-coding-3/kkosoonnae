@@ -7,9 +7,9 @@ const CheckAvailabilityApi = async (
   let url = "";
 
   if (field === "Id") {
-    url = `/KkoSoonNae/customer/${value}`;
+    url = `/KkoSoonNae/customer/check/login/${value}`;
   } else if (field === "NickName") {
-    url = `/KkoSoonNae/customer/${value}`;
+    url = `/KkoSoonNae/customer/check/nickname/${value}`;
   }
   try {
     const response = await HttpClient.get(url);

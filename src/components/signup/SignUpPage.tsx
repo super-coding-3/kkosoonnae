@@ -49,12 +49,12 @@ const Main: React.FC = () => {
               console.log(res);
               setTimeout(() => {
                 navigate("/");
-              }, 1000); // 1초 후에 페이지 이동
+              }, 800);
             })
             .catch((error) => {
               setTimeout(() => {
                 setToastMessage(error.response.data.message);
-              }, 2000);
+              }, 800);
             });
           alert(JSON.stringify(values, null, 2));
           setSubmitting(false);
