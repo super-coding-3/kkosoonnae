@@ -24,7 +24,7 @@ const StoreList: React.FC<StoreListProps> = ({ stores }) => {
                 alt={`${store.storeName} image`}
                 rounded
                 size="s"
-                className="w-12 h-12"
+                className="w-13 h-13"
               />
              <div className="ml-4 flex-1">
                 <p className="text-lg font-semibold  dark:text-white">
