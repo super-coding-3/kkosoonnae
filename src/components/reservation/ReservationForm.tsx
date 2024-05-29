@@ -17,6 +17,7 @@ import ReservationOk from "../../components/reservation/ReservationOk";
 interface ReservationFormProps {
   salonNamefix?: string;
   salonNumber: number;
+  onPetSelect?: (petName: string, breed: string, weight: string) => void;
 }
 
 export interface reservationFormValues {
@@ -34,11 +35,29 @@ export interface reservationFormValues {
 const ReservationForm: React.FC<ReservationFormProps> = ({
   salonNamefix,
   salonNumber,
+  onPetSelect,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [reservationData, setReservationData] =
     useState<reservationFormValues | null>(null);
+
+  const [petName, setPetName] = useState("");
+  const [breed, setBreed] = useState("");
+  const [weight, setWeight] = useState("");
+
+  const handlePetSelect = (
+    selectName: string,
+    selectBreed: string,
+    selectWeight: string
+  ) => {
+    setPetName(selectName);
+    setBreed(selectBreed);
+    setWeight(selectWeight);
+    if (onPetSelect) {
+      onPetSelect(selectName, selectBreed, selectWeight);
+    }
+  };
 
   const initialValues: reservationFormValues = {
     storeName: salonNamefix || "",
@@ -46,9 +65,9 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
     reservationDate: "",
     reservationTime: "",
     cutStyle: "",
-    petName: "",
-    breed: "",
-    weight: "",
+    petName,
+    breed,
+    weight,
     characteristics: "",
   };
 
@@ -69,7 +88,6 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
         "/KkoSoonNae/reservation/make-reservation",
         payload
       );
-      console.log(response.data);
       setReservationData(values);
       setStep(2);
     } catch (error) {
@@ -78,7 +96,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
   };
 
   const handleReservationComplete = () => {
-    setStep(3); // step을 3으로 변경
+    setStep(3);
   };
 
   return (
@@ -128,25 +146,36 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                   <ReservationFormGroup
                     label="펫 이름"
                     name="petName"
+                    value={petName}
                     readOnly={false}
                   />
                   {/* 견종/묘종 */}
                   <ReservationFormGroup
                     label="견종/묘종"
                     name="breed"
+                    value={breed}
                     readOnly={false}
                   />
                   {/* 몸무게 */}
                   <ReservationFormGroup
                     label="몸무게"
                     name="weight"
+                    value={weight}
                     readOnly={false}
                   />
                   {/* 특징 */}
                   <ReservationTextArea label="특징" name="characteristics" />
                 </div>
 
-                <BtnSubmit type="submit" className="my-4 rounded">
+                <BtnSubmit
+                  type="submit"
+                  className="my-4 rounded"
+                  onClick={() => {
+                    setFieldValue("petName", petName);
+                    setFieldValue("breed", breed);
+                    setFieldValue("weight", weight);
+                  }}
+                >
                   예약하기
                 </BtnSubmit>
               </Form>
@@ -155,6 +184,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
           <MyKkosoonaeModal
             openModal={isModalOpen}
             setOpenModal={setIsModalOpen}
+            onPetSelect={handlePetSelect}
           />
         </>
       ) : null}
