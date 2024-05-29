@@ -107,6 +107,7 @@ const MyPage: React.FC = () => {
         }));
       })
     );
+    console.log(mypageInfos.myPet);
   }, []);
 
   var settings = {
@@ -163,16 +164,18 @@ const MyPage: React.FC = () => {
               <PiPawPrintFill color="#492D28" size="25px" />
             </div>
             <div>
-              <div>
-                <button
-                  className="p-1 border-2 border-solid border-MAIN_COLOR rounded text-MAIN_COLOR"
-                  onClick={activeMainPetEdit}
-                >
-                  {representative === false
-                    ? "대표 꼬순내 수정하기"
-                    : "대표 꼬순내 수정 취소"}
-                </button>
-              </div>
+              {mypageInfos.myPet.length > 1 && (
+                <div>
+                  <button
+                    className="p-1 border-2 border-solid border-MAIN_COLOR rounded text-MAIN_COLOR"
+                    onClick={activeMainPetEdit}
+                  >
+                    {representative === false
+                      ? "대표 꼬순내 수정하기"
+                      : "대표 꼬순내 수정 취소"}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -198,11 +201,11 @@ const MyPage: React.FC = () => {
                 </div>
               ))}
               <div className="pr-6">
-                <MyPagePetAdd userName="홍길동" />
+                <MyPagePetAdd userName={mypageInfos.userNickname} />
               </div>
             </Slider>
           ) : (
-            <MyPagePetAdd userName="홍길동" />
+            <MyPagePetAdd userName={mypageInfos.userNickname} />
           )}
         </div>
         <div className="flex flex-col justify-center items-start mt-7 gap-5">
