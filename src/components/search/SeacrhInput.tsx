@@ -1,16 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { IoIosSearch } from "react-icons/io";
+import HttpClient from "../../utils/api/customAxios";
 
 interface SearchInputProps {
   className?: string;
+  onSearchComplete: (data: SearchResultItem[]) => void;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ className }) => {
+interface SearchResultItem {
+  storeNo: number;
+  storeName: string;
+  roadAddress: string;
+  img: null;
+  averageScope: null;
+}
+
+const SearchInput: React.FC<SearchInputProps> = ({
+  className,
+  onSearchComplete,
+}) => {
+  const [searchKeywordQuery, setSearchKeywordQuery] = useState("");
+
+  const handleSearch = async () => {
+    try {
+      const response = await HttpClient.get(
+        `/KkoSoonNae/search/stores/?nameAddressKeyword=${searchKeywordQuery}`
+      );
+      onSearchComplete(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("검색 요청 실패:", error);
+    }
+  };
+
+  const onChangeSearch = (e: any) => {
+    setSearchKeywordQuery(e.target.value);
+  };
+
   return (
     <SeacrhInputWrap className={className}>
-      <input type="text" placeholder="동이름 또는 매장명을 입력해주세요" />
-      <BtnSearch>
+      <input
+        type="text"
+        placeholder="동이름 또는 매장명을 입력해주세요"
+        value={searchKeywordQuery}
+        onChange={onChangeSearch}
+      />
+      <BtnSearch onClick={handleSearch}>
         <IoIosSearch size={28} />
       </BtnSearch>
     </SeacrhInputWrap>
@@ -22,7 +58,7 @@ const SeacrhInputWrap = styled.div`
   display: flex;
   align-items: center;
 
-  &.min-size {
+  &.mid-size {
     width: calc(100% - 55px);
   }
   &.full-size {

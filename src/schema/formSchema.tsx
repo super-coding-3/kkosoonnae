@@ -22,40 +22,40 @@ const SignUpPasswordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{4,}$/;
 const phoneRegex = /[0-9]{3}-[0-9]{4}-[0-9]{4}/;
 
 const SignupSchema = Yup.object().shape({
-  SignUpId: Yup.string()
+  loginId: Yup.string()
     .matches(
       SignUpIdRegex,
       "아이디는 최소 4자리이상 대문자를 포함하여야 합니다"
     )
     .required("아이디는 필수입니다"),
 
-  SignUpPassword: Yup.string()
+    password: Yup.string()
     .matches(
       SignUpPasswordRegex,
       "비밀번호는 최소 4자리이상 대문자와 숫자를 포함하여야 합니다"
     )
     .required("비밀번호는 필수입니다"),
-  SignUpPasswordCheck: Yup.string()
+    passwordCheck: Yup.string()
     .oneOf([Yup.ref("SignUpPassword"), undefined], "비밀번호가 일치하지 않습니다")
     .required("비밀번호 확인은 필수입니다."),
-  SignUpEmail: Yup.string()
+    email: Yup.string()
     .email("올바른 이메일 형식을 입력하세요")
     .required("이메일은 필수입니다."),
-  SignUpPhoneNumber: Yup.string()
+    phone: Yup.string()
     .matches(
       phoneRegex,
       "전화번호 형식에 맞지 않습니다. 000-0000-0000 형식으로 입력해주세요."
     )
     .required("핸드폰번호는 필수입니다."),
-  SignUpNickName: Yup.string().required("닉네임은 필수입니다."),
-  SignUpPostCode: Yup.string().required("우편번호는 필수입니다."),
-  SignUpAddress: Yup.string().required("기본주소는 필수입니다."),
-  SignUpAddressDetail: Yup.string().required("상세주소는 필수입니다."),
+    nickName: Yup.string().required("닉네임은 필수입니다."),
+    zipCode: Yup.string().required("우편번호는 필수입니다."),
+    address: Yup.string().required("기본주소는 필수입니다."),
+    addressDtl: Yup.string().required("상세주소는 필수입니다."),
 });
 
 const LoginSchema = Yup.object().shape({
-  LoginId: Yup.string().required("아이디를 입력해주세요"),
-  LoginPassword: Yup.string().required("비밀번호를 입력해주세요"),
+  loginId: Yup.string().required("아이디를 입력해주세요"),
+  password: Yup.string().required("비밀번호를 입력해주세요"),
 });
 
 const EditProfileSchema = Yup.object().shape({

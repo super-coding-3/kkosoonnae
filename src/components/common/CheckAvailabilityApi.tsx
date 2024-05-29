@@ -1,15 +1,15 @@
 import HttpClient from "../../utils/api/customAxios";
 
 const CheckAvailabilityApi = async (
-  field: "SignUpId" | "SignUpNickName",
+  field: "loginId" | "nickName",
   value: string
 ) => {
   let url = "";
 
-  if (field === "SignUpId") {
-    url = `/KkoSoonNae/customer/checkLoginId/${value}`;
-  } else if (field === "SignUpNickName") {
-    url = `/KkoSoonNae/customer/checkNickName/${value}`;
+  if (field === "loginId") {
+    url = `/KkoSoonNae/customer/check/login/${value}`;
+  } else if (field === "nickName") {
+    url = `/KkoSoonNae/customer/check/nickname/${value}`;
   }
   try {
     const response = await HttpClient.get(url);
@@ -17,6 +17,7 @@ const CheckAvailabilityApi = async (
     alert(message);
   } catch (error) {
     alert("전송 오류!");
+    console.log(error)
   }
 };
 export default CheckAvailabilityApi;
