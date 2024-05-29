@@ -10,8 +10,8 @@ import { fetchStores, Store } from '../components/mylocationstore/LocationApi';
 
 const MyLocationStore:React.FC = () => {
     const [stores, setStores] = useState<Store[]>([]);
-    const initialLat = 37.5571;
-    const initialLon = 126.9243;
+    const initialLat = 37.4995;
+    const initialLon = 127.0332;
   
     useEffect(() => {
       const fetchInitialStores = async () => {
@@ -25,12 +25,14 @@ const MyLocationStore:React.FC = () => {
 
     return (
         <OuterLayout>
-            <PageTitle title="내 주변 미용실"/>
+          <PageTitle title="내 주변 미용실"/>
+          <div className='px-4'>
             <KakaoMap stores={stores} />
             <StoreList stores={stores}/>
             <StyleSlider stores={stores}/>
             <Footer/>
             <Nav/>
+            </div>
         </OuterLayout>
     );
 };
