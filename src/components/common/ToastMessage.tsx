@@ -1,6 +1,5 @@
 import React from "react";
 import { Toast } from "flowbite-react";
-import { FaTelegramPlane } from "react-icons/fa";
 
 interface ToastMessageProps {
   message: string;
@@ -8,9 +7,9 @@ interface ToastMessageProps {
 
 const ToastMessage: React.FC<ToastMessageProps> = ({ message }) => {
   return (
-    <Toast className="fixed top-[57px] left-1/2 transform -translate-x-1/2 z-50 border-2  flex items-center justify-center space-x-2 p-2">
-      <FaTelegramPlane className="h-5 w-5 text-cyan-600 dark:text-cyan-500" />
-      <div className="text-[15px] font-bold">{message}</div>
+    <Toast className="w-fit min-w-fit fixed top-16 left-1/2 transform -translate-x-1/2 z-50 border-2 flex items-center justify-center gap-2 p-3">
+      <img className="size-7" src="/img/common/icon-dog_normal.svg" />
+      <div className="text-sm font-bold">{message}</div>
     </Toast>
   );
 };

@@ -11,28 +11,27 @@ const LoginPage: React.FC = () => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   return (
-    <LogMainDiv className="px-2">
+    <LogMainDiv className="px-4">
       {toastMessage && <ToastMessage message={toastMessage} />}
       <Formik
         initialValues={{
-          LoginId: "",
-          LoginPassword: "",
+          loginId: "",
+          password: "",
         }}
         onSubmit={(values, { setSubmitting }) => {
           const payload = {
-            loginId: values.LoginId,
-            password: values.LoginPassword,
+            loginId: values.loginId,
+            password: values.password,
           };
           HttpClient.post("/KkoSoonNae/customer/login", payload)
             .then((response) => {
               setToastMessage("로그인이 성공하였습니다!");
               const res = response.data;
               const token = res.data.token;
-              console.log(token);
               localStorage.setItem("token", token);
               setTimeout(() => {
                 navigate("/");
-              }, 1000); // 3초 후에 페이지 이동
+              }, 1000); // 1"초 후에 페이지 이동
             })
             .catch((error) => {
               setToastMessage("로그인이 실패하였습니다");
@@ -45,29 +44,29 @@ const LoginPage: React.FC = () => {
         {({ isSubmitting }) => (
           <Form className="mx-auto max-w-xl min-w-[320px] w-full mt-4 mb-4">
             <ForminputDiv>
-              <label htmlFor="LoginId">아이디</label>
+              <label htmlFor="loginId">아이디</label>
               <Field
                 type="text"
-                name="LoginId"
+                name="loginId"
                 placeholder="아이디를 입력하세요"
                 className="rounded-lg mt-2 mb-1 w-full border-solid border-2 h-10 mr-1 border-MAIN_COLOR"
               />
               <ErrorMessage
-                name="LoginId"
+                name="loginId"
                 component="div"
                 className="text-xs ml-2 text-red-600 mt-1 mb-2"
               />
             </ForminputDiv>
             <ForminputDiv>
-              <label htmlFor="LoginPassword">패스워드</label>
+              <label htmlFor="password">패스워드</label>
               <Field
                 type="password"
-                name="LoginPassword"
+                name="password"
                 placeholder="비밀번호를 입력하세요"
                 className="rounded-lg mt-2 mb-1 w-full border-solid border-2 h-10 mr-1 border-MAIN_COLOR"
               />
               <ErrorMessage
-                name="LoginPassword"
+                name="password"
                 component="div"
                 className="text-xs ml-2 text-red-600 mt-1 mb-2"
               />
