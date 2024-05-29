@@ -14,6 +14,10 @@ interface KakaoMapProps {
 
 const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
   const [map, setMap] = useState<any>(null);
+  const [filteredStores, setFilteredStores] = useState<Store[]>(stores);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [markers, setMarkers] = useState<any[]>([]); {/* 마커 위치 지정 */}
+  const [overlays, setOverlays] = useState<any[]>([]); {/* 오버레이 위치 지정 */}
 
   useEffect(() => {
     const initializeMap = (latitude: number, longitude: number) => {
@@ -30,18 +34,12 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
           const mapInstance = new window.kakao.maps.Map(container, options);
           setMap(mapInstance);
 
-          {
-            /* Note:지도 확대/축소 기능 */
-          }
           const zoomControl = new window.kakao.maps.ZoomControl();
           mapInstance.addControl(
             zoomControl,
             window.kakao.maps.ControlPosition.RIGHT
           );
 
-          {
-            /* Note:현재 내 위치를 나타내는 코드 */
-          }
           if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
               const currentLat = initialLat;
@@ -85,15 +83,21 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
       document.head.appendChild(script);
     };
 
-    // 초기 지도 설정
     const initialLat = 37.5022;
     const initialLon = 127.0321;
     initializeMap(initialLat, initialLon);
   }, []);
 
+
   useEffect(() => {
     if (map) {
-      stores.forEach((store) => {
+      markers.forEach((marker) => marker.setMap(null));  {/*기존 마커 제거*/}
+      overlays.forEach((overlay) => overlay.setMap(null)); {/*기존 오버레이 제거*/}
+
+      const newMarkers: any[] = [];
+      const newOverlays: any[] = [];
+
+      filteredStores.forEach((store) => {
         const markerPosition = new window.kakao.maps.LatLng(
           store.lat,
           store.lon
@@ -102,10 +106,11 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
           position: markerPosition,
         });
         marker.setMap(map);
+        newMarkers.push(marker);
 
         const content = `
           <div style="padding:2px; font-size:10px; background: white; border:1px solid black; border-radius:1px">
-            ${store.storeName}
+          <a href="/salon/${store.storeNo}" target="_blank">${store.storeName}</a>
           </div>
         `;
 
@@ -117,14 +122,33 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
         });
 
         customOverlay.setMap(map);
+        newOverlays.push(customOverlay);
       });
+
+      setMarkers(newMarkers); // 새로운 마커 저장
+      setOverlays(newOverlays); // 새로운 오버레이 저장
     }
-  }, [stores, map]);
+  }, [filteredStores, map]);
+
+  useEffect(() => {
+    setFilteredStores(
+      stores.filter((store) =>
+        store.storeName.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, stores]);
 
   return (
     <>
-      <h1 className="text-xl  mt-4 ml-2 font-semibold">내 주변 매장 지도</h1>
+      <h1 className="text-xl mt-4 font-semibold">내 주변 매장 지도</h1>
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="매장 검색"
+        className="w-full mt-2 rounded-lg p-2 border mb-4"/>
       <MapDiv id="map" />
+      
     </>
   );
 };
@@ -132,9 +156,7 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
 export default KakaoMap;
 
 const MapDiv = styled.div`
-  width: 98%;
+  width: 100%;
   height: 300px;
-  margin-top: 10px;
-  margin-left: 5px;
   border-radius: 10px;
 `;

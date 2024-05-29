@@ -3,7 +3,6 @@ import Slider from "react-slick";
 import { Store } from "./LocationApi";
 import { useNavigate } from "react-router-dom";
 
-
 interface StoreListProps {
   stores: Store[];
 }
@@ -14,7 +13,7 @@ interface Style {
   img: string;
   price: number;
   storeName: string;
-  storeNo:string;
+  storeNo: string;
 }
 
 const StyleSlider: React.FC<StoreListProps> = ({ stores }) => {
@@ -42,18 +41,18 @@ const StyleSlider: React.FC<StoreListProps> = ({ stores }) => {
       store.style.map((style) => ({
         ...style,
         storeName: store.storeName,
-        storeNo:store.storeNo
+        storeNo: store.storeNo
       }))
     )
   ).slice(0, 6);
 
   return (
     <>
-      <h1 className="text-xl mb-4 mt-4 ml-2 font-semibold">최근 주변매장 스타일 이용내역</h1>
-      <Slider {...settings} className="mb-5 mr-2">
+      <h1 className="text-xl mb-4 mt-4  font-semibold">최근 주변매장 스타일 이용내역</h1>
+      <Slider {...settings} className="mb-5 w-full px-0">
         {styles.map((style: Style) => (
-          <div key={style.styleId} className="w-1/2 px-2 flex flex-col">
-            <div className="bg-white rounded-lg border border-gray-300 overflow-hidden"> {/* border 클래스 추가 */}
+          <div key={style.styleId} className="w-full px-1 flex flex-col"> 
+            <div className="bg-white rounded-lg border border-gray-300 overflow-hidden">
               <img
                 src={style.img}
                 alt={style.styleName}
@@ -69,7 +68,7 @@ const StyleSlider: React.FC<StoreListProps> = ({ stores }) => {
                 <p className="text-l font-bold tracking-tight text-gray-900 dark:text-white flex items-center gap-1">
                   {style.price}원 
                 </p>
-                <button onClick={()=>{navigate(`/salon/${style.storeNo}`)}} className="w-full bg-MAIN_COLOR text-MAIN_IVORY h-10 mt-4 rounded-lg text-lg">
+                <button onClick={() => { navigate(`/salon/${style.storeNo}`) }} className="w-full bg-MAIN_COLOR text-MAIN_IVORY h-10 mt-4 rounded-lg text-lg">
                   매장방문
                 </button>
               </div>
@@ -82,3 +81,4 @@ const StyleSlider: React.FC<StoreListProps> = ({ stores }) => {
 };
 
 export default StyleSlider;
+

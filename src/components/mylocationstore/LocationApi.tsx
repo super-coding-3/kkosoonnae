@@ -10,7 +10,7 @@ export interface Store {
   lon: number;
   openingTime: string;
   closingTime: string;
-  storeImg: string[];
+  petImg: string[];
   style: {
     styleId: number;
     styleName: string;

@@ -17,21 +17,21 @@ const StoreList: React.FC<StoreListProps> = ({ stores }) => {
         className="w-full divide-y  divide-gray-200 dark:divide-gray-700 bg-white rounded-lg "
       >
         {stores.map((store) => (
-          <List.Item key={store.storeNo} className="mx-2 py-2">
+          <List.Item key={store.storeNo} className="py-1">
             <div className="flex items-center space-x-4">
               <Avatar
                 img="/img/common/icon-dog_haircut.svg"
                 alt={`${store.storeName} image`}
                 rounded
-                size="sm"
+                size="s"
                 className="w-12 h-12"
               />
              <div className="ml-4 flex-1">
-                <p className="text-lg font-semibold dark:text-white">
+                <p className="text-lg font-semibold  dark:text-white">
                   <Link to={`/salon/${store.storeNo}`}>{store.storeName}</Link>
                 </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
-                  매장 내 최근 리뷰:{store.latestReviewMessage}
+                <p className="text-sm mt-1  text-gray-600 dark:text-gray-400 truncate">
+                  <h4 className="font-semibold mb-1">매장 내 최근 리뷰</h4>"{store.latestReviewMessage}"
                 </p>
               </div>
               <div className="flex items-center text-base font-bold text-gray-700 dark:text-white">
