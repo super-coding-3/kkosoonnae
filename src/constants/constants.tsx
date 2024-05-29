@@ -14,6 +14,7 @@ import MyLikeStore from "../page/MyLikeStore";
 import RegisterQnA from "../page/RegisterQnA";
 import MyQnA from "../page/MyQnA";
 import Login from "../page/Login";
+import MyReservationDetail from "../components/myreservation/MyReservationDetail";
 
 export const ROUTER_INFOS = [
   { path: "/", element: <Main /> },
@@ -28,9 +29,23 @@ export const ROUTER_INFOS = [
   { path: "/editmykkosoonae/:petNo", element: <EditMyPet /> },
   { path: "/addmykkosoonae", element: <AddMyPet /> },
   { path: "/myreservation", element: <MyReservation /> },
+  {
+    path: "/myreservation/detail/:reservationNo",
+    element: <MyReservationDetail />,
+  },
   { path: "/myreview", element: <MyReview /> },
   { path: "/mylikestore", element: <MyLikeStore /> },
   { path: "/registerqna", element: <RegisterQnA /> },
   { path: "/myqna", element: <MyQnA /> },
   { path: "/login", element: <Login /> },
 ];
+
+export const MYPET_FORM_LABEL = {
+  name: "내 꼬순내 이름",
+  type: "내 꼬순내 종",
+  birthDt: "내 꼬순내 생년월일",
+  gender: "내 꼬순내 성별",
+  weight: "내 꼬순내 몸무게",
+};
+
+export const PRICE_COMMA = /\B(?=(\d{3})+(?!\d))/g;

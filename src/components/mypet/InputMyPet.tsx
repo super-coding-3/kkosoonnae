@@ -4,17 +4,19 @@ import React from "react";
 interface InputMyPetProps {
   name?: string;
   placeholder?: string;
+  label: string;
 }
 
 const InputMyPet: React.FC<InputMyPetProps> = (props) => {
   return (
-    <div className="mt-3">
+    <div className="flex flex-col mt-3 gap-2">
+      <label className="font-bold pl-1">{props.label}</label>
       {props.name === "weight" ? (
         <div className="relative">
           <Field
             type="text"
             name={props.name}
-            className="h-10 p-2.5 w-full border-2 border-gray-300 appearance-none focus:border-MAIN_COLOR focus:outline-none focus:ring-transparent rounded-lg"
+            className="h-10 p-2.5 w-full border-2 border-COMMONN_BORDER_GRAY appearance-none focus:border-MAIN_COLOR focus:outline-none focus:ring-transparent rounded-lg"
             placeholder={props.placeholder}
           />
           <div className="absolute bottom-2.5 right-2.5">Kg</div>
@@ -23,7 +25,7 @@ const InputMyPet: React.FC<InputMyPetProps> = (props) => {
         <Field
           type="text"
           name={props.name}
-          className="h-10 p-2.5 w-full border-2 border-gray-300 appearance-none focus:border-MAIN_COLOR focus:outline-none focus:ring-transparent rounded-lg"
+          className="h-10 p-2.5 w-full border-2 border-COMMONN_BORDER_GRAY appearance-none focus:border-MAIN_COLOR focus:outline-none focus:ring-transparent rounded-lg"
           placeholder={props.placeholder}
         />
       )}
