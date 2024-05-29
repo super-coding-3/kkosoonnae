@@ -5,6 +5,7 @@ import { BiDollarCircle } from "react-icons/bi";
 import { SlArrowRight } from "react-icons/sl";
 import { PiPawPrintFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import { parseISO } from "date-fns";
 import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -56,6 +57,20 @@ const MyPage: React.FC = () => {
     return res.data;
   };
 
+  const getPetAge = (birthDt: string) => {
+    const today = new Date();
+    const dateBirthDt = parseISO(birthDt);
+    let age = today.getFullYear() - dateBirthDt.getFullYear();
+    const month = today.getMonth() - dateBirthDt.getMonth();
+    const day = today.getDate() - dateBirthDt.getDate();
+    if (month <= 0 && age === 0) return `${day}일`;
+    if (age === 0) return `${month}개월`;
+    if (month < 0 || (month === 0 && today.getDate() < dateBirthDt.getDate())) {
+      age--;
+    }
+    return `${age}살`;
+  };
+
   useEffect(() => {
     axios.all([getPoints(), getUserNickname(), getMyPet()]).then(
       axios.spread((pointRes, nicknameRes, mypetRes) => {
@@ -75,8 +90,6 @@ const MyPage: React.FC = () => {
         }));
       })
     );
-
-    console.log(mypageInfos.myPet);
   }, []);
 
   var settings = {
@@ -91,7 +104,7 @@ const MyPage: React.FC = () => {
   return (
     <OuterLayout>
       <PageTitle title="마이페이지" leftBtn={false} />
-      <div className="mt-5 pb-24 mx-4">
+      <div className="pt-4 pb-24 px-4">
         <div className="flex justify-between items-center">
           <div className="font-black text-2xl">
             {JSON.stringify(mypageInfos) === "{}" ? (
@@ -101,13 +114,13 @@ const MyPage: React.FC = () => {
             )}
           </div>
           <div className="flex gap-2">
-            <BtnLogout/>
-          <Link
-            to="/editprofile"
-            className="p-1 border-2 border-solid border-MAIN_COLOR rounded text-MAIN_COLOR"
-          >
-            프로필 수정
-          </Link>
+            <BtnLogout />
+            <Link
+              to="/editprofile"
+              className="p-1 border-2 border-solid border-MAIN_COLOR rounded text-MAIN_COLOR"
+            >
+              프로필 수정
+            </Link>
           </div>
         </div>
         <button className="flex justify-between items-center bg-MAIN_COLOR rounded-xl px-5 py-3 mt-5 w-full">
@@ -142,7 +155,7 @@ const MyPage: React.FC = () => {
                     img={item.img}
                     name={item.name}
                     type={item.type}
-                    age={item.birthDt}
+                    age={getPetAge(item.birthDt)}
                     gender={item.gender}
                     weigth={item.weight}
                   />

@@ -16,7 +16,7 @@ const RegisterQnAFormGroup: React.FC<RegisterQnAFormGroupProps> = (props) => {
       <Field
         type="text"
         component={props.component}
-        className={`h-${props.height} p-2.5 w-full border-2 border-gray-300 appearance-none focus:border-MAIN_COLOR focus:outline-none focus:ring-transparent rounded-lg align-text-top`}
+        className={`h-${props.height} p-2.5 w-full border-2 border-COMMONN_BORDER_GRAY appearance-none focus:border-MAIN_COLOR focus:outline-none focus:ring-transparent rounded-lg align-text-top`}
         name={props.name}
         placeholder={props.placeholder}
         required
@@ -24,7 +24,7 @@ const RegisterQnAFormGroup: React.FC<RegisterQnAFormGroupProps> = (props) => {
       <ErrorMessage
         name={props.name}
         component="div"
-        className="text-rose-300"
+        className="text-xs text-red-600"
       />
     </div>
   );

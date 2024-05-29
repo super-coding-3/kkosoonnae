@@ -29,7 +29,7 @@ const RegisterQnAForm: React.FC<RegisterQnAFormProps> = (props) => {
   const initialValues = { title: "", content: "" };
 
   return (
-    <div className="mt-5 mx-5">
+    <div className="pt-4 px-4">
       <div className="flex justify-between items-center pb-3 border-b-2 border-COMMONN_BORDER_GRAY">
         <div className="font-bold text-xl">꼬순내 고객센터</div>
         <Link
