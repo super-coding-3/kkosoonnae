@@ -15,13 +15,13 @@ const LoginPage: React.FC = () => {
       {toastMessage && <ToastMessage message={toastMessage} />}
       <Formik
         initialValues={{
-          LoginId: "",
-          LoginPassword: "",
+          loginId: "",
+          password: "",
         }}
         onSubmit={(values, { setSubmitting }) => {
           const payload = {
-            loginId: values.LoginId,
-            password: values.LoginPassword,
+            loginId: values.loginId,
+            password: values.password,
           };
           HttpClient.post("/KkoSoonNae/customer/login", payload)
             .then((response) => {
@@ -44,29 +44,29 @@ const LoginPage: React.FC = () => {
         {({ isSubmitting }) => (
           <Form className="mx-auto max-w-xl min-w-[320px] w-full mt-4 mb-4">
             <ForminputDiv>
-              <label htmlFor="LoginId">아이디</label>
+              <label htmlFor="loginId">아이디</label>
               <Field
                 type="text"
-                name="LoginId"
+                name="loginId"
                 placeholder="아이디를 입력하세요"
                 className="rounded-lg mt-2 mb-1 w-full border-solid border-2 h-10 mr-1 border-MAIN_COLOR"
               />
               <ErrorMessage
-                name="LoginId"
+                name="loginId"
                 component="div"
                 className="text-xs ml-2 text-red-600 mt-1 mb-2"
               />
             </ForminputDiv>
             <ForminputDiv>
-              <label htmlFor="LoginPassword">패스워드</label>
+              <label htmlFor="password">패스워드</label>
               <Field
                 type="password"
-                name="LoginPassword"
+                name="password"
                 placeholder="비밀번호를 입력하세요"
                 className="rounded-lg mt-2 mb-1 w-full border-solid border-2 h-10 mr-1 border-MAIN_COLOR"
               />
               <ErrorMessage
-                name="LoginPassword"
+                name="password"
                 component="div"
                 className="text-xs ml-2 text-red-600 mt-1 mb-2"
               />
