@@ -1,32 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Avatar } from "flowbite-react";
 import HttpClient from "../../utils/api/customAxios";
-import { TbGenderFemale, TbGenderMale } from "react-icons/tb";
 
 interface MyKkosoonaeModalProps {
   openModal: boolean;
   setOpenModal: (open: boolean) => void;
+  onPetSelect?: (petName: string, breed: string, weight: string) => void;
 }
 
 interface MypetInfo {
-  petNo: number;
-  img: string;
-  name: string;
-  type: string;
-  birthDt: string;
-  gender: string;
+  petNumber: number;
+  petName: string;
+  breed: string;
   weight: string;
 }
 
 const MyKkosoonaeModal: React.FC<MyKkosoonaeModalProps> = ({
   openModal,
   setOpenModal,
+  onPetSelect,
 }) => {
   const [petInfo, setPetInfo] = useState<MypetInfo[]>([]);
 
   const getPetInfo = async () => {
     const { data } = await HttpClient.get<MypetInfo[]>(
-      "/KkoSoonNae/pet/allPet-list"
+      "KkoSoonNae/reservation/my-pet"
     );
     setPetInfo(data);
     return data;
@@ -37,7 +35,10 @@ const MyKkosoonaeModal: React.FC<MyKkosoonaeModalProps> = ({
   }, []);
 
   const handlePetSelect = (pet: MypetInfo) => {
-    console.log(pet.name, pet.type, pet.weight);
+    if (onPetSelect) {
+      onPetSelect(pet.petName, pet.breed, pet.weight.toString());
+    }
+    setOpenModal(false);
   };
 
   return (
@@ -51,24 +52,19 @@ const MyKkosoonaeModal: React.FC<MyKkosoonaeModalProps> = ({
                 key={index}
                 className="border border-gray-400 rounded mb-2 flex items-center gap-4 px-2 py-2"
               >
-                <Avatar img={pet.img} size="lg" alt={pet.name} rounded />
-                <div>
-                  <h3 className="text-lg font-bold">{pet.name}</h3>
-                  <p className="text-xs text-gray-400 to-MAIN_COLOR">
-                    종 {pet.type}
+                <Avatar
+                  img="/img/common/icon-dog_normal.svg"
+                  size="lg"
+                  alt={pet.petName}
+                  rounded
+                />
+                <div className="w-32">
+                  <h3 className="text-lg font-bold">{pet.petName}</h3>
+                  <p className="text-xs text-gray-500 to-MAIN_COLOR">
+                    견종/묘종 {pet.breed}
                   </p>
-                  <p className="text-xs text-gray-400">
-                    생년월일: {pet.birthDt}
-                  </p>
-                  <p className="text-xs text-gray-400 flex items-center">
-                    성별:
-                    {pet.gender == "여아" ? (
-                      <TbGenderFemale color="#e91e63" size="20px" />
-                    ) : (
-                      <TbGenderMale color="#004fe5" size="20px" />
-                    )}
-                  </p>
-                  <p className="text-xs text-gray-400">
+
+                  <p className="text-xs text-gray-500">
                     몸무게: {pet.weight} kg
                   </p>
                 </div>
