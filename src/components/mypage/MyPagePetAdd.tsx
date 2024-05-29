@@ -8,7 +8,7 @@ interface MyPagePetAddProps {
 
 const MyPagePetAdd: React.FC<MyPagePetAddProps> = (props) => {
   return (
-    <div className="flex items-center border-2 border-dashed border-MAIN_LIGHT_COLOR rounded-2xl w-full h-36">
+    <div className="flex items-center border-2 border-dashed border-MAIN_LIGHT_COLOR rounded-2xl w-full h-40">
       <div className="flex justify-start items-center px-5 py-3 gap-3">
         <Link
           to="/addmykkosoonae"
