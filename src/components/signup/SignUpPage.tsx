@@ -20,27 +20,27 @@ const Main: React.FC = () => {
       {toastMessage && <ToastMessage message={toastMessage} />}
       <Formik
         initialValues={{
-          Id: "",
-          SignUpPassword: "",
-          SignUpPasswordCheck: "",
-          SignUpEmail: "",
-          SignUpPhoneNumber: "",
-          NickName: "",
-          SignUpPostCode: "",
-          SignUpAddress: "",
-          SignUpAddressDetail: "",
+          loginId: "",
+          password: "",
+          passwordCheck: "",
+          email: "",
+          phone: "",
+          nickName: "",
+          zipCode: "",
+          address: "",
+          addressDtl: "",
         }}
         validationSchema={SignupSchema}
         onSubmit={(values, { setSubmitting }) => {
           const payload = {
-            loginId: values.Id,
-            email: values.SignUpEmail,
-            password: values.SignUpPassword,
-            phone: values.SignUpPhoneNumber,
-            nickName: values.NickName,
-            zipCode: values.SignUpPostCode,
-            address: values.SignUpAddress,
-            addressDtl: values.SignUpAddressDetail,
+            loginId: values.loginId,
+            email: values.email,
+            password: values.password,
+            phone: values.phone,
+            nickName: values.nickName,
+            zipCode: values.zipCode,
+            address: values.address,
+            addressDtl: values.addressDtl,
           };
           HttpClient.post("/KkoSoonNae/customer/signUp", payload)
             .then((response) => {
@@ -72,13 +72,13 @@ const Main: React.FC = () => {
                     placeholder={field.placeholder}
                     className="rounded-lg mt-2 mb-1 w-full border-solid border-2 h-10 border-MAIN_LIGHT_COLOR"
                   />
-                  {["Id", "NickName"].includes(field.name) && (
+                  {["loginId", "nickName"].includes(field.name) && (
                     <button
                       type="button"
                       onClick={() =>
                         CheckAvailabilityApi(
-                          field.name as "Id" | "NickName",
-                          values[field.name as "Id" | "NickName"]
+                          field.name as "loginId" | "nickName",
+                          values[field.name as "loginId" | "nickName"]
                         )
                       }
                       className="rounded-lg border-solid border-main-light-color border-2 text-[10px] w-16 h-10 mt-2 ml-1"
@@ -86,7 +86,7 @@ const Main: React.FC = () => {
                       중복확인
                     </button>
                   )}
-                  {["SignUpPostCode"].includes(field.name) && (
+                  {["zipCode"].includes(field.name) && (
                     <button
                       type="button"
                       onClick={() => setShowPostcode(true)}
@@ -106,9 +106,9 @@ const Main: React.FC = () => {
             ))}
             <Postcode
               onAddressSelect={(addressData) => {
-                setFieldValue("SignUpPostCode", addressData.postCode);
-                setFieldValue("SignUpAddress", addressData.address);
-                setFieldValue("SignUpAddressDetail", addressData.addressDetail);
+                setFieldValue("zipCode", addressData.postCode);
+                setFieldValue("address", addressData.address);
+                setFieldValue("addressDtl", addressData.addressDetail);
               }}
               showPostcode={showPostcode}
               setShowPostcode={setShowPostcode}
