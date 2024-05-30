@@ -1,6 +1,8 @@
-import { Avatar } from "flowbite-react";
 import React from "react";
+
+import { Avatar } from "flowbite-react";
 import { Link } from "react-router-dom";
+
 import { PRICE_COMMA } from "../../constants/constants";
 
 interface MyReservationCardProps {

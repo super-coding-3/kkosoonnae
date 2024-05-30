@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Card } from "flowbite-react";
 import { RiScissorsFill } from "react-icons/ri";
@@ -16,7 +16,6 @@ interface CutStyleItem {
 const SalonStyleCard: React.FC = () => {
   const [salonCutStyle, setSalonCutStyle] = useState<CutStyleItem[]>([]);
   const { storeNo } = useParams<{ storeNo: string }>();
-  const navigate = useNavigate();
 
   const getSalonCutStyle = async () => {
     const { data } = await HttpClient.get<CutStyleItem[]>(

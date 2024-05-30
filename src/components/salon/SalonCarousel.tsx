@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import HttpClient from "../../utils/api/customAxios";
 import { Carousel } from "flowbite-react";
@@ -56,7 +56,7 @@ function SalonCarousel() {
 
   return (
     <SalonCarouselWrap>
-      <Carousel>{salonInfo && <img src={salonInfo.img} />}</Carousel>
+      <Carousel>{salonInfo && <img src={salonInfo.img} alt="" />}</Carousel>
     </SalonCarouselWrap>
   );
 }

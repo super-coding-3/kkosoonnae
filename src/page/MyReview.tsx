@@ -1,6 +1,7 @@
 import HttpClient from "../utils/api/customAxios";
 
 import React, { useEffect, useState } from "react";
+
 import OuterLayout from "../components/common/OuterLayout";
 import PageTitle from "../components/common/PageTitle";
 import Nav from "../components/common/Nav";
@@ -34,7 +35,7 @@ const MyReview: React.FC = () => {
     await HttpClient.delete(`/my-page/my-review/${reviewNo}`);
     setShowModalDelete(false);
     setShowToastMessage(true);
-    setTimeout(function () {
+    setTimeout(() => {
       window.location.reload();
     }, 1000);
   };

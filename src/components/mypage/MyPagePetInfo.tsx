@@ -16,7 +16,6 @@ interface MyPagePetInfoProps {
 }
 
 const MyPagePetInfo: React.FC<MyPagePetInfoProps> = (props) => {
-  // TODO 예약하기 - 내 꼬순내 불러오기에서 선택하기 변경위함
   const { storeNo } = useParams<{ storeNo: string }>();
   const location = useLocation();
 

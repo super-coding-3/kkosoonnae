@@ -1,30 +1,29 @@
 import React from "react";
-import styled from "styled-components";
 
 const EventBtnContent: React.FC = () => {
   return (
     <div
-      className="flex justify-between items-center px-2"
-      style={{ marginTop: "-30px" }}
+      className="flex justify-between items-center gap-2 px-2"
+      style={{ marginTop: "-50px" }}
     >
-      <EventBtn>
-        <img src="img/main/btn-img.png" alt="펫프렌즈" />
-      </EventBtn>
-      <EventBtn>
-        <img src="img/main/btn-img2.png" alt="이벤트2" />
-      </EventBtn>
+      <a
+        href="https://smartstore.naver.com/pawinhand"
+        target="_blank"
+        className="block relative z-10 w-1/2 min-h-28 shadow-md overflow-hidden rounded-lg"
+        rel="noreferrer"
+      >
+        <img src="img/main/event1.png" alt="" className="w-full" />
+      </a>
+      <a
+        href="https://m.pet-friends.co.kr/category/2/5?productGroup2Id=4&filters=orderBy%5C-product_score"
+        target="_blank"
+        className="block relative z-10 w-1/2 min-h-28 shadow-md overflow-hidden rounded-lg"
+        rel="noreferrer"
+      >
+        <img src="img/main/event2.png" alt="" className="w-full" />
+      </a>
     </div>
   );
 };
 
-const EventBtn = styled.button`
-  width: 49%;
-  height: 120px;
-  border-radius: 10px;
-  overflow: hidden;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  img {
-    width: 100%;
-  }
-`;
 export default EventBtnContent;

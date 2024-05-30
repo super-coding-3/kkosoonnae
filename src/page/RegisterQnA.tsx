@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+
+import RegisterQnAForm from "../components/registerqna/RegisterQnAForm";
+import PageComplete from "../components/common/PageComplete";
 import OuterLayout from "../components/common/OuterLayout";
 import PageTitle from "../components/common/PageTitle";
 import Nav from "../components/common/Nav";
-import { useState } from "react";
-import RegisterQnAForm from "../components/registerqna/RegisterQnAForm";
-import PageComplete from "../components/common/PageComplete";
 
 const RegisterQnA: React.FC = () => {
   const [step, setStep] = useState(1);
