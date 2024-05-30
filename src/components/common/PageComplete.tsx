@@ -3,8 +3,8 @@ import BtnSubmit from "./BtnSubmit";
 import { useNavigate } from "react-router-dom";
 
 interface PageCompleteProps {
-  h2Value: string;
-  pValue: string;
+  title: string;
+  description: string;
   btnValue: string;
   link: string;
 }
@@ -24,9 +24,9 @@ const PageComplete: React.FC<PageCompleteProps> = (props) => {
           alt="꼬순내 로고 별"
           className="size-28"
         />
-        <h2 className="text-xl mt-4 font-bold">{props.h2Value}</h2>
-        <p className=" text-black text-sm  mt-4 mb-8">{props.pValue}</p>
-        <BtnSubmit value={props.btnValue} onclick={navigateToLink} />
+        <h2 className="text-xl mt-4 font-bold">{props.title}</h2>
+        <p className=" text-black text-sm  mt-4 mb-8">{props.description}</p>
+        <BtnSubmit value={props.btnValue} onClick={navigateToLink} />
       </div>
     </div>
   );

@@ -6,13 +6,14 @@ interface MyQnACardProps {
   content: string;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
   ask?: string;
+  createDt?: string;
 }
 
 const MyQnACard: React.FC<MyQnACardProps> = (props) => {
   return (
     <div className="my-5">
       <div className="flex justify-between px-1 mb-3">
-        <div className="font-bold text-2xl text-gray-400">{props.status}</div>
+        <div className="font-bold text-2xl text-gray-400 ">{props.status}</div>
         <button
           className="bg-MAIN_LIGHT_COLOR text-MAIN_IVORY rounded-lg h-fit w-fit py-1 px-2"
           onClick={props.onClick}
@@ -28,6 +29,7 @@ const MyQnACard: React.FC<MyQnACardProps> = (props) => {
           </div>
         </div>
         <div className="w-full whitespace-pre-line">{props.content}</div>
+        <div className="w-full text-right">{props.createDt}</div>
       </div>
     </div>
   );

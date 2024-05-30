@@ -12,12 +12,18 @@ HttpClient.interceptors.request.use(
   (config) => {
     if (config.headers) {
       config.headers.Authorization = localStorage.getItem("token");
+      if (config.url?.includes("/KkoSoonNae/pet/addPet")) {
+        config.headers["Content-Type"] = "multipart/form-data";
+      }
+      if (config.url?.includes("/KkoSoonNae/pet/update/")) {
+        config.headers["Content-Type"] = "multipart/form-data";
+      }
     }
     return config;
   },
   (error) => {
     console.log(error);
-    return Promise.reject(error);
+    // return Promise.reject(error);
   }
 );
 

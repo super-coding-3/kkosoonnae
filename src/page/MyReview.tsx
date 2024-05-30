@@ -1,31 +1,90 @@
-import React from "react";
+import HttpClient from "../utils/api/customAxios";
+
+import React, { useEffect, useState } from "react";
 import OuterLayout from "../components/common/OuterLayout";
 import PageTitle from "../components/common/PageTitle";
 import Nav from "../components/common/Nav";
 import MyReviewCard from "../components/myreview/MyReviewCard";
+import PageNothing from "../components/common/PageNothing";
+import ToastMessage from "../components/common/ToastMessage";
+import ModalDelete from "../components/common/ModalDelete";
+
+interface MyReviewType {
+  reviewNo: number;
+  storeNo: number;
+  storeName: string;
+  scope: number;
+  img: string;
+  content: string;
+  reviewDt: Date;
+}
 
 const MyReview: React.FC = () => {
+  const [myReview, setMyReview] = useState<MyReviewType[]>([]);
+  const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
+  const [showToastMessage, setShowToastMessage] = useState<boolean>(false);
+  const [reviewNo, setReviewNo] = useState<number>(0);
+
+  const getMyReview = async (): Promise<MyReviewType[]> => {
+    const res = await HttpClient.get("/my-page/my-review-list");
+    return res.data;
+  };
+
+  const deleteMyReview = async (reviewNo: number) => {
+    await HttpClient.delete(`/my-page/my-review/${reviewNo}`);
+    setShowModalDelete(false);
+    setShowToastMessage(true);
+    setTimeout(function () {
+      window.location.reload();
+    }, 1000);
+  };
+
+  const handlerReviewCancel = (reviewNo: number) => {
+    setReviewNo(reviewNo);
+    setShowModalDelete(true);
+  };
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const prevReview = await getMyReview();
+      setMyReview(prevReview);
+    };
+    fetchProfile();
+  }, []);
+
   return (
     <OuterLayout>
       <PageTitle title="내가 쓴 리뷰" leftBtn={true} />
-      <div className="mt-5 pb-24 mx-5">
-        <div className="pb-6 font-bold text-xl">내가 쓴 리뷰 총 3개</div>
-        <MyReviewCard
-          store_name="꼬순이네"
-          scope="4.9"
-          content="지인 추천으로 가게됬는데 미용도 예쁘게 잘해주시고 너무 친절해요 무엇보다 미용맡기면 아기들이 스트레스 안 받는거 같아서 너무좋네요"
-        />
-        <MyReviewCard
-          store_name="꼬순이네2"
-          scope="5"
-          content="지인 추천으로 가게됬는데 미용도 예쁘게 잘해주시고 너무 친절해요 무엇보다 미용맡기면 아기들이 스트레스 안 받는거 같아서 너무좋네요 지인 추천으로 가게됬는데 미용도 예쁘게 잘해주시고 너무 친절해요 무엇보다 미용맡기면 아기들이 스트레스 안 받는거 같아서 너무좋네요"
-        />
-        <MyReviewCard
-          store_name="꼬순이네3"
-          scope="1"
-          content="지인 추천으로 가게됬는데 미용도 예쁘게 잘해주시고 너무 친절해요 무엇보다 미용맡기면 아기들이 스트레스 안 받는거 같아서 너무좋네요 지인 추천으로 가게됬는데 미용도 예쁘게 잘해주시고 너무 친절해요 무엇보다 미용맡기면 아기들이 스트레스 안 받는거 같아서 너무좋네요 지인 추천으로 가게됬는데 미용도 예쁘게 잘해주시고 너무 친절해요 무엇보다 미용맡기면 아기들이 스트레스 안 받는거 같아서 너무좋네요 지인 추천으로 가게됬는데 미용도 예쁘게 잘해주시고 너무 친절해요 무엇보다 미용맡기면 아기들이 스트레스 안 받는거 같아서 너무좋네요 "
-        />
-      </div>
+      {myReview.length === 0 ? (
+        <PageNothing message="리뷰내역이 없습니다" />
+      ) : (
+        <div className="pt-4 pb-24 px-4">
+          <div className="pb-6 font-bold text-xl">
+            내가 쓴 리뷰 총 {myReview.length}개
+          </div>
+          {myReview.map((item: MyReviewType) => (
+            <MyReviewCard
+              storeName={item.storeName}
+              scope={item.scope}
+              content={item.content}
+              onClick={() => {
+                handlerReviewCancel(item.reviewNo);
+              }}
+            />
+          ))}
+          <ModalDelete
+            showModalDelete={showModalDelete}
+            setShowModalDelete={setShowModalDelete}
+            onClick={() => {
+              deleteMyReview(reviewNo);
+            }}
+            description="선택한 리뷰를 삭제하시겠습니까?"
+            delBtnValue="삭제"
+            cancelBtnValue="취소"
+          />
+          {showToastMessage && <ToastMessage message="리뷰가 삭제되었습니다" />}
+        </div>
+      )}
       <Nav />
     </OuterLayout>
   );

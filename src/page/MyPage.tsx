@@ -5,6 +5,7 @@ import { BiDollarCircle } from "react-icons/bi";
 import { SlArrowRight } from "react-icons/sl";
 import { PiPawPrintFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import { parseISO } from "date-fns";
 import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -17,6 +18,7 @@ import MyPageMainBtn from "../components/mypage/MyPageMainBtn";
 import MyPagePetInfo from "../components/mypage/MyPagePetInfo";
 import MyPagePetAdd from "../components/mypage/MyPagePetAdd";
 import BtnLogout from "../components/common/BtnLogut";
+import ToastMessage from "../components/common/ToastMessage";
 
 interface MyPageInfosType {
   userNickname: string;
@@ -32,6 +34,7 @@ interface MyPetInfosType {
   birthDt: string;
   gender: string;
   weight: string;
+  mainPet: string;
 }
 
 const MyPage: React.FC = () => {
@@ -40,6 +43,20 @@ const MyPage: React.FC = () => {
     pointRm: "",
     myPet: [],
   });
+  const [representative, setRepresentative] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const activeMainPetEdit = () => {
+    setRepresentative(!representative);
+  };
+
+  const handlerMainPetEdit = async (petNo: number, petName: string) => {
+    await HttpClient.put(`/KkoSoonNae/pet/main-pet/${petNo}`);
+    setToastMessage(`대표 꼬순내가 ${petName}(으)로 변경되었습니다`);
+    setTimeout(function () {
+      window.location.reload();
+    }, 1000);
+  };
 
   const getPoints = async () => {
     const res = await HttpClient.get("/KkoSoonNae/point");
@@ -54,6 +71,20 @@ const MyPage: React.FC = () => {
   const getMyPet = async () => {
     const res = await HttpClient.get("/KkoSoonNae/pet/allPet-list");
     return res.data;
+  };
+
+  const getPetAge = (birthDt: string) => {
+    const today = new Date();
+    const dateBirthDt = parseISO(birthDt);
+    let age = today.getFullYear() - dateBirthDt.getFullYear();
+    const month = today.getMonth() - dateBirthDt.getMonth();
+    const day = today.getDate() - dateBirthDt.getDate();
+    if (month <= 0 && age === 0) return `${day}일`;
+    if (age === 0) return `${month}개월`;
+    if (month < 0 || (month === 0 && today.getDate() < dateBirthDt.getDate())) {
+      age--;
+    }
+    return `${age}살`;
   };
 
   useEffect(() => {
@@ -71,11 +102,11 @@ const MyPage: React.FC = () => {
             birthDt: item.birthDt,
             gender: item.gender,
             weight: item.weight,
+            mainPet: item.mainPet,
           })),
         }));
       })
     );
-
     console.log(mypageInfos.myPet);
   }, []);
 
@@ -91,7 +122,7 @@ const MyPage: React.FC = () => {
   return (
     <OuterLayout>
       <PageTitle title="마이페이지" leftBtn={false} />
-      <div className="mt-5 pb-24 mx-4">
+      <div className="pt-4 pb-24 px-4">
         <div className="flex justify-between items-center">
           <div className="font-black text-2xl">
             {JSON.stringify(mypageInfos) === "{}" ? (
@@ -101,13 +132,13 @@ const MyPage: React.FC = () => {
             )}
           </div>
           <div className="flex gap-2">
-            <BtnLogout/>
-          <Link
-            to="/editprofile"
-            className="p-1 border-2 border-solid border-MAIN_COLOR rounded text-MAIN_COLOR"
-          >
-            프로필 수정
-          </Link>
+            <BtnLogout />
+            <Link
+              to="/editprofile"
+              className="p-1 border-2 border-solid border-MAIN_COLOR rounded text-MAIN_COLOR"
+            >
+              프로필 수정
+            </Link>
           </div>
         </div>
         <button className="flex justify-between items-center bg-MAIN_COLOR rounded-xl px-5 py-3 mt-5 w-full">
@@ -127,9 +158,25 @@ const MyPage: React.FC = () => {
           </div>
         </button>
         <div>
-          <div className="flex justify-start items-center gap-1 mt-7">
-            <div className="font-semibold text-2xl">내 꼬순내</div>
-            <PiPawPrintFill color="#492D28" size="25px" />
+          <div className="flex justify-between items-center gap-1 mt-7">
+            <div className="flex items-center">
+              <div className="font-semibold text-2xl">내 꼬순내</div>
+              <PiPawPrintFill color="#492D28" size="25px" />
+            </div>
+            <div>
+              {mypageInfos.myPet.length > 1 && (
+                <div>
+                  <button
+                    className="p-1 border-2 border-solid border-MAIN_COLOR rounded text-MAIN_COLOR"
+                    onClick={activeMainPetEdit}
+                  >
+                    {representative === false
+                      ? "대표 꼬순내 수정하기"
+                      : "대표 꼬순내 수정 취소"}
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className="mt-3">
@@ -142,18 +189,23 @@ const MyPage: React.FC = () => {
                     img={item.img}
                     name={item.name}
                     type={item.type}
-                    age={item.birthDt}
+                    age={getPetAge(item.birthDt)}
                     gender={item.gender}
                     weigth={item.weight}
+                    mainPet={item.mainPet}
+                    representative={representative}
+                    onClick={() => {
+                      handlerMainPetEdit(item.petNo, item.name);
+                    }}
                   />
                 </div>
               ))}
               <div className="pr-6">
-                <MyPagePetAdd userName="홍길동" />
+                <MyPagePetAdd userName={mypageInfos.userNickname} />
               </div>
             </Slider>
           ) : (
-            <MyPagePetAdd userName="홍길동" />
+            <MyPagePetAdd userName={mypageInfos.userNickname} />
           )}
         </div>
         <div className="flex flex-col justify-center items-start mt-7 gap-5">
@@ -166,6 +218,7 @@ const MyPage: React.FC = () => {
             <MyPageMainBtn title="문의하기" link="/registerqna" />
           </div>
         </div>
+        {toastMessage && <ToastMessage message={toastMessage} />}
       </div>
       <Nav />
     </OuterLayout>

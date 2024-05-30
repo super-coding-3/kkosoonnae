@@ -10,7 +10,9 @@ const EditProfileErrorMsg: React.FC<EditProfileErrorMsgProps> = (props) => {
     <ErrorMessage
       name={props.name}
       component="div"
-      className={`text-rose-300 ml-${props.name.includes("address") ? 0 : 20}`}
+      className={`text-xs text-red-600 ml-${
+        props.name.includes("address") ? 0 : 20
+      }`}
     />
   );
 };

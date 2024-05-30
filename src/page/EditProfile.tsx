@@ -12,6 +12,7 @@ import Postcode from "../components/common/PostCode";
 import EditProfileInput from "../components/editprofile/EditProfileInput";
 import EditProfileFormGroup from "../components/editprofile/EditProfileFormGroup";
 import EditProfileErrorMsg from "../components/editprofile/EditProfileErrorMsg";
+import CheckAvailabilityApi from "../components/common/CheckAvailabilityApi";
 
 interface MyProfileType {
   nickName: string;
@@ -39,6 +40,7 @@ const EditProfile: React.FC = () => {
     HttpClient.put("/KkoSoonNae/customer/profile/update", values)
       .then((response) => {
         alert("프로필 수정 성공하였습니다");
+        window.location.href = "/mypage";
       })
       .catch((error: any) => {
         alert(error);
@@ -64,7 +66,7 @@ const EditProfile: React.FC = () => {
   return (
     <OuterLayout>
       <PageTitle title="프로필 수정" leftBtn={true} />
-      <div className="flex justify-center items-center mt-5 mb-24 mx-5 font-bold">
+      <div className="flex justify-center items-center pt-4 px-4 font-bold">
         <Formik
           initialValues={initialValues}
           onSubmit={handleFormSubmit}

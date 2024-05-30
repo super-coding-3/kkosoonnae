@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useParams, useLocation } from "react-router-dom";
 import { reservationFormValues } from "../reservation/ReservationForm";
+import BtnSubmit from "./BtnSubmit";
 
 interface ReservationCheckListProps {
   reservationData: reservationFormValues | null;
@@ -25,16 +26,14 @@ const ReservationCheckList: React.FC<ReservationCheckListProps> = ({
   }
 
   return (
-    <div className="px-4">
-      {showReservationComponent && (
-        <CheckTitle className="py-8 flex flex-col items-center">
-          <img
-            src="/img/reservation/icon-reservation.svg"
-            alt="예약확인 아이콘"
-          />
-          <h2 className="text-xl mt-4">예약확인</h2>
-        </CheckTitle>
-      )}
+    <div className="px-4 pb-24">
+      <CheckTitle className="py-8 flex flex-col items-center">
+        <img
+          src="/img/reservation/icon-reservation.svg"
+          alt="예약확인 아이콘"
+        />
+        <h2 className="text-xl mt-4">예약확인</h2>
+      </CheckTitle>
 
       <ReservationCheck className="flex flex-col gap-4">
         <p className="flex justify-between items-center">
@@ -88,7 +87,7 @@ const ReservationCheckList: React.FC<ReservationCheckListProps> = ({
           </span>
         </p>
       </ReservationCheck>
-      {showReservationComponent && (
+      {showReservationComponent ? (
         <div className="flex items-center gap-1 my-4">
           <BtnBorder>이전</BtnBorder>
           <BtnMain
@@ -98,6 +97,8 @@ const ReservationCheckList: React.FC<ReservationCheckListProps> = ({
             예약완료
           </BtnMain>
         </div>
+      ) : (
+        <BtnSubmit value="확인 완료" onClick={onReservationComplete} />
       )}
     </div>
   );
