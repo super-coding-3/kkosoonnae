@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
+import { FiHome, FiMapPin, FiInfo, FiUser, FiLock } from "react-icons/fi";
 
 const Nav: React.FC = () => {
+  const { pathname } = useLocation();
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token")
   );
@@ -14,39 +16,54 @@ const Nav: React.FC = () => {
 
     window.addEventListener("storage", handleStorageChange);
   }, []);
+
+  const onActive = (path: string) => {
+    return pathname === path ? "#492D28" : "#888";
+  };
+
+  const renderNavLink = (to: string, icon: React.ReactNode, text: string) => {
+    return (
+      <Link to={to} className="flex flex-col items-center">
+        {icon}
+        <span className="text-xs mt-1" style={{ color: onActive(to) }}>
+          {text}
+        </span>
+      </Link>
+    );
+  };
+
   return (
     <NavWrap>
-      <Link to="/" className="flex flex-col items-center">
-        <img src="/img/nav/icon-home.svg" alt="홈 아이콘" className="block" />
-        <span className="text-xs mt-1 ">홈</span>
-      </Link>
-      <Link to="/about" className="flex flex-col items-center">
-        <img src="/img/nav/icon-map.svg" alt="홈 아이콘" className="block" />
-        <span className="text-xs mt-1">내주변</span>
-      </Link>
-      <Link to="/" className="flex flex-col items-center">
-        <img src="/img/nav/icon-notice.svg" alt="홈 아이콘" className="block" />
-        <span className="text-xs mt-1">공지사항</span>
-      </Link>
-      <Link to="/reservation" className="flex flex-col items-center">
-        <img src="/img/nav/icon-book.svg" alt="홈 아이콘" className="block" />
-        <span className="text-xs mt-1">예약</span>
-      </Link>
-      {token ? (
-        <Link to="/mypage" className="flex flex-col items-center">
-          <img src="/img/nav/icon-my.svg" alt="마이 아이콘" className="block" />
-          <span className="text-xs mt-1">마이</span>
-        </Link>
-      ) : (
-        <Link to="/login" className="flex flex-col items-center">
-          <img
-            src="/img/nav/icon-login.svg"
-            alt="로그인 아이콘"
-            className="block"
-          />
-          <span className="text-xs mt-1">로그인</span>
-        </Link>
+      {renderNavLink(
+        "/",
+        <FiHome className="block" size={24} color={onActive("/")} />,
+        "홈"
       )}
+      {renderNavLink(
+        "/my_location_store",
+        <FiMapPin
+          className="block"
+          size={24}
+          color={onActive("/my_location_store")}
+        />,
+        "내주변"
+      )}
+      {renderNavLink(
+        "/notice",
+        <FiInfo className="block" size={24} color={onActive("/notice")} />,
+        "공지사항"
+      )}
+      {token
+        ? renderNavLink(
+            "/mypage",
+            <FiUser className="block" size={24} color={onActive("/mypage")} />,
+            "마이"
+          )
+        : renderNavLink(
+            "/login",
+            <FiLock className="block" size={24} color={onActive("/login")} />,
+            "로그인"
+          )}
     </NavWrap>
   );
 };
