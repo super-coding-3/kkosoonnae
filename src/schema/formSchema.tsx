@@ -37,7 +37,7 @@ const SignupSchema = Yup.object().shape({
     .required("비밀번호는 필수입니다"),
   
     passwordCheck: Yup.string()
-    .oneOf([Yup.ref("SignUpPassword"), undefined], "비밀번호가 일치하지 않습니다")
+    .oneOf([Yup.ref("password"), undefined], "비밀번호가 일치하지 않습니다")
     .required("비밀번호 확인은 필수입니다."),
     email: Yup.string()
     .email("올바른 이메일 형식을 입력하세요")

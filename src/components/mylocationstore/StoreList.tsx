@@ -23,8 +23,8 @@ const StoreList: React.FC<StoreListProps> = ({ stores }) => {
                 img="/img/common/icon-dog_haircut.svg"
                 alt={`${store.storeName} image`}
                 rounded
-                size="s"
-                className="w-12 h-12"
+                size="sm"
+                className="w-13 h-13"
               />
              <div className="ml-4 flex-1">
                 <p className="text-lg font-semibold  dark:text-white">
