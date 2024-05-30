@@ -18,6 +18,7 @@ import MyPageMainBtn from "../components/mypage/MyPageMainBtn";
 import MyPagePetInfo from "../components/mypage/MyPagePetInfo";
 import MyPagePetAdd from "../components/mypage/MyPagePetAdd";
 import BtnLogout from "../components/common/BtnLogut";
+import ToastMessage from "../components/common/ToastMessage";
 
 interface MyPageInfosType {
   userNickname: string;
@@ -33,6 +34,7 @@ interface MyPetInfosType {
   birthDt: string;
   gender: string;
   weight: string;
+  mainPet: string;
 }
 
 const MyPage: React.FC = () => {
@@ -41,6 +43,20 @@ const MyPage: React.FC = () => {
     pointRm: "",
     myPet: [],
   });
+  const [representative, setRepresentative] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const activeMainPetEdit = () => {
+    setRepresentative(!representative);
+  };
+
+  const handlerMainPetEdit = async (petNo: number, petName: string) => {
+    await HttpClient.put(`/KkoSoonNae/pet/main-pet/${petNo}`);
+    setToastMessage(`대표 꼬순내가 ${petName}(으)로 변경되었습니다`);
+    setTimeout(function () {
+      window.location.reload();
+    }, 1000);
+  };
 
   const getPoints = async () => {
     const res = await HttpClient.get("/KkoSoonNae/point");
@@ -86,10 +102,12 @@ const MyPage: React.FC = () => {
             birthDt: item.birthDt,
             gender: item.gender,
             weight: item.weight,
+            mainPet: item.mainPet,
           })),
         }));
       })
     );
+    console.log(mypageInfos.myPet);
   }, []);
 
   var settings = {
@@ -140,9 +158,25 @@ const MyPage: React.FC = () => {
           </div>
         </button>
         <div>
-          <div className="flex justify-start items-center gap-1 mt-7">
-            <div className="font-semibold text-2xl">내 꼬순내</div>
-            <PiPawPrintFill color="#492D28" size="25px" />
+          <div className="flex justify-between items-center gap-1 mt-7">
+            <div className="flex items-center">
+              <div className="font-semibold text-2xl">내 꼬순내</div>
+              <PiPawPrintFill color="#492D28" size="25px" />
+            </div>
+            <div>
+              {mypageInfos.myPet.length > 1 && (
+                <div>
+                  <button
+                    className="p-1 border-2 border-solid border-MAIN_COLOR rounded text-MAIN_COLOR"
+                    onClick={activeMainPetEdit}
+                  >
+                    {representative === false
+                      ? "대표 꼬순내 수정하기"
+                      : "대표 꼬순내 수정 취소"}
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className="mt-3">
@@ -158,15 +192,20 @@ const MyPage: React.FC = () => {
                     age={getPetAge(item.birthDt)}
                     gender={item.gender}
                     weigth={item.weight}
+                    mainPet={item.mainPet}
+                    representative={representative}
+                    onClick={() => {
+                      handlerMainPetEdit(item.petNo, item.name);
+                    }}
                   />
                 </div>
               ))}
               <div className="pr-6">
-                <MyPagePetAdd userName="홍길동" />
+                <MyPagePetAdd userName={mypageInfos.userNickname} />
               </div>
             </Slider>
           ) : (
-            <MyPagePetAdd userName="홍길동" />
+            <MyPagePetAdd userName={mypageInfos.userNickname} />
           )}
         </div>
         <div className="flex flex-col justify-center items-start mt-7 gap-5">
@@ -179,6 +218,7 @@ const MyPage: React.FC = () => {
             <MyPageMainBtn title="문의하기" link="/registerqna" />
           </div>
         </div>
+        {toastMessage && <ToastMessage message={toastMessage} />}
       </div>
       <Nav />
     </OuterLayout>
