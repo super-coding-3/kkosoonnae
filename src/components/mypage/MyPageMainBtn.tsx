@@ -16,7 +16,7 @@ const MyPageMainBtn: React.FC<MyPageMainBtnProps> = (props) => {
       to={props.link}
       className="flex flex-col justify-center items-center border-2 border-solid border-MAIN_LIGHT_COLOR rounded-2xl w-1/2 h-40"
     >
-      <div className="flex justify-center items-center rounded-full bg-MAIN_GRAY p-4 w-28">
+      <div className="flex justify-center items-center rounded-full bg-MAIN_GRAY p-3 w-24">
         {props.title === "예약내역" && (
           <LuCalendarCheck2 color="#816F6B" size="72px" />
         )}

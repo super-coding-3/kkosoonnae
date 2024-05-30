@@ -53,7 +53,7 @@ const MyPage: React.FC = () => {
   const handlerMainPetEdit = async (petNo: number, petName: string) => {
     await HttpClient.put(`/KkoSoonNae/pet/main-pet/${petNo}`);
     setToastMessage(`대표 꼬순내가 ${petName}(으)로 변경되었습니다`);
-    setTimeout(function () {
+    setTimeout(() => {
       window.location.reload();
     }, 1000);
   };
@@ -107,7 +107,6 @@ const MyPage: React.FC = () => {
         }));
       })
     );
-    console.log(mypageInfos.myPet);
   }, []);
 
   var settings = {
@@ -208,12 +207,12 @@ const MyPage: React.FC = () => {
             <MyPagePetAdd userName={mypageInfos.userNickname} />
           )}
         </div>
-        <div className="flex flex-col justify-center items-start mt-7 gap-5">
-          <div className="flex justify-center items-center gap-5 w-full">
+        <div className="flex flex-col justify-center items-start mt-7 gap-3">
+          <div className="flex justify-center items-center gap-3 w-full">
             <MyPageMainBtn title="예약내역" link="/myreservation" />
             <MyPageMainBtn title="내가 쓴 리뷰" link="/myreview" />
           </div>
-          <div className="flex justify-center items-center gap-5 w-full">
+          <div className="flex justify-center items-center gap-3 w-full">
             <MyPageMainBtn title="관심매장" link="/mylikestore" />
             <MyPageMainBtn title="문의하기" link="/registerqna" />
           </div>

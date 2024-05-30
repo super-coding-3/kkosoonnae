@@ -1,9 +1,11 @@
+import HttpClient from "../utils/api/customAxios";
+
 import React, { useEffect, useState } from "react";
+
 import OuterLayout from "../components/common/OuterLayout";
 import PageTitle from "../components/common/PageTitle";
 import Nav from "../components/common/Nav";
 import MyLikeStoreCard from "../components/mylikestore/MyLikeStoreCard";
-import HttpClient from "../utils/api/customAxios";
 import PageNothing from "../components/common/PageNothing";
 import ModalDelete from "../components/common/ModalDelete";
 import ToastMessage from "../components/common/ToastMessage";
@@ -35,7 +37,7 @@ const MyLikeStore: React.FC = () => {
     await HttpClient.delete(`/my-page/like-cancel/${likeNo}`);
     setShowModalDelete(false);
     setShowToastMessage(true);
-    setTimeout(function () {
+    setTimeout(() => {
       window.location.reload();
     }, 1000);
   };
