@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import SubmitBtn from "../common/SubmitBtn";
+import BtnSubmit from "../common/BtnSubmit";
 
 const ReservationOk: React.FC = () => {
   return (
@@ -14,7 +14,7 @@ const ReservationOk: React.FC = () => {
         <h2 className="text-xl mt-4">예약확인</h2>
         <p className=" text-black text-sm  mt-4 mb-8">예약이 완료 되었습니다</p>
         <Link to="/myreservation" className="block w-full">
-          <SubmitBtn value="예약내역" />
+          <BtnSubmit value="예약내역" />
         </Link>
       </div>
     </div>
