@@ -4,7 +4,7 @@ interface BtnSubmitProps {
   type?: "submit" | "reset" | "button" | undefined;
   value: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  dirty?: boolean;
+  active?: boolean;
 }
 
 const BtnSubmit: React.FC<BtnSubmitProps> = (props) => {
@@ -13,7 +13,7 @@ const BtnSubmit: React.FC<BtnSubmitProps> = (props) => {
       type={props.type}
       onClick={props.onClick}
       className={`w-full bg-${
-        props.dirty === false ? "MAIN_GRAY" : "MAIN_COLOR"
+        props.active === false ? "MAIN_GRAY" : "MAIN_COLOR"
       } text-white h-14 rounded-lg text-lg mt-3`}
     >
       {props.value}

@@ -171,7 +171,7 @@ const EditProfile: React.FC = () => {
               <BtnSubmit
                 value="수정하기"
                 type={dirty === true ? "submit" : "button"}
-                dirty={dirty}
+                active={dirty}
                 onClick={() => {
                   handleFormNotChange(dirty);
                 }}
