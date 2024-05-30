@@ -12,7 +12,7 @@ const EditProfileInput: React.FC<EditProfileInputProps> = (props) => {
     <Field
       type={props.type}
       className={`p-2.5 border-2 h-10 w-full border-COMMONN_BORDER_GRAY appearance-none focus:border-MAIN_COLOR focus:outline-none focus:ring-transparent rounded-lg bg-${
-        props.disabled ? "gray-100" : undefined
+        props.disabled ? "MAIN_GRAY" : undefined
       }`}
       name={props.name}
       disabled={props.disabled}

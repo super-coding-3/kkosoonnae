@@ -12,6 +12,7 @@ const Main: React.FC = () => {
   const navigate = useNavigate();
   const [showPostcode, setShowPostcode] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [doubleCheck, setDoubleCheck] = useState<string>("noProgress");
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full mt-2 font-bold text-sm">
@@ -40,22 +41,29 @@ const Main: React.FC = () => {
             address: values.address,
             addressDtl: values.addressDtl,
           };
-          HttpClient.post("/KkoSoonNae/customer/signUp", payload)
-            .then((response) => {
-              setToastMessage("회원가입이 완료되었습니다!");
-              const res = response.data;
-              console.log(res);
-              setTimeout(() => {
-                navigate("/");
-              }, 800);
-            })
-            .catch((error) => {
-              setTimeout(() => {
-                setToastMessage(error.response.data.message);
-              }, 800);
-            });
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
+          if (doubleCheck === "noProgress") {
+            setToastMessage("닉네임 중복확인을 진행해주세요");
+            setTimeout(() => {
+              setToastMessage(null);
+            }, 1000);
+          } else if (doubleCheck === "complete") {
+            HttpClient.post("/KkoSoonNae/customer/signUp", payload)
+              .then((response) => {
+                setToastMessage("회원가입이 완료되었습니다!");
+                const res = response.data;
+                console.log(res);
+                setTimeout(() => {
+                  navigate("/");
+                }, 800);
+              })
+              .catch((error) => {
+                setTimeout(() => {
+                  setToastMessage(error.response.data.message);
+                }, 800);
+              });
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }
         }}
       >
         {({ setFieldValue, values }) => (
@@ -75,12 +83,15 @@ const Main: React.FC = () => {
                   {["loginId", "nickName"].includes(field.name) && (
                     <button
                       type="button"
-                      onClick={() =>
+                      onClick={() => {
+                        setToastMessage(null);
                         CheckAvailabilityApi(
                           field.name as "loginId" | "nickName",
-                          values[field.name as "loginId" | "nickName"]
-                        )
-                      }
+                          values[field.name as "loginId" | "nickName"],
+                          setToastMessage,
+                          setDoubleCheck
+                        );
+                      }}
                       className="rounded-lg border-2 border-solid border-main-light-color text-xs w-16 h-10 mt-2 ml-1"
                     >
                       중복확인

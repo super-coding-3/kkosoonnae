@@ -1,5 +1,7 @@
-import { FormikProps } from "formik";
 import React from "react";
+
+import { FormikProps } from "formik";
+
 import BtnMyPetGender from "./BtnMyPetGender";
 import { MYPET_FORM_LABEL } from "../../constants/constants";
 

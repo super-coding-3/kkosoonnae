@@ -1,6 +1,9 @@
 import React, { SyntheticEvent, forwardRef } from "react";
+
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
+
 import { MYPET_FORM_LABEL } from "../../constants/constants";
 
 interface CustomDatePickerMyPetProps {

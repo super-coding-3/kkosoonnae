@@ -5,7 +5,6 @@ import { Avatar } from "flowbite-react";
 import { Link } from "react-router-dom";
 
 interface MyLikeStoreCardProps {
-  // likeNo: number;
   storeNo: number;
   storeImg: string;
   storeName: string;
