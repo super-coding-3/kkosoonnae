@@ -88,6 +88,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
         "/KkoSoonNae/reservation/make-reservation",
         payload
       );
+
       setReservationData(values);
       setStep(2);
     } catch (error) {
@@ -111,7 +112,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
 
           <Formik
             initialValues={initialValues}
-            // validationSchema={reservationSchema}
+            validationSchema={reservationSchema}
             onSubmit={(values) => reservationHandleSubmit(values)}
           >
             {({ setFieldValue }) => (
