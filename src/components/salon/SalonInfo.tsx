@@ -33,8 +33,6 @@ const SalonInfo: React.FC = () => {
   const { storeNo } = useParams<{ storeNo: string }>();
   const navigate = useNavigate();
 
-  // const salon = salonData.find((item) => item.id === salonId);
-
   const handleFavoriteClick = () => {
     console.log(`미용실을 즐겨찾기에 추가/제거했습니다.`);
   };

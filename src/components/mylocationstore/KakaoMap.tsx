@@ -147,16 +147,10 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder="매장 검색"
         className="w-full mt-2 rounded-lg p-2 border mb-4"/>
-      <MapDiv id="map" />
+      <div id="map" className="w-full h-72 rounded-xl border" />
       
     </>
   );
 };
 
 export default KakaoMap;
-
-const MapDiv = styled.div`
-  width: 100%;
-  height: 300px;
-  border-radius: 10px;
-`;

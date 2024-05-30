@@ -1,14 +1,16 @@
+import HttpClient from "../utils/api/customAxios";
+
 import React, { useEffect, useState } from "react";
+import { format, parseISO } from "date-fns";
+import { ko } from "date-fns/locale";
+
+import PageNothing from "../components/common/PageNothing";
+import ModalDelete from "../components/common/ModalDelete";
+import ToastMessage from "../components/common/ToastMessage";
 import OuterLayout from "../components/common/OuterLayout";
 import PageTitle from "../components/common/PageTitle";
 import Nav from "../components/common/Nav";
 import MyQnACard from "../components/myqna/MyQnACard";
-import HttpClient from "../utils/api/customAxios";
-import { format, parseISO } from "date-fns";
-import { ko } from "date-fns/locale";
-import PageNothing from "../components/common/PageNothing";
-import ModalDelete from "../components/common/ModalDelete";
-import ToastMessage from "../components/common/ToastMessage";
 
 interface MyQnADatasType {
   status?: string;
@@ -34,7 +36,7 @@ const MyQnA: React.FC = () => {
     await HttpClient.delete(`/KkoSoonNae/qna/deleteQna/${qnaNo}`);
     setShowModalDelete(false);
     setShowToastMessage(true);
-    setTimeout(function () {
+    setTimeout(() => {
       window.location.reload();
     }, 1000);
   };

@@ -12,7 +12,7 @@ const MyPagePetAdd: React.FC<MyPagePetAddProps> = (props) => {
       <div className="flex justify-start items-center px-5 py-3 gap-3">
         <Link
           to="/addmykkosoonae"
-          className="flex flex-col items-center border-2 border-dashed border-MAIN_LIGHT_COLOR rounded-full bg-MAIN_GRAY gap-2 px-6 py-3"
+          className="flex flex-col items-center border-2 border-dashed border-MAIN_LIGHT_COLOR rounded-full bg-MAIN_GRAY gap-2 px-6 py-3 sm:px-"
         >
           <PiPawPrintLight color="#816F6B" size="30px" />
           <div className="text-MAIN_LIGHT_COLOR text-xs text-center">

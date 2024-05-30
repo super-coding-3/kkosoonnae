@@ -2,16 +2,14 @@ import HttpClient from "../../utils/api/customAxios";
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { reservationFormValues } from "../reservation/ReservationForm";
 
 import OuterLayout from "../common/OuterLayout";
 import PageTitle from "../common/PageTitle";
 import Nav from "../common/Nav";
 import ReservationCheckList from "../common/ReservationCheckList";
+import { reservationFormValues } from "../reservation/ReservationForm";
 
 const MyReservationDetail: React.FC = () => {
-  // const navigate = useNavigate();
   const { reservationNo } = useParams() as { reservationNo: string };
   const [myReservationDatas, setMyReservationDatas] =
     useState<reservationFormValues>(Object);

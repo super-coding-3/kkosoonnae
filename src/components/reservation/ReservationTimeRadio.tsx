@@ -5,7 +5,7 @@ import { CiClock2 } from "react-icons/ci";
 import { useField, ErrorMessage, useFormikContext } from "formik";
 
 function ReservationTimeRadio() {
-  const [field, , helpers] = useField("reservationTime");
+  const [field] = useField("reservationTime");
   const { touched, errors, setFieldValue } = useFormikContext<{
     reservationTime: string;
   }>();

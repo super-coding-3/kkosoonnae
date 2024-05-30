@@ -16,6 +16,9 @@ const MainCarousel: React.FC = () => {
 
 const MainCarouselWrap = styled.div`
   height: 340px;
+  button[data-testid="carousel-indicator"] {
+    display: none;
+  }
 `;
 
 export default MainCarousel;

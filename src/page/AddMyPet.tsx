@@ -52,7 +52,10 @@ const AddMyPet: React.FC = () => {
           }, 1000);
         })
         .catch((error: any) => {
-          alert(error);
+          setToastMessage("오류가 발생했습니다");
+          setTimeout(() => {
+            setToastMessage(null);
+          }, 1000);
         });
     } else {
       setToastMessage("반려동물의 이미지를 넣어주세요");
@@ -60,6 +63,15 @@ const AddMyPet: React.FC = () => {
         setToastMessage(null);
       }, 3000);
       return;
+    }
+  };
+
+  const handleFormIsValid = (isValid: boolean) => {
+    if (!isValid) {
+      setToastMessage("반려동물의 정보를 올바르게 작성해주세요");
+      setTimeout(() => {
+        setToastMessage(null);
+      }, 1000);
     }
   };
 
@@ -81,7 +93,7 @@ const AddMyPet: React.FC = () => {
         validationSchema={EditMyPetSchema}
         enableReinitialize={true}
       >
-        {({ setFieldValue, values }) => (
+        {({ setFieldValue, values, isValid, dirty }) => (
           <Form className="pt-4 pb-24 px-4 font-bold">
             <ImgMyPet
               img={values.petImg}
@@ -112,7 +124,14 @@ const AddMyPet: React.FC = () => {
               placeholder="내 꼬순내 몸무게를 입력해주세요."
               label={MYPET_FORM_LABEL.weight}
             />
-            <BtnSubmit value="등록하기" type="submit" />
+            <BtnSubmit
+              value="수정하기"
+              type={isValid === true ? "submit" : "button"}
+              active={isValid}
+              onClick={() => {
+                handleFormIsValid(isValid);
+              }}
+            />
             {toastMessage && <ToastMessage message={toastMessage} />}
           </Form>
         )}

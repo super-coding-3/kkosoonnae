@@ -1,22 +1,21 @@
 import HttpClient from "../utils/api/customAxios";
 
 import React, { useEffect, useState } from "react";
+import { Form, Formik } from "formik";
+import { EditMyPetSchema } from "../schema/formSchema";
+import { useParams } from "react-router-dom";
+
 import OuterLayout from "../components/common/OuterLayout";
 import PageTitle from "../components/common/PageTitle";
 import Nav from "../components/common/Nav";
 import BtnSubmit from "../components/common/BtnSubmit";
 import ImgMyPet from "../components/mypet/ImgMyPet";
 import InputMyPet from "../components/mypet/InputMyPet";
-
-import { Form, Formik } from "formik";
-import { EditMyPetSchema } from "../schema/formSchema";
-import { useParams } from "react-router-dom";
-import "react-datepicker/dist/react-datepicker.css";
 import CustomDatePickerMyPet from "../components/mypet/CustomDatePickerMyPet";
-import { MYPET_FORM_LABEL } from "../constants/constants";
 import SelectMyPetGender from "../components/mypet/SelectMyPetGender";
 import ModalDelete from "../components/common/ModalDelete";
 import ToastMessage from "../components/common/ToastMessage";
+import { MYPET_FORM_LABEL } from "../constants/constants";
 
 interface MyPetInfosType {
   name: string;
@@ -64,18 +63,21 @@ const EditMyPet: React.FC = () => {
       )
         .then((response) => {
           setToastMessage(`${values.name}의 정보가 수정되었습니다`);
-          setTimeout(function () {
+          setTimeout(() => {
             window.location.href = "/mypage";
           }, 1000);
         })
         .catch((error: any) => {
-          alert(error);
+          setToastMessage("오류가 발생했습니다");
+          setTimeout(() => {
+            setToastMessage(null);
+          }, 1000);
         });
     } else {
       setToastMessage("반려동물의 이미지를 넣어주세요");
-      setTimeout(function () {
+      setTimeout(() => {
         setToastMessage(null);
-      }, 3000);
+      }, 1000);
       return;
     }
   };
@@ -88,27 +90,39 @@ const EditMyPet: React.FC = () => {
     setShowModalDelete(true);
   };
 
+  const handleFormNotChange = (dirty: boolean) => {
+    if (!dirty) {
+      setToastMessage("반려동물의 정보를 수정해주세요");
+      setTimeout(() => {
+        setToastMessage(null);
+      }, 1000);
+    }
+  };
+
   const deleteMyPetDatas = async (petNo: number, petName: string) => {
     await HttpClient.delete(`/KkoSoonNae/pet/deletePet/${petNo}`)
       .then((response) => {
-        if (response.data.message == "해당 반려동물은 현재 예약 상태입니다.") {
+        if (response.data.message === "해당 반려동물은 현재 예약 상태입니다.") {
           setShowModalDelete(false);
           setToastMessage(
             `${petName}은 미용이 예약되어 있어 삭제할 수 없습니다`
           );
-          setTimeout(function () {
+          setTimeout(() => {
             setToastMessage(null);
-          }, 3000);
+          }, 1000);
         } else {
           setShowModalDelete(false);
           setToastMessage(`${petName}의 정보가 삭제되었습니다`);
-          setTimeout(function () {
-            window.location.href = "/mypage";
+          setTimeout(() => {
+            setToastMessage(null);
           }, 1000);
         }
       })
       .catch((error: any) => {
-        alert(error);
+        setToastMessage("오류가 발생했습니다");
+        setTimeout(() => {
+          setToastMessage(null);
+        }, 1000);
       });
   };
 
@@ -144,7 +158,7 @@ const EditMyPet: React.FC = () => {
         validationSchema={EditMyPetSchema}
         enableReinitialize={true}
       >
-        {({ setFieldValue, values }) => (
+        {({ setFieldValue, values, dirty }) => (
           <Form className="pt-4 pb-24 px-4 font-bold">
             <ImgMyPet
               img={values.petImg}
@@ -163,7 +177,14 @@ const EditMyPet: React.FC = () => {
               setFieldValue={setFieldValue}
             />
             <InputMyPet name="weight" label={MYPET_FORM_LABEL.weight} />
-            <BtnSubmit value="수정하기" type="submit" />
+            <BtnSubmit
+              value="수정하기"
+              type={dirty === true ? "submit" : "button"}
+              active={dirty}
+              onClick={() => {
+                handleFormNotChange(dirty);
+              }}
+            />
             <button
               type="button"
               className="w-full text-right mt-3 underline text-gray-400"
