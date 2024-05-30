@@ -5,7 +5,7 @@ const EventBtnContent: React.FC = () => {
   return (
     <div
       className="flex justify-between items-center px-2"
-      style={{ marginTop: "-30px" }}
+      style={{ marginTop: "-50px" }}
     >
       <EventBtn>
         <img src="img/main/btn-img.png" alt="펫프렌즈" />
