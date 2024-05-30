@@ -35,7 +35,3 @@ export const fetchStores = async (
     throw error;
   }
 };
-
-const initialLat = 37.5022;
-const initialLon = 127.0321;
-fetchStores(initialLat, initialLon);
