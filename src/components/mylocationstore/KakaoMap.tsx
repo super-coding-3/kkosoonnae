@@ -140,16 +140,16 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
 
   return (
     <>
-      <h1 className="text-xl mt-4 font-semibold">내 주변 매장 지도</h1>
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="매장 검색"
-        className="w-full mt-2 rounded-lg p-2 border mb-4"/>
-      <div id="map" className="w-full h-72 rounded-xl border" />
-      
-    </>
+    <h1 className="text-xl mt-4 font-semibold">내 주변 매장 지도</h1>
+    <input
+      type="text"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      placeholder="매장 검색"
+      className="w-full mt-2 rounded-lg p-2 border mb-4"
+    />
+    <div id="map" className="w-full h-72 rounded-xl border" />
+  </>
   );
 };
 
