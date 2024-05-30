@@ -1,7 +1,9 @@
-import React from "react";
 import { List, Avatar } from "flowbite-react";
 import { Store } from "./LocationApi";
 import { Link } from "react-router-dom";
+
+
+import React from "react";
 
 interface StoreListProps {
   stores: Store[];

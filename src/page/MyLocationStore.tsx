@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { fetchStores, Store } from "../components/mylocationstore/LocationApi";
+
+import React from "react";
 import OuterLayout from "../components/common/OuterLayout";
 import PageTitle from "../components/common/PageTitle";
 import Footer from "../components/common/Footer";
@@ -6,7 +9,7 @@ import Nav from "../components/common/Nav";
 import KakaoMap from "../components/mylocationstore/KakaoMap";
 import StoreList from "../components/mylocationstore/StoreList";
 import StyleSlider from "../components/mylocationstore/StyleSlider";
-import { fetchStores, Store } from "../components/mylocationstore/LocationApi";
+
 
 const MyLocationStore: React.FC = () => {
   const [stores, setStores] = useState<Store[]>([]);

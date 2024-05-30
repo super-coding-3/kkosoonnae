@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import { useEffect, useState } from "react";
 import { Store } from "./LocationApi";
+
+import React from "react";
 
 declare global {
   interface Window {
@@ -91,8 +92,8 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
 
   useEffect(() => {
     if (map) {
-      markers.forEach((marker) => marker.setMap(null));  {/*기존 마커 제거*/}
-      overlays.forEach((overlay) => overlay.setMap(null)); {/*기존 오버레이 제거*/}
+      markers.forEach((marker) => marker.setMap(null));  
+      overlays.forEach((overlay) => overlay.setMap(null)); 
 
       const newMarkers: any[] = [];
       const newOverlays: any[] = [];
@@ -125,8 +126,8 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
         newOverlays.push(customOverlay);
       });
 
-      setMarkers(newMarkers); // 새로운 마커 저장
-      setOverlays(newOverlays); // 새로운 오버레이 저장
+      setMarkers(newMarkers); 
+      setOverlays(newOverlays); 
     }
   }, [filteredStores, map]);
 
