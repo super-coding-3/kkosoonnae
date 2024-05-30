@@ -11,9 +11,9 @@ const Footer: React.FC = () => {
         스크래핑 등의 행위는 관련 법령에 의하여 엄격히 금지 됩니다. 콘텐츠산업
         진흥법에 따른 표시 © Kkosoonae 문의하기: 전화번호: 1234-0777
         <a href="mailto:support@kkosoonae.com">support@kkosoonae.com</a>
-        <address>주소:서울특별시 강남구 봉은사로 427</address>
         &copy; 2024 꼬순내. All rights reserved.
       </p>
+      <address>주소:서울특별시 강남구 봉은사로 427</address>
     </footer>
   );
 };
