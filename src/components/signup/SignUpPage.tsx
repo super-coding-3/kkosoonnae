@@ -1,14 +1,12 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import React, { useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { SignupSchema } from "../../schema/formSchema";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import Postcode from "../common/PostCode";
 import formFields from "./FormFields";
 import HttpClient from "../../utils/api/customAxios";
 import CheckAvailabilityApi from "../common/CheckAvailabilityApi";
 import ToastMessage from "../common/ToastMessage";
-// 메인 코드
 
 const Main: React.FC = () => {
   const navigate = useNavigate();
@@ -16,7 +14,7 @@ const Main: React.FC = () => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   return (
-    <MainDiv className="px-4">
+    <div className="flex flex-col justify-center items-center w-full h-full mt-2 font-bold text-sm">
       {toastMessage && <ToastMessage message={toastMessage} />}
       <Formik
         initialValues={{
@@ -61,16 +59,18 @@ const Main: React.FC = () => {
         }}
       >
         {({ setFieldValue, values }) => (
-          <Form className="mx-auto max-w-xl min-w-[320px] w-full ">
+          <Form className="mx-auto max-w-xl min-w-[320px] w-full">
             {formFields.map((field) => (
-              <ForminputDiv key={field.name}>
-                <label className="mt-1" htmlFor={field.name}>{field.label}</label>
-                <FieldWithButtonDiv>
+              <div key={field.name} className="flex flex-col w-full">
+                <label className="mt-1" htmlFor={field.name}>
+                  {field.label}
+                </label>
+                <div className="flex flex-row w-full">
                   <Field
                     type={field.type}
                     name={field.name}
                     placeholder={field.placeholder}
-                    className="rounded-lg mt-2 mb-1 w-full border-solid border-2 h-10 border-MAIN_LIGHT_COLOR"
+                    className="rounded-lg mt-2 mb-1 w-full border-2 border-solid border-MAIN_LIGHT_COLOR h-10"
                   />
                   {["loginId", "nickName"].includes(field.name) && (
                     <button
@@ -81,7 +81,7 @@ const Main: React.FC = () => {
                           values[field.name as "loginId" | "nickName"]
                         )
                       }
-                      className="rounded-lg border-solid border-main-light-color border-2 text-[10px] w-16 h-10 mt-2 ml-1"
+                      className="rounded-lg border-2 border-solid border-main-light-color text-xs w-16 h-10 mt-2 ml-1"
                     >
                       중복확인
                     </button>
@@ -90,19 +90,19 @@ const Main: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setShowPostcode(true)}
-                      className="rounded-lg border-solid border-main-light-color border-2 text-[10px] w-16 h-10 mt-2 ml-1"
+                      className="rounded-lg border-2 border-solid border-main-light-color text-xs w-16 h-10 mt-2 ml-1"
                     >
                       주소찾기
                     </button>
                   )}
-                </FieldWithButtonDiv>
+                </div>
                 <ErrorMessage
                   name={field.name}
                   render={(msg) => (
                     <div className="text-xs ml-2 mb-1 text-red-600">{msg}</div>
                   )}
                 />
-              </ForminputDiv>
+              </div>
             ))}
             <Postcode
               onAddressSelect={(addressData) => {
@@ -115,39 +115,15 @@ const Main: React.FC = () => {
             />
             <button
               type="submit"
-              className="w-full max-w-l bg-MAIN_COLOR text-MAIN_IVORY h-16 rounded-lg text-lg mt-3"
+              className="w-full bg-MAIN_COLOR text-MAIN_IVORY h-16 rounded-lg text-lg mt-3"
             >
               제출하기
             </button>
           </Form>
         )}
       </Formik>
-    </MainDiv>
+    </div>
   );
 };
 
 export default Main;
-
-const MainDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  margin-top: 10px;
-  font-size: 14px;
-  font-weight: bold;
-`;
-
-const ForminputDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-const FieldWithButtonDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-`;

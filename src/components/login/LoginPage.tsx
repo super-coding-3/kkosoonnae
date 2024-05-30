@@ -2,7 +2,6 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate } from "react-router-dom";
 import { LoginSchema } from "../../schema/formSchema";
 import React, { useState } from "react";
-import styled from "styled-components";
 import HttpClient from "../../utils/api/customAxios";
 import ToastMessage from "../common/ToastMessage";
 
@@ -11,7 +10,7 @@ const LoginPage: React.FC = () => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   return (
-    <LogMainDiv className="px-4">
+    <div className="flex flex-col justify-center max-w-xl min-w-[320px] w-full h-full px-4 font-bold text-sm">
       {toastMessage && <ToastMessage message={toastMessage} />}
       <Formik
         initialValues={{
@@ -31,7 +30,7 @@ const LoginPage: React.FC = () => {
               localStorage.setItem("token", token);
               setTimeout(() => {
                 navigate("/");
-              }, 1000); // 1"초 후에 페이지 이동
+              }, 1000); // 1초 후에 페이지 이동
             })
             .catch((error) => {
               setToastMessage("로그인이 실패하였습니다");
@@ -42,36 +41,36 @@ const LoginPage: React.FC = () => {
         validationSchema={LoginSchema}
       >
         {({ isSubmitting }) => (
-          <Form className="mx-auto max-w-xl min-w-[320px] w-full mt-4 mb-4">
-            <ForminputDiv>
+          <Form className="mx-auto w-full mt-4 mb-4">
+            <div className="flex flex-col mb-4">
               <label htmlFor="loginId">아이디</label>
               <Field
                 type="text"
                 name="loginId"
                 placeholder="아이디를 입력하세요"
-                className="rounded-lg mt-2 mb-1 w-full border-solid border-2 h-10 mr-1 border-MAIN_COLOR"
+                className="rounded-lg mt-2 mb-1 w-full border-solid border-2 h-10 border-MAIN_COLOR"
               />
               <ErrorMessage
                 name="loginId"
                 component="div"
                 className="text-xs ml-2 text-red-600 mt-1 mb-2"
               />
-            </ForminputDiv>
-            <ForminputDiv>
+            </div>
+            <div className="flex flex-col mb-4">
               <label htmlFor="password">패스워드</label>
               <Field
                 type="password"
                 name="password"
                 placeholder="비밀번호를 입력하세요"
-                className="rounded-lg mt-2 mb-1 w-full border-solid border-2 h-10 mr-1 border-MAIN_COLOR"
+                className="rounded-lg mt-2 mb-1 w-full border-solid border-2 h-10 border-MAIN_COLOR"
               />
               <ErrorMessage
                 name="password"
                 component="div"
                 className="text-xs ml-2 text-red-600 mt-1 mb-2"
               />
-            </ForminputDiv>
-            <ButtonDiv>
+            </div>
+            <div className="flex flex-row justify-between gap-1">
               <button
                 type="button"
                 onClick={() => {
@@ -88,37 +87,12 @@ const LoginPage: React.FC = () => {
               >
                 로그인
               </button>
-            </ButtonDiv>
+            </div>
           </Form>
         )}
       </Formik>
-    </LogMainDiv>
+    </div>
   );
 };
 
 export default LoginPage;
-
-const LogMainDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 640px;
-  min-width: 375px;
-  width: 100%;
-  height: 100%;
-  font-size: 14px;
-  font-weight: bold;
-`;
-
-const ForminputDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 16px;
-`;
-
-const ButtonDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 1px;
-`;
