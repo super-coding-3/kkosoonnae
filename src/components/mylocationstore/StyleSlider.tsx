@@ -1,8 +1,11 @@
+import React from "react";
+import Slider from "react-slick";
+
 import { Store } from "./LocationApi";
 import { useNavigate } from "react-router-dom";
 
-import React from "react";
-import Slider from "react-slick";
+
+
 
 interface StoreListProps {
   stores: Store[];

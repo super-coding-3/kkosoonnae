@@ -1,7 +1,8 @@
+import React from "react";
+
 import { useState, useEffect } from "react";
 import { fetchStores, Store } from "../components/mylocationstore/LocationApi";
 
-import React from "react";
 import OuterLayout from "../components/common/OuterLayout";
 import PageTitle from "../components/common/PageTitle";
 import Footer from "../components/common/Footer";
