@@ -1,7 +1,11 @@
 import React from "react";
 import Slider from "react-slick";
+
 import { Store } from "./LocationApi";
 import { useNavigate } from "react-router-dom";
+
+
+
 
 interface StoreListProps {
   stores: Store[];
@@ -48,9 +52,7 @@ const StyleSlider: React.FC<StoreListProps> = ({ stores }) => {
 
   return (
     <>
-      <h1 className="text-xl mb-4 mt-4 ml-2  font-semibold">
-        최근 주변매장 스타일 이용내역
-      </h1>
+      <h1 className="text-xl mb-4 mt-4 font-semibold">최근 주변 매장 스타일 이용 내역</h1>
       <Slider {...settings} className="mb-5 w-full px-0">
         {styles.map((style: Style) => (
           <div key={style.styleId} className="w-full px-1 flex flex-col">
@@ -61,13 +63,13 @@ const StyleSlider: React.FC<StoreListProps> = ({ stores }) => {
                 className="w-full h-60 object-cover"
               />
               <div className="p-4">
-                <p className=" text-[17px] font-bold text-gray-700 dark:text-gray-400 flex items-center gap-1">
+                <p className="text-[17px] font-bold text-gray-700">
                   {style.storeName}
                 </p>
-                <p className="font-xl text-gray-700 dark:text-gray-400 flex items-center gap-1">
+                <p className="font-xl text-gray-700">
                   {style.styleName}
                 </p>
-                <p className="text-l font-bold tracking-tight text-gray-900 dark:text-white flex items-center gap-1">
+                <p className="text-l font-bold text-gray-900">
                   {style.price}원
                 </p>
                 <button
