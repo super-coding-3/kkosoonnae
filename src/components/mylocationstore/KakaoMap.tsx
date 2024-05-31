@@ -1,7 +1,9 @@
+import React from "react";
+
 import { useEffect, useState } from "react";
 import { Store } from "./LocationApi";
 
-import React from "react";
+
 
 declare global {
   interface Window {
