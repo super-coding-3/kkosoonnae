@@ -1,7 +1,6 @@
 import React from "react";
 import { FaStar, FaTimes } from "react-icons/fa";
 import { HiHeart } from "react-icons/hi2";
-import { Avatar } from "flowbite-react";
 import { Link } from "react-router-dom";
 
 interface MyLikeStoreCardProps {
@@ -18,10 +17,16 @@ interface MyLikeStoreCardProps {
 
 const MyLikeStoreCard: React.FC<MyLikeStoreCardProps> = (props) => {
   return (
-    <div className="flex flex-col justify-start items-center border-b-2 border-solid border-MAIN_LIGHT_COLOR w-full h-fit p-3 gap-3 mb-5">
-      <div className="flex justify-between items-center px-5 py-3 w-full">
-        <Link to={"/salon/" + props.storeNo}>
-          <Avatar img={props.storeImg} size="xl" />
+    <div className="flex justify-between items-center border-b-2 border-MAIN_LIGHT_COLOR w-full h-48 px-5 py-3 gap-3 mb-5 likestore-fragment-height">
+      <div className="flex items-center gap-3 w-11/12 likestore-info-size-change">
+        <Link
+          to={"/salon/" + props.storeNo}
+          className="size-40 likestore-img-size-change"
+        >
+          <img
+            src={props.storeImg}
+            className="border-2 border-MAIN_LIGHT_COLOR size-full"
+          />
         </Link>
         <div className="flex flex-col gap-2 w-2/3">
           <div className="flex w-full justify-between h-8">
@@ -31,9 +36,6 @@ const MyLikeStoreCard: React.FC<MyLikeStoreCardProps> = (props) => {
             >
               {props.storeName}
             </Link>
-            <button onClick={props.onClick} className="flex items-start">
-              <FaTimes color="#816F6B" size="20px" />
-            </button>
           </div>
           <div className="flex gap-3">
             <div className="flex items-center gap-1">
@@ -45,12 +47,19 @@ const MyLikeStoreCard: React.FC<MyLikeStoreCardProps> = (props) => {
               <div className="pb-0.5">{props.totalLikeCount}</div>
             </div>
           </div>
-          <div className="text-gray-400 font-bold">{props.roadAddress}</div>
-          <div className="text-gray-400 font-bold">
+          <div className="text-gray-400 font-bold w-10/12 truncate likestore-info-hidden">
+            주소: {props.roadAddress}
+          </div>
+          <div className="text-gray-400 font-bold likestore-info-hidden">
             영업시간 : {props.openTime.slice(0, 5)}~
             {props.closeTime.slice(0, 5)}
           </div>
         </div>
+      </div>
+      <div className="flex items-start h-full">
+        <button onClick={props.onClick}>
+          <FaTimes color="#816F6B" size="20px" />
+        </button>
       </div>
     </div>
   );

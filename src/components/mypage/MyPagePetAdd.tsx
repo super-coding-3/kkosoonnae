@@ -8,11 +8,11 @@ interface MyPagePetAddProps {
 
 const MyPagePetAdd: React.FC<MyPagePetAddProps> = (props) => {
   return (
-    <div className="flex items-center border-2 border-dashed border-MAIN_LIGHT_COLOR rounded-2xl w-full h-40">
-      <div className="flex justify-start items-center px-5 py-3 gap-3">
+    <div className="flex items-center border-2 border-dashed border-MAIN_LIGHT_COLOR rounded-2xl w-full h-40 addpet-button-fragment-change">
+      <div className="flex justify-start items-center px-5 py-3 gap-3 addpet-button-wrap-change">
         <Link
           to="/addmykkosoonae"
-          className="flex flex-col items-center border-2 border-dashed border-MAIN_LIGHT_COLOR rounded-full bg-MAIN_GRAY gap-2 px-6 py-3 sm:px-"
+          className="flex flex-col  justify-center items-center border-2 border-dashed border-MAIN_LIGHT_COLOR rounded-full bg-MAIN_GRAY gap-2 px-6 py-3 addpet-button-change"
         >
           <PiPawPrintLight color="#816F6B" size="30px" />
           <div className="text-MAIN_LIGHT_COLOR text-xs text-center">
@@ -22,8 +22,12 @@ const MyPagePetAdd: React.FC<MyPagePetAddProps> = (props) => {
         </Link>
         <div>
           <div className="text-MAIN_LIGHT_COLOR">
-            <div>{props.userName}님과 함께 사는</div>
-            <div>꼬순내는 어떤 친구인가요? 🤔</div>
+            <div className="addpet-description-hidden">
+              {props.userName}님과 함께 사는
+            </div>
+            <div className="addpet-description-hidden">
+              꼬순내는 어떤 친구인가요? 🤔
+            </div>
           </div>
         </div>
       </div>

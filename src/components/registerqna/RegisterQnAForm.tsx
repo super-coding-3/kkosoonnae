@@ -40,7 +40,7 @@ const RegisterQnAForm: React.FC<RegisterQnAFormProps> = (props) => {
       <div className="flex justify-between items-center pb-3 border-b-2 border-COMMONN_BORDER_GRAY">
         <div className="font-bold text-xl">꼬순내 고객센터</div>
         <Link
-          to="/myqna"
+          to="/my_qna"
           className="bg-MAIN_COLOR text-MAIN_IVORY rounded-lg h-fit w-fit py-1 px-2"
         >
           내 문의내역

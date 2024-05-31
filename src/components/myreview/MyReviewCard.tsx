@@ -23,7 +23,7 @@ const MyReviewCard: React.FC<MyReviewCardProps> = (props) => {
           <FaTimes color="#816F6B" size="20px" />
         </button>
       </div>
-      <div className="w-full whitespace-pre-line">{props.content}</div>
+      <div className="w-full break-words">{props.content}</div>
     </div>
   );
 };

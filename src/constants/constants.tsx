@@ -36,7 +36,7 @@ export const ROUTER_INFOS = [
   { path: "/my_review", element: <MyReview /> },
   { path: "/my_likestore", element: <MyLikeStore /> },
   { path: "/register_qna", element: <RegisterQnA /> },
-  { path: "/myqna", element: <MyQnA /> },
+  { path: "/my_qna", element: <MyQnA /> },
 ];
 
 export const MYPET_FORM_LABEL = {
