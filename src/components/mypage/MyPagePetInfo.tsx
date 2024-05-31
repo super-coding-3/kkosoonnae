@@ -20,21 +20,30 @@ const MyPagePetInfo: React.FC<MyPagePetInfoProps> = (props) => {
   const location = useLocation();
 
   return (
-    <div className="border-2 border-solid border-MAIN_LIGHT_COLOR rounded-2xl w-full h-40">
-      <div className="flex justify-between items-center px-5 py-3 gap-5 w-full h-28">
-        <div className="flex items-center gap-5">
-          <img className="rounded-full size-24" src={props.img} />
-          <div className="flex flex-col gap-1">
+    <div className="border-2 border-solid border-MAIN_LIGHT_COLOR rounded-2xl w-full h-40 infopet-fragment-size-change">
+      <div className="flex justify-between items-center px-5 py-3 gap-5 w-full h-28 infopet-wrap-size-change">
+        <div className="flex items-center gap-5 infopet-flex-direction">
+          <img
+            className="rounded-full size-24 border-2 border-MAIN_LIGHT_COLOR"
+            src={props.img}
+          />
+          <div className="flex flex-col gap-1 w-36 infopet-allinfo-size-change">
             <div className="flex items-center gap-1">
-              <div className="text-lg font-bold">{props.name}</div>
+              <div className="text-lg font-bold truncate">{props.name}</div>
               {props.gender == "여아" ? (
-                <TbGenderFemale color="#e91e63" size="20px" />
+                <p className="infopet-gender-hidden">
+                  <TbGenderFemale color="#e91e63" size="20px" />
+                </p>
               ) : (
-                <TbGenderMale color="#004fe5" size="20px" />
+                <p className="infopet-gender-hidden">
+                  <TbGenderMale color="#004fe5" size="20px" />
+                </p>
               )}
             </div>
-            <div className="text-gray-400">{props.type}</div>
-            <div className="text-gray-400">
+            <div className="text-gray-400 infopet-additionalinfo-hidden">
+              {props.type}
+            </div>
+            <div className="text-gray-400 infopet-additionalinfo-hidden">
               {props.age} • {props.weigth}kg
             </div>
           </div>
@@ -47,7 +56,7 @@ const MyPagePetInfo: React.FC<MyPagePetInfoProps> = (props) => {
           )}
           {props.representative && props.mainPet == "N" && (
             <button
-              className="border-2 border-solid border-MAIN_LIGHT_COLOR text-MAIN_LIGHT_COLOR rounded-xl px-2 py-1 text-sm"
+              className="border-2 border-solid border-MAIN_LIGHT_COLOR text-MAIN_LIGHT_1COL1OR rounded-xl px-2 py-1 text-sm"
               onClick={props.onClick}
             >
               선택

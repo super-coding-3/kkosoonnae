@@ -123,17 +123,20 @@ const MyPage: React.FC = () => {
       <PageTitle title="마이페이지" leftBtn={false} />
       <div className="pt-4 pb-24 px-4">
         <div className="flex justify-between items-center">
-          <div className="font-black text-2xl">
+          <div className="font-black text-2xl username-size-change">
             {JSON.stringify(mypageInfos) === "{}" ? (
               <div>익명의 집사님</div>
             ) : (
-              <div>{mypageInfos.userNickname} 집사님</div>
+              <div className="flex items-center leading w-72 gap-1 username-width-change">
+                <div className="truncate">{mypageInfos.userNickname}</div>
+                <div className="w-7">님</div>
+              </div>
             )}
           </div>
           <div className="flex gap-2">
             <BtnLogout />
             <Link
-              to="/editprofile"
+              to="/edit_profile"
               className="p-1 border-2 border-solid border-MAIN_COLOR rounded text-MAIN_COLOR"
             >
               프로필 수정
@@ -182,7 +185,7 @@ const MyPage: React.FC = () => {
           {!(mypageInfos.myPet?.length === 0) ? (
             <Slider {...settings}>
               {mypageInfos.myPet.map((item: MyPetInfosType) => (
-                <div className="pr-6">
+                <div className="pr-2">
                   <MyPagePetInfo
                     petNo={item.petNo}
                     img={item.img}
@@ -209,12 +212,12 @@ const MyPage: React.FC = () => {
         </div>
         <div className="flex flex-col justify-center items-start mt-7 gap-3">
           <div className="flex justify-center items-center gap-3 w-full">
-            <MyPageMainBtn title="예약내역" link="/myreservation" />
-            <MyPageMainBtn title="내가 쓴 리뷰" link="/myreview" />
+            <MyPageMainBtn title="예약내역" link="/my_reservation" />
+            <MyPageMainBtn title="내가 쓴 리뷰" link="/my_review" />
           </div>
           <div className="flex justify-center items-center gap-3 w-full">
-            <MyPageMainBtn title="관심매장" link="/mylikestore" />
-            <MyPageMainBtn title="문의하기" link="/registerqna" />
+            <MyPageMainBtn title="관심매장" link="/my_likestore" />
+            <MyPageMainBtn title="문의하기" link="/register_qna" />
           </div>
         </div>
         {toastMessage && <ToastMessage message={toastMessage} />}

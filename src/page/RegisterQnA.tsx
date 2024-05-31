@@ -18,7 +18,7 @@ const RegisterQnA: React.FC = () => {
           title="문의 접수가 완료되었습니다"
           description="접수하신 내용은 최대한 빠르게 답변드리겠습니다"
           btnValue="확인"
-          link="/myqna"
+          link="/my_qna"
         />
       )}
       <Nav />

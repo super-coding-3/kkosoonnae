@@ -20,3 +20,94 @@ code {
 .react-datepicker-wrapper {
   @apply w-full;
 }
+
+@media (max-width: 510px) {
+  .username-width-change {
+    width: 12rem;
+  }
+  .addpet-description-hidden {
+    display: none;
+  }
+  .addpet-button-change {
+    border-radius: 1rem;
+    width: 100%;
+    height: 100%;
+  }
+  .addpet-button-wrap-change {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+  }
+  .addpet-button-fragment-change {
+    border: 0;
+    height: 10rem;
+  }
+  .infopet-allinfo-size-change {
+    width: 5rem;
+  }
+  .infopet-gender-hidden {
+    display: none;
+  }
+  .likestore-info-size-change {
+    width: 80%;
+  }
+  .likestore-info-hidden {
+    display: none;
+  }
+  .likestore-fragment-height {
+    height: 11rem;
+  }
+  .likestore-img-size-change {
+    width: 7rem;
+    height: 7rem;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 550px) {
+  .likestore-img-size-change {
+    width: 8rem;
+    height: 8rem;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 400px) {
+  .username-width-change {
+    width: 10rem;
+  }
+  .infopet-additionalinfo-hidden {
+    display: none;
+  }
+  .infopet-flex-direction {
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+  }
+  .infopet-fragment-size-change {
+    height: 12rem;
+  }
+  .infopet-wrap-size-change {
+    height: 9rem;
+    gap: 0px;
+  }
+  .addpet-button-fragment-change {
+    height: 12rem;
+  }
+  .infopet-mainpet-label-change {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    padding: 0.25rem 0.5rem;
+  }
+  .infopet-allinfo-size-change {
+    width: 10rem;
+  }
+  .likestore-img-size-change {
+    width: 6rem;
+    height: 6rem;
+    object-fit: cover;
+  }
+  .likestore-fragment-height {
+    height: 9rem;
+  }
+}
