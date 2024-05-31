@@ -1,15 +1,15 @@
-import React from "react";
-import Postcode from "../common/PostCode";
-import formFields from "./FormFields";
 import HttpClient from "../../utils/api/customAxios";
-import CheckAvailabilityApi from "../common/CheckAvailabilityApi";
-import ToastMessage from "../common/ToastMessage";
+import React from "react";
 
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { SignupSchema } from "../../schema/formSchema";
 import { useNavigate } from "react-router-dom";
 
+import Postcode from "../common/PostCode";
+import formFields from "./FormFields";
+import CheckAvailabilityApi from "../common/CheckAvailabilityApi";
+import ToastMessage from "../common/ToastMessage";
 
 const SignUpPage: React.FC = () => {
   const navigate = useNavigate();
