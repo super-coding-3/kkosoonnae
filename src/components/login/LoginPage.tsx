@@ -1,8 +1,11 @@
+import React from "react";
+import HttpClient from "../../utils/api/customAxios";
+
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate } from "react-router-dom";
 import { LoginSchema } from "../../schema/formSchema";
-import React, { useState } from "react";
-import HttpClient from "../../utils/api/customAxios";
+import { useState } from "react";
+
 import ToastMessage from "../common/ToastMessage";
 
 const LoginPage: React.FC = () => {
@@ -10,7 +13,7 @@ const LoginPage: React.FC = () => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   return (
-    <div className="flex flex-col justify-center max-w-xl min-w-[320px] w-full h-full px-4 font-bold text-sm">
+    <div className="flex flex-col justify-center items-center w-full h-full px-4 font-bold text-sm max-w-[640px] min-w-[375px] mx-auto">
       {toastMessage && <ToastMessage message={toastMessage} />}
       <Formik
         initialValues={{
@@ -41,7 +44,7 @@ const LoginPage: React.FC = () => {
         validationSchema={LoginSchema}
       >
         {({ isSubmitting }) => (
-          <Form className="mx-auto w-full mt-4 mb-4">
+          <Form className="w-full mt-4 mb-4">
             <div className="flex flex-col mb-4">
               <label htmlFor="loginId">아이디</label>
               <Field
@@ -70,20 +73,20 @@ const LoginPage: React.FC = () => {
                 className="text-xs ml-2 text-red-600 mt-1 mb-2"
               />
             </div>
-            <div className="flex flex-row justify-between gap-1">
+            <div className="flex flex-row justify-between gap-2">
               <button
                 type="button"
                 onClick={() => {
                   navigate("/signup");
                 }}
-                className="w-full text-MAIN_COLOR h-16 rounded-lg text-lg mt-3 mr-2 border-solid border-2 border-MAIN_COLOR"
+                className="w-1/2 text-MAIN_COLOR h-16 rounded-lg text-lg mt-3 border-solid border-2 border-MAIN_COLOR"
               >
                 회원가입
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-MAIN_COLOR text-MAIN_IVORY h-16 rounded-lg text-lg mt-3"
+                className="w-1/2 bg-MAIN_COLOR text-MAIN_IVORY h-16 rounded-lg text-lg mt-3"
               >
                 로그인
               </button>

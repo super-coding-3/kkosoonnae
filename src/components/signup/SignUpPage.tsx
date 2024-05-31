@@ -1,21 +1,24 @@
-import React, { useState } from "react";
+import HttpClient from "../../utils/api/customAxios";
+import React from "react";
+
+import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { SignupSchema } from "../../schema/formSchema";
 import { useNavigate } from "react-router-dom";
+
 import Postcode from "../common/PostCode";
 import formFields from "./FormFields";
-import HttpClient from "../../utils/api/customAxios";
 import CheckAvailabilityApi from "../common/CheckAvailabilityApi";
 import ToastMessage from "../common/ToastMessage";
 
-const Main: React.FC = () => {
+const SignUpPage: React.FC = () => {
   const navigate = useNavigate();
   const [showPostcode, setShowPostcode] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [doubleCheck, setDoubleCheck] = useState<string>("noProgress");
 
   return (
-    <div className="flex flex-col justify-center items-center w-full h-full mt-2 font-bold text-sm">
+    <div className="flex flex-col justify-center items-center w-full h-full mt-2 font-bold text-sm max-w-[640px] min-w-[375px] mx-auto p-4">
       {toastMessage && <ToastMessage message={toastMessage} />}
       <Formik
         initialValues={{
@@ -67,7 +70,7 @@ const Main: React.FC = () => {
         }}
       >
         {({ setFieldValue, values }) => (
-          <Form className="mx-auto max-w-xl min-w-[320px] w-full">
+          <Form className="w-full">
             {formFields.map((field) => (
               <div key={field.name} className="flex flex-col w-full">
                 <label className="mt-1" htmlFor={field.name}>
@@ -101,7 +104,7 @@ const Main: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setShowPostcode(true)}
-                      className="rounded-lg border-2 border-solid border-main-light-color text-xs w-16 h-10 mt-2 ml-1"
+                      className="rounded-lg border-2 border-solid border-MAIN_LIGHT_COLOR text-xs w-16 h-10 mt-2 ml-1"
                     >
                       주소찾기
                     </button>
@@ -137,4 +140,5 @@ const Main: React.FC = () => {
   );
 };
 
-export default Main;
+export default SignUpPage;
+
