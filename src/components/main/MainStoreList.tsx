@@ -11,6 +11,7 @@ interface MainStoreItem {
   storeName: string;
   roadAddress: string;
   averageScope: null;
+  totalLikeStore: null;
 }
 
 const MainStoreList: React.FC = () => {
@@ -47,13 +48,13 @@ const MainStoreList: React.FC = () => {
                 rounded
               />
               <p className="">
-                <strong className="flex gap-1 text-MAIN_COLOR text-normal">
+                <strong className="flex gap-2 text-MAIN_COLOR text-normal">
                   {item.storeName}
-                  <span className="flex text-xs items-center gap-1">
-                    <FaStar /> 총점 5.0
+                  <span className="flex text-xs items-center gap-1  text-MAIN_LIGHT_COLOR">
+                    <FaStar /> 총점{item.averageScope}
                   </span>
-                  <span className="flex text-xs items-center gap-1">
-                    <FaRegHeart /> 관심수 10
+                  <span className="flex text-xs items-center gap-1  text-MAIN_LIGHT_COLOR">
+                    <FaRegHeart /> 관심수{item.totalLikeStore}
                   </span>
                 </strong>
                 <span className="text-gray-500 text-xs">

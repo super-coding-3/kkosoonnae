@@ -20,3 +20,9 @@ code {
 .react-datepicker-wrapper {
   @apply w-full;
 }
+
+.salon-slick {
+  > div {
+    height: 100%;
+  }
+}
