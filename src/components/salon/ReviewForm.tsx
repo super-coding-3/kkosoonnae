@@ -1,32 +1,91 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
-
+import HttpClient from "../../utils/api/customAxios";
 import { FaStar } from "react-icons/fa";
+
+import ToastMessage from "../common/ToastMessage";
+
+interface ReviewSalonNumberItem {
+  storeNo?: number;
+}
+
+interface ReviewItem {
+  scope: number;
+  content: string;
+  createDt: string;
+}
 
 interface ReviewFormProps {
   onSubmit: (review: { rating: number; content: string }) => void;
 }
 
 const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
-  const [rating, setRating] = useState(0);
-  const [content, setContent] = useState("");
+  const { storeNo } = useParams<{ storeNo: string }>();
 
+  const [rating, setRating] = useState(0);
+  const [salonNumber, setSalonNumber] = useState<ReviewSalonNumberItem | null>(
+    null
+  );
+  const [content, setContent] = useState("");
+  const [reviewToastMessage, setReviewToastMessage] = useState("");
+
+  //총점 클릭
   const handleRatingClick = (selectedRating: number) => {
     setRating(selectedRating);
   };
 
+  //리뷰 내용 담기
   const handleContentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setContent(event.target.value);
   };
 
+  // 매장 번호
+  const getSalonNumber = async () => {
+    const { data } = await HttpClient.get<ReviewSalonNumberItem>(
+      "/KkoSoonNae/store/allStore"
+    );
+    setSalonNumber(data);
+    return data;
+  };
+
+  // 리뷰 내용 post 호출
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSubmit({ rating, content });
-    setRating(0);
-    setContent("");
+
+    const payload = {
+      storeNumber: storeNo,
+      scope: rating,
+      content: content,
+      createDt: new Date().toISOString(),
+    };
+
+    HttpClient.post(`/KkoSoonNae/store/${storeNo}/reviews`, payload)
+      .then((response) => {
+        if (response.status === 200) {
+          setReviewToastMessage(response.data);
+          onSubmit({ rating, content });
+          setRating(0);
+          setContent("");
+
+          const timer = setTimeout(() => {
+            setReviewToastMessage("");
+          }, 3000);
+
+          return () => clearTimeout(timer);
+        }
+      })
+      .catch((error: any) => {
+        setReviewToastMessage("리뷰 작성에 실패했습니다.");
+        console.log(error, "에러");
+      });
   };
+
+  useEffect(() => {
+    getSalonNumber();
+  }, []);
 
   return (
     <ReviewFormWrap>
@@ -68,6 +127,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
         <BtnReviewSubmit type="submit" className="rounded">
           리뷰 작성
         </BtnReviewSubmit>
+        {reviewToastMessage && <ToastMessage message={reviewToastMessage} />}
       </form>
     </ReviewFormWrap>
   );
@@ -89,4 +149,5 @@ const BtnReviewSubmit = styled.button`
   color: #fff;
   background: #492d28;
 `;
+
 export default ReviewForm;

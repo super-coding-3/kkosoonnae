@@ -28,7 +28,6 @@ const SalonReview: React.FC = () => {
     const { data } = await HttpClient.get<ReviewListItem[]>(
       `/KkoSoonNae/store/list-review/${storeNo}`
     );
-    console.log(data[0].storeName);
     setReviewListData(data);
     return data;
   };

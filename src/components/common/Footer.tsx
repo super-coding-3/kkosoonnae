@@ -13,7 +13,9 @@ const Footer: React.FC = () => {
         <a href="mailto:support@kkosoonae.com">support@kkosoonae.com</a>
         &copy; 2024 꼬순내. All rights reserved.
       </p>
-      <address>주소:서울특별시 강남구 봉은사로 427</address>
+      <address className="text-xs text-center break-keep text-slate-400 leading-4 mt-3">
+        주소:서울특별시 강남구 봉은사로 427
+      </address>
     </footer>
   );
 };

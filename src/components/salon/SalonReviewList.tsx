@@ -14,7 +14,7 @@ const SalonReviewList: React.FC<SalonReviewListProps> = ({
   reviewListData,
 }) => {
   const handleReviewSubmit = (review: { rating: number; content: string }) => {
-    console.log("Submitted review:", review);
+    console.log("Submitted review:");
   };
 
   return (
