@@ -21,6 +21,11 @@ code {
   @apply w-full;
 }
 
+.salon-slick {
+  > div {
+    height: 100%;
+  }
+}
 
 @media (max-width: 510px) {
   .username-width-change {
@@ -110,9 +115,5 @@ code {
   }
   .likestore-fragment-height {
     height: 9rem;
-
-.salon-slick {
-  > div {
-    height: 100%;
   }
 }
