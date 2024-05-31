@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
 import HttpClient from "../../utils/api/customAxios";
-import { Carousel } from "flowbite-react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 interface SalonNumberItem {
   storeNo?: number;
@@ -32,6 +33,16 @@ function SalonCarousel() {
 
   const { storeNo } = useParams<{ storeNo: string }>();
 
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    arrows: false,
+  };
+
   const getSalonNumber = async () => {
     const { data } = await HttpClient.get<SalonNumberItem>(
       "/KkoSoonNae/store/allStore"
@@ -55,14 +66,17 @@ function SalonCarousel() {
   }, [storeNo]);
 
   return (
-    <SalonCarouselWrap>
-      <Carousel>{salonInfo && <img src={salonInfo.img} alt="" />}</Carousel>
-    </SalonCarouselWrap>
+    <div>
+      <Slider {...settings} className="salon-slick h-64 w-full">
+        {salonInfo?.img?.[0] && (
+          <img src={salonInfo.img[0]} alt="" className="h-full" />
+        )}
+        {salonInfo?.img?.[1] && (
+          <img src={salonInfo.img[1]} alt="" className="h-full" />
+        )}
+      </Slider>
+    </div>
   );
 }
-
-const SalonCarouselWrap = styled.div`
-  height: 180px;
-`;
 
 export default SalonCarousel;

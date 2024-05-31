@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/KkoSoonNae/:path*",
-      "destination": "http://43.200.162.185:8080/:path*"
-    }
-  ]
-}

@@ -9,7 +9,7 @@ interface SalonNumberItem {
   storeName: string;
 }
 
-interface SalonInfoItem {
+export interface SalonInfoItem {
   storeNo?: number;
   storeName: string;
   content: string;

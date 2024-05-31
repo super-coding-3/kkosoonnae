@@ -9,7 +9,7 @@ const EventBtnContent: React.FC = () => {
       <a
         href="https://smartstore.naver.com/pawinhand"
         target="_blank"
-        className="block relative z-10 w-1/2 min-h-28 shadow-md overflow-hidden rounded-lg"
+        className="block relative z-1 w-1/2 min-h-28 shadow-md overflow-hidden rounded-lg"
         rel="noreferrer"
       >
         <img src="img/main/event1.png" alt="" className="w-full" />
@@ -17,7 +17,7 @@ const EventBtnContent: React.FC = () => {
       <a
         href="https://m.pet-friends.co.kr/category/2/5?productGroup2Id=4&filters=orderBy%5C-product_score"
         target="_blank"
-        className="block relative z-10 w-1/2 min-h-28 shadow-md overflow-hidden rounded-lg"
+        className="block relative z-1 w-1/2 min-h-28 shadow-md overflow-hidden rounded-lg"
         rel="noreferrer"
       >
         <img src="img/main/event2.png" alt="" className="w-full" />

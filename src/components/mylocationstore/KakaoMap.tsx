@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import React from "react";
+
+import { useEffect, useState } from "react";
 import { Store } from "./LocationApi";
+
+
 
 declare global {
   interface Window {
@@ -91,8 +94,8 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
 
   useEffect(() => {
     if (map) {
-      markers.forEach((marker) => marker.setMap(null));  {/*기존 마커 제거*/}
-      overlays.forEach((overlay) => overlay.setMap(null)); {/*기존 오버레이 제거*/}
+      markers.forEach((marker) => marker.setMap(null));  
+      overlays.forEach((overlay) => overlay.setMap(null)); 
 
       const newMarkers: any[] = [];
       const newOverlays: any[] = [];
@@ -125,8 +128,8 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
         newOverlays.push(customOverlay);
       });
 
-      setMarkers(newMarkers); // 새로운 마커 저장
-      setOverlays(newOverlays); // 새로운 오버레이 저장
+      setMarkers(newMarkers); 
+      setOverlays(newOverlays); 
     }
   }, [filteredStores, map]);
 
@@ -140,16 +143,16 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
 
   return (
     <>
-      <h1 className="text-xl mt-4 font-semibold">내 주변 매장 지도</h1>
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="매장 검색"
-        className="w-full mt-2 rounded-lg p-2 border mb-4"/>
-      <div id="map" className="w-full h-72 rounded-xl border" />
-      
-    </>
+    <h1 className="text-xl mt-4 font-semibold">내 주변 매장 지도</h1>
+    <input
+      type="text"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      placeholder="매장 검색"
+      className="w-full mt-2 rounded-lg p-2 border mb-4"
+    />
+    <div id="map" className="w-full h-72 rounded-xl border" />
+  </>
   );
 };
 
