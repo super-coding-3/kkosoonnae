@@ -185,7 +185,7 @@ const MyPage: React.FC = () => {
           {!(mypageInfos.myPet?.length === 0) ? (
             <Slider {...settings}>
               {mypageInfos.myPet.map((item: MyPetInfosType) => (
-                <div className="pr-2">
+                <div className="pr-2" key={item.petNo}>
                   <MyPagePetInfo
                     petNo={item.petNo}
                     img={item.img}

@@ -77,6 +77,7 @@ const MyQnA: React.FC = () => {
           </div>
           {myQnADatas.map((item: MyQnADatasType) => (
             <MyQnACard
+              key={item.qnaNo}
               status="답변 대기중"
               title={item.title}
               content={item.content}
