@@ -6,6 +6,7 @@ const BASE_URL = apiUrl;
 
 const HttpClient: AxiosInstance = axios.create({
   baseURL: BASE_URL,
+  withCredentials: true,
 });
 
 HttpClient.interceptors.request.use(
