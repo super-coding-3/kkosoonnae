@@ -2,7 +2,7 @@
    "rewrites": [
      {
        "source": "/KkoSoonNae/:path*",
-       "destination": "https://kkosoonnae.shop/KkoSoonNae/:path*"
+       "destination": "https://kkosoonnae.store/KkoSoonNae/:path*"
      }
    ]
  }
