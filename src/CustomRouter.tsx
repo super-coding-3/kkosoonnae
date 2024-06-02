@@ -5,8 +5,8 @@ import { ROUTER_INFOS } from "./constants/constants";
 const CustomRouter: React.FC = () => {
   return (
     <Routes>
-      {ROUTER_INFOS.map((info) => (
-        <Route path={info.path} element={info.element} />
+      {ROUTER_INFOS.map((info, index) => (
+        <Route key={index} path={info.path} element={info.element} />
       ))}
     </Routes>
   );

@@ -82,23 +82,22 @@ const MyReservation: React.FC = () => {
         <PageNothing message="예약내역이 없습니다" />
       ) : (
         <div className="pt-4 pb-24 px-4">
-          {myReservationDatas.map(
-            (item: MyReservationDatasType, index: number) => (
-              <MyReservationCard
-                reservationNo={item.reservationNo}
-                date={item.reservationDate}
-                time={item.reservationTime}
-                status={item.reservationStatus}
-                storeImg={item.storeImg}
-                storeName={item.storeName}
-                style={item.styleName}
-                price={`${item.price}원`}
-                delBtnOnClick={() => {
-                  handlerClickCancel(item.reservationNo);
-                }}
-              />
-            )
-          )}
+          {myReservationDatas.map((item: MyReservationDatasType) => (
+            <MyReservationCard
+              key={item.reservationNo}
+              reservationNo={item.reservationNo}
+              date={item.reservationDate}
+              time={item.reservationTime}
+              status={item.reservationStatus}
+              storeImg={item.storeImg}
+              storeName={item.storeName}
+              style={item.styleName}
+              price={`${item.price}원`}
+              delBtnOnClick={() => {
+                handlerClickCancel(item.reservationNo);
+              }}
+            />
+          ))}
           <ModalDelete
             showModalDelete={showModalDelete}
             setShowModalDelete={setShowModalDelete}

@@ -65,6 +65,7 @@ const MyReview: React.FC = () => {
           </div>
           {myReview.map((item: MyReviewType) => (
             <MyReviewCard
+              key={item.reviewNo}
               storeName={item.storeName}
               scope={item.scope}
               content={item.content}

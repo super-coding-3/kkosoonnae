@@ -64,6 +64,7 @@ const MyLikeStore: React.FC = () => {
         ) : (
           myLikeStore.map((item: MyLikeStoreType) => (
             <MyLikeStoreCard
+              key={item.likeNo}
               storeNo={item.storeNo}
               storeImg={item.storeImg}
               storeName={item.storeName}
