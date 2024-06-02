@@ -127,7 +127,7 @@ const MyPage: React.FC = () => {
             {JSON.stringify(mypageInfos) === "{}" ? (
               <div>익명의 집사님</div>
             ) : (
-              <div className="flex items-center leading w-72 gap-1 username-width-change">
+              <div className="flex items-center leading w-72 username-width-change">
                 <div className="truncate">{mypageInfos.userNickname}</div>
                 <div className="w-7">님</div>
               </div>
@@ -185,7 +185,7 @@ const MyPage: React.FC = () => {
           {!(mypageInfos.myPet?.length === 0) ? (
             <Slider {...settings}>
               {mypageInfos.myPet.map((item: MyPetInfosType) => (
-                <div className="pr-2">
+                <div className="pr-2" key={item.petNo}>
                   <MyPagePetInfo
                     petNo={item.petNo}
                     img={item.img}

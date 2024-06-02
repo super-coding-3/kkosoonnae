@@ -51,7 +51,7 @@ code {
   .infopet-allinfo-size-change {
     width: 5rem;
   }
-  .infopet-gender-hidden {
+  .infopet-info-hidden {
     display: none;
   }
   .likestore-info-size-change {
@@ -96,6 +96,12 @@ code {
   .infopet-wrap-size-change {
     height: 9rem;
     gap: 0px;
+  }
+  .infopet-info-justify-change {
+    justify-content: center;
+  }
+  .infopet-info-hidden {
+    display: flex;
   }
   .addpet-button-fragment-change {
     height: 12rem;
