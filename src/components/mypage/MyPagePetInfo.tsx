@@ -28,23 +28,22 @@ const MyPagePetInfo: React.FC<MyPagePetInfoProps> = (props) => {
             src={props.img}
           />
           <div className="flex flex-col gap-1 w-36 infopet-allinfo-size-change">
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 infopet-info-justify-change">
               <div className="text-lg font-bold truncate">{props.name}</div>
               {props.gender == "여아" ? (
-                <p className="infopet-gender-hidden">
+                <p className="infopet-info-hidden">
                   <TbGenderFemale color="#e91e63" size="20px" />
                 </p>
               ) : (
-                <p className="infopet-gender-hidden">
+                <p className="infopet-info-hidden">
                   <TbGenderMale color="#004fe5" size="20px" />
                 </p>
               )}
             </div>
             <div className="text-gray-400 infopet-additionalinfo-hidden">
-              {props.type}
-            </div>
-            <div className="text-gray-400 infopet-additionalinfo-hidden">
-              {props.age} • {props.weigth}kg
+              <div>{props.type}</div>
+              <span>{props.age}</span>
+              <span className="infopet-info-hidden"> • {props.weigth}kg </span>
             </div>
           </div>
         </div>
