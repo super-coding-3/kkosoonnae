@@ -23,7 +23,7 @@ const MyReservationDetail: React.FC = () => {
     };
 
   const hanlderOkBtn = () => {
-    window.location.href = "/myreservation";
+    window.location.href = "/my_reservation";
   };
 
   useEffect(() => {
