@@ -112,7 +112,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
 
           <Formik
             initialValues={initialValues}
-            // validationSchema={reservationSchema}
+            validationSchema={reservationSchema}
             onSubmit={(values) => reservationHandleSubmit(values)}
           >
             {({ setFieldValue }) => (
