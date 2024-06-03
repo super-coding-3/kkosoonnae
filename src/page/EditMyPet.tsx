@@ -142,6 +142,7 @@ const EditMyPet: React.FC = () => {
       };
 
       setMyPetInfos(petData);
+      setPreviewImg(resPetData.img);
     };
 
     fetchPet(setParam);
