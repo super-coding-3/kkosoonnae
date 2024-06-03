@@ -135,6 +135,9 @@
 
 - GitHub PR과 디스코드를 사용하여 진행 상황을 공유했습니다.
 - 주간회의를 진행하며 작업 순서와 방향성에 대한 고민을 나누고 [Notion](https://www.notion.so/511920be91a34f8485c6c91f82d8fd19?pvs=4)에 회의 내용을 기록했습니다.
+- WBS 작성하여 프로젝트 범위 명확화하고 진척도 추적을 했습니다.
+- ![image](https://github.com/super-coding-3/kkosoonnae/assets/101633842/2eb639d1-7c3c-4a8a-bb63-2ef53ac4cca4)
+
 
 
 <br>
