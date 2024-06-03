@@ -42,7 +42,7 @@ const SalonReviewList: React.FC<SalonReviewListProps> = ({
       ))}
 
       {/* Review 쓰기 */}
-      <div className="py-4">
+      <div className="pt-4 pb-8">
         <ReviewForm onSubmit={handleReviewSubmit} />
       </div>
     </div>

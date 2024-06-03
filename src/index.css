@@ -27,6 +27,10 @@ code {
   }
 }
 
+.result-card-img > img {
+  max-height: 280px;
+}
+
 @media (max-width: 510px) {
   .username-width-change {
     width: 12rem;

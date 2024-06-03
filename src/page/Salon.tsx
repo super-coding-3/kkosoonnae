@@ -3,7 +3,7 @@ import OuterLayout from "../components/common/OuterLayout";
 import SalonCarousel from "../components/salon/SalonCarousel";
 import SalonTab from "../components/salon/SalonTab";
 import PageTitle from "../components/common/PageTitle";
-import Footer from "../components/common/Footer";
+import Nav from "../components/common/Nav";
 
 const Salon: React.FC = () => {
   return (
@@ -13,7 +13,7 @@ const Salon: React.FC = () => {
       <div className="px-4 mb-12">
         <SalonTab />
       </div>
-      <Footer />
+      <Nav />
     </OuterLayout>
   );
 };
