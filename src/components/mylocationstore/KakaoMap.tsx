@@ -143,7 +143,7 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
 
   return (
     <>
-    <h1 className="text-xl mt-4 font-semibold">내 주변 매장 지도</h1>
+    <h1 className="text-xl font-semibold">내 주변 매장 지도</h1>
     <input
       type="text"
       value={searchTerm}
