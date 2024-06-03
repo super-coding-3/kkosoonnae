@@ -53,8 +53,6 @@ const SignUpPage: React.FC = () => {
             HttpClient.post("/KkoSoonNae/customer/signUp", payload)
               .then((response) => {
                 setToastMessage("회원가입이 완료되었습니다!");
-                const res = response.data;
-                console.log(res);
                 setTimeout(() => {
                   navigate("/");
                 }, 800);
@@ -64,7 +62,6 @@ const SignUpPage: React.FC = () => {
                   setToastMessage(error.response.data.message);
                 }, 800);
               });
-            alert(JSON.stringify(values, null, 2));
             setSubmitting(false);
           }
         }}
