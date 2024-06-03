@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="py-4 px-4">
+    <footer className="pt-4 pb-10 px-4">
       <p className="text-xs text-center break-keep text-slate-400 leading-4 mt-3">
         꼬순내는 반려동물 주인들과 전문 반려동물 미용사를 연결하는 플랫폼입니다.
         저희는 사용자들에게 편리하고 원활한 경험을 제공하기 위해 노력하고

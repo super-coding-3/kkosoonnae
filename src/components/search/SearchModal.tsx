@@ -26,6 +26,7 @@ function SearchModal({ onClose }: SearchModalProps) {
 
   const handleSearchComplete = (data: SearchResultItem[]) => {
     setResultKeywordData(data);
+    console.log(data);
   };
 
   return (
@@ -35,38 +36,40 @@ function SearchModal({ onClose }: SearchModalProps) {
           className="mid-size"
           onSearchComplete={handleSearchComplete}
         />
-        <BtnClose onClick={onClose}>
+        <button onClick={onClose}>
           <IoIosClose size={44} />
-        </BtnClose>
+        </button>
       </div>
       <div className="mt-4">
         {resultKeywordData.map((item, index) => (
-          <>
-            <NavLink
-              to={`/salon/${item.storeNo}`}
-              key={index}
-              className="block mb-3"
-            >
-              <ResultStore>
-                <Card imgAlt="살롱이미지" imgSrc="/img/search/store-sample.png">
-                  <ResultStoreInfo>
+          <NavLink
+            to={`/salon/${item.storeNo}`}
+            key={index}
+            className="block mb-3"
+          >
+            <div>
+              <Card
+                imgAlt="살롱이미지"
+                imgSrc={`${item?.img?.[0]}`}
+                className="result-card-img"
+              >
+                <div className="py-4 px-8">
+                  <div className="flex items-center gap-2">
+                    <strong>{item.storeName}</strong>
                     <div className="flex items-center gap-2">
-                      <strong>{item.storeName}</strong>
-                      <Score>
-                        <p className="flex text-xs items-center gap-1">
-                          <FaStar /> {item.averageScope} null
-                        </p>
-                        <p className="flex text-xs items-center gap-1">
-                          <FaRegHeart /> 관심수 10
-                        </p>
-                      </Score>
+                      <p className="flex text-xs items-center gap-1 text-MAIN_LIGHT_COLOR">
+                        <FaStar /> {item.averageScope}
+                      </p>
+                      <p className="flex text-xs items-center gap-1  text-MAIN_LIGHT_COLOR">
+                        <FaRegHeart /> 관심수 10
+                      </p>
                     </div>
-                    <p className="text-xs text-zinc-500">{item.roadAddress}</p>
-                  </ResultStoreInfo>
-                </Card>
-              </ResultStore>
-            </NavLink>
-          </>
+                  </div>
+                  <p className="text-xs text-zinc-500">{item.roadAddress}</p>
+                </div>
+              </Card>
+            </div>
+          </NavLink>
         ))}
       </div>
     </SearchModalWrap>
@@ -88,27 +91,4 @@ const SearchModalWrap = styled.div`
   }
 `;
 
-const BtnClose = styled.button``;
-
-const ResultStore = styled.div`
-  > div {
-    > div {
-      padding: 0.5rem 1rem;
-    }
-  }
-`;
-
-const ResultStoreInfo = styled.div``;
-
-const Score = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  p {
-    svg {
-      color: #888;
-    }
-    color: #888;
-  }
-`;
 export default SearchModal;

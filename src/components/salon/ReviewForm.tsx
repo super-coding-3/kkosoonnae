@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import HttpClient from "../../utils/api/customAxios";
 import { FaStar } from "react-icons/fa";
@@ -22,6 +22,7 @@ interface ReviewFormProps {
 
 const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
   const { storeNo } = useParams<{ storeNo: string }>();
+  const navigate = useNavigate();
 
   const [rating, setRating] = useState(0);
   const [salonNumber, setSalonNumber] = useState<ReviewSalonNumberItem | null>(
@@ -29,6 +30,9 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
   );
   const [content, setContent] = useState("");
   const [reviewToastMessage, setReviewToastMessage] = useState("");
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem("token")
+  );
 
   //총점 클릭
   const handleRatingClick = (selectedRating: number) => {
@@ -78,8 +82,10 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
         }
       })
       .catch((error: any) => {
-        setReviewToastMessage("리뷰 작성에 실패했습니다.");
-        console.log(error, "에러");
+        setReviewToastMessage("로그인이 필요합니다.");
+        setTimeout(() => {
+          navigate("/login");
+        }, 3000);
       });
   };
 

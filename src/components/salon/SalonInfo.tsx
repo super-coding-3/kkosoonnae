@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
 import FavoriteButton from "./FavoriteButton";
 import HttpClient from "../../utils/api/customAxios";
+import ToastMessage from "../common/ToastMessage";
 
 interface SalonNumberItem {
   storeNo?: number;
@@ -29,6 +31,10 @@ interface SalonServerResponse {
 const SalonInfo: React.FC = () => {
   const [salonNumber, setSalonNumber] = useState<SalonNumberItem | null>(null);
   const [salonInfo, setSalonInfo] = useState<SalonInfoItem | null>(null);
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem("token")
+  );
+  const [reservationToastMessage, setReservationToastMessage] = useState("");
 
   const { storeNo } = useParams<{ storeNo: string }>();
   const navigate = useNavigate();
@@ -67,15 +73,20 @@ const SalonInfo: React.FC = () => {
   }, [storeNo]);
 
   const goReservation = () => {
-    if (salonInfo) {
+    console.log("실행");
+    if (!token) {
+      setReservationToastMessage("로그인이 필요합니다.");
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+    }
+    if (token && salonInfo) {
       navigate(`/reservation/${salonInfo.storeNo}`, {
         state: {
           salonNamefix: salonInfo.storeName,
           salonNumber: salonInfo.storeNo,
         },
       });
-    } else {
-      console.error("펫 store 정보가 없습니다");
     }
   };
 
@@ -114,6 +125,9 @@ const SalonInfo: React.FC = () => {
             예약
           </BtnReservation>
         </>
+      )}
+      {reservationToastMessage && (
+        <ToastMessage message={reservationToastMessage} />
       )}
     </div>
   );
