@@ -13,7 +13,7 @@ const ReservationOk: React.FC = () => {
         />
         <h2 className="text-xl mt-4">예약확인</h2>
         <p className=" text-black text-sm  mt-4 mb-8">예약이 완료 되었습니다</p>
-        <Link to="/myreservation" className="block w-full">
+        <Link to="/my_reservation" className="block w-full">
           <BtnSubmit value="예약내역" />
         </Link>
       </div>
