@@ -29,7 +29,7 @@ const MyLocationStore: React.FC = () => {
   return (
     <OuterLayout>
     <div className="max-w-[640px] w-full min-w-[375px] px-4 overflow-x-hidden">
-      <header className="fixed top-0 left-0 right-0 bg-white shadow-md w-full max-w-[640px] mx-auto">
+      <header className="fixed top-0 left-0 right-0 bg-white shadow-md w-full max-w-[640px] mx-auto z-50">
         <PageTitle title="내 주변 미용실" />
       </header>
       <div className="flex-1  pt-20 pb-20">
