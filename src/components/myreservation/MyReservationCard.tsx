@@ -41,7 +41,7 @@ const MyReservationCard: React.FC<MyReservationCardProps> = (props) => {
           예약 취소
         </button>
         <Link
-          to={"/myreservation/detail/" + props.reservationNo}
+          to={"/my_reservation/detail/" + props.reservationNo}
           className="w-1/2 bg-MAIN_LIGHT_COLOR text-MAIN_IVORY rounded-lg flex items-center justify-center"
         >
           <p>예약 상세</p>
