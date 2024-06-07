@@ -21,7 +21,7 @@ interface QnAType {
 const RegisterQnAForm: React.FC<RegisterQnAFormProps> = (props) => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const handleFormSubmit = (values: QnAType) => {
-    HttpClient.post("/KkoSoonNae/qna/create", values)
+    HttpClient.post("/api/qna/create", values)
       .then((response) => {
         props.setStep(2);
       })

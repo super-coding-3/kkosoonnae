@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 
-const apiUrl = process.env.REACT_APP_API_URL
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const BASE_URL = apiUrl;
 
@@ -12,10 +12,10 @@ HttpClient.interceptors.request.use(
   (config) => {
     if (config.headers) {
       config.headers.Authorization = localStorage.getItem("token");
-      if (config.url?.includes("/KkoSoonNae/pet/addPet")) {
+      if (config.url?.includes("/api/pet/addPet")) {
         config.headers["Content-Type"] = "multipart/form-data";
       }
-      if (config.url?.includes("/KkoSoonNae/pet/update/")) {
+      if (config.url?.includes("/api/pet/update/")) {
         config.headers["Content-Type"] = "multipart/form-data";
       }
     }

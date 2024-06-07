@@ -51,7 +51,7 @@ const MyPage: React.FC = () => {
   };
 
   const handlerMainPetEdit = async (petNo: number, petName: string) => {
-    await HttpClient.put(`/KkoSoonNae/pet/main-pet/${petNo}`);
+    await HttpClient.put(`/api/pet/main-pet/${petNo}`);
     setToastMessage(`대표 꼬순내가 ${petName}(으)로 변경되었습니다`);
     setTimeout(() => {
       window.location.reload();
@@ -59,17 +59,17 @@ const MyPage: React.FC = () => {
   };
 
   const getPoints = async () => {
-    const res = await HttpClient.get("/KkoSoonNae/point");
+    const res = await HttpClient.get("/api/point");
     return res.data;
   };
 
   const getUserNickname = async () => {
-    const res = await HttpClient.get("/KkoSoonNae/customer/nickname");
+    const res = await HttpClient.get("/api/customer/nickname");
     return res.data;
   };
 
   const getMyPet = async () => {
-    const res = await HttpClient.get("/KkoSoonNae/pet/allPet-list");
+    const res = await HttpClient.get("/api/pet/allPet-list");
     return res.data;
   };
 

@@ -25,7 +25,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
   const handleSearch = async () => {
     try {
       const response = await HttpClient.get(
-        `/KkoSoonNae/search/stores/?nameAddressKeyword=${searchKeywordQuery}`
+        `/api/search/stores/?nameAddressKeyword=${searchKeywordQuery}`
       );
       onSearchComplete(response.data);
     } catch (error) {
