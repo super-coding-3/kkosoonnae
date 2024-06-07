@@ -27,12 +27,12 @@ const MyReview: React.FC = () => {
   const [reviewNo, setReviewNo] = useState<number>(0);
 
   const getMyReview = async (): Promise<MyReviewType[]> => {
-    const res = await HttpClient.get("/KkoSoonNae/my-review-list");
+    const res = await HttpClient.get("/api/my-review-list");
     return res.data;
   };
 
   const deleteMyReview = async (reviewNo: number) => {
-    await HttpClient.delete(`/KkoSoonNae/my-review/${reviewNo}`);
+    await HttpClient.delete(`/api/my-review/${reviewNo}`);
     setShowModalDelete(false);
     setShowToastMessage(true);
     setTimeout(() => {

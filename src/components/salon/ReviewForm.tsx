@@ -49,7 +49,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
   // 매장 번호
   const getSalonNumber = async () => {
     const { data } = await HttpClient.get<ReviewSalonNumberItem>(
-      "/KkoSoonNae/store/allStore"
+      "/api/store/allStore"
     );
     setSalonNumber(data);
     return data;
@@ -66,7 +66,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
       createDt: new Date().toISOString(),
     };
 
-    HttpClient.post(`/KkoSoonNae/store/${storeNo}/reviews`, payload)
+    HttpClient.post(`/api/store/${storeNo}/reviews`, payload)
       .then((response) => {
         if (response.status === 200) {
           setReviewToastMessage(response.data);

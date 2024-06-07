@@ -26,7 +26,7 @@ const SalonReview: React.FC = () => {
 
   const getReviewList = async () => {
     const { data } = await HttpClient.get<ReviewListItem[]>(
-      `/KkoSoonNae/store/list-review/${storeNo}`
+      `/api/store/list-review/${storeNo}`
     );
     setReviewListData(data);
     return data;

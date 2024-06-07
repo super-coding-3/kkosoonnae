@@ -45,7 +45,7 @@ function SalonCarousel() {
 
   const getSalonNumber = async () => {
     const { data } = await HttpClient.get<SalonNumberItem>(
-      "/KkoSoonNae/store/allStore"
+      "/api/store/allStore"
     );
     setSalonNumber(data);
     return data;

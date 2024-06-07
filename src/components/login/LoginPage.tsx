@@ -25,7 +25,7 @@ const LoginPage: React.FC = () => {
             loginId: values.loginId,
             password: values.password,
           };
-          HttpClient.post("/KkoSoonNae/customer/login", payload)
+          HttpClient.post("/api/customer/login", payload)
             .then((response) => {
               setToastMessage("로그인이 성공하였습니다!");
               const res = response.data;

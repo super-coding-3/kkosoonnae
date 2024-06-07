@@ -17,9 +17,7 @@ function NoticeAccordion() {
   const [data, setData] = useState<NoticeItem[]>([]);
 
   const getNoticeData = async () => {
-    const response = await HttpClient.get<NoticeItem[]>(
-      "/KkoSoonNae/notice/all"
-    );
+    const response = await HttpClient.get<NoticeItem[]>("/api/notice/all");
     setData(response.data);
   };
 

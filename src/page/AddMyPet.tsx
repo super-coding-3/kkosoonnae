@@ -44,7 +44,7 @@ const AddMyPet: React.FC = () => {
       requestValues.append("petAddDto", petAddDtoDatas);
       requestValues.append("petImg", previewImg);
 
-      await HttpClient.post("/KkoSoonNae/pet/addPet", requestValues)
+      await HttpClient.post("/api/pet/addPet", requestValues)
         .then(() => {
           setToastMessage(`${values.name}(이)가 등록되었습니다`);
           setTimeout(function () {

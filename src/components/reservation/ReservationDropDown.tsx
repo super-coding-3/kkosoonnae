@@ -22,7 +22,7 @@ function ReservationDropDown() {
 
   const getCutstyle = async () => {
     const { data } = await HttpClient.get<CutStyleItem[]>(
-      `/KkoSoonNae/reservation/style-list/${storeNo}`
+      `/api/reservation/style-list/${storeNo}`
     );
     setCutStyleState(data);
     return data;
