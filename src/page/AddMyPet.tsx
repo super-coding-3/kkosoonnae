@@ -22,14 +22,14 @@ interface MyPetInfosType {
   gender: string;
   weight: string;
   petImg: string;
+  petImgData: string;
 }
 
 const AddMyPet: React.FC = () => {
-  const [previewImg, setPreviewImg] = useState<string | undefined>("");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const handleFormSubmit = async (values: MyPetInfosType) => {
-    if (previewImg) {
+    if (values.petImgData) {
       const requestValues = new FormData();
       const petAddDtoValues = JSON.stringify({
         name: values.name,
@@ -42,7 +42,7 @@ const AddMyPet: React.FC = () => {
         type: "application/json",
       });
       requestValues.append("petAddDto", petAddDtoDatas);
-      requestValues.append("petImg", previewImg);
+      requestValues.append("petImg", values.petImgData);
 
       await HttpClient.post("/api/pet/addPet", requestValues)
         .then(() => {
@@ -82,6 +82,7 @@ const AddMyPet: React.FC = () => {
     gender: "남아",
     weight: "",
     petImg: "",
+    petImgData: "",
   };
 
   return (
@@ -93,13 +94,9 @@ const AddMyPet: React.FC = () => {
         validationSchema={EditMyPetSchema}
         enableReinitialize={true}
       >
-        {({ setFieldValue, values, isValid, dirty }) => (
+        {({ setFieldValue, values, isValid }) => (
           <Form className="pt-4 pb-24 px-4 font-bold">
-            <ImgMyPet
-              img={values.petImg}
-              setFieldValue={setFieldValue}
-              setPreviewImg={setPreviewImg}
-            />
+            <ImgMyPet img={values.petImg} setFieldValue={setFieldValue} />
             <InputMyPet
               name="name"
               placeholder="내 꼬순내 이름을 입력해주세요."
@@ -125,7 +122,7 @@ const AddMyPet: React.FC = () => {
               label={MYPET_FORM_LABEL.weight}
             />
             <BtnSubmit
-              value="수정하기"
+              value="등록하기"
               type={isValid === true ? "submit" : "button"}
               active={isValid}
               onClick={() => {

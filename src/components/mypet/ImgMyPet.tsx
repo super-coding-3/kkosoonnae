@@ -6,22 +6,20 @@ import { LuSwitchCamera } from "react-icons/lu";
 interface ImgMyPetProps {
   img: string;
   setFieldValue: FormikProps<any>["setFieldValue"];
-  setPreviewImg: React.Dispatch<SetStateAction<string | undefined>>;
 }
 
 const ImgMyPet: React.FC<ImgMyPetProps> = (props) => {
-  const handleFileUpload = (e: any) => {
-    const imgFile = e.target.files[0];
-    e.preventDefault();
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const imgFile = e.target.files?.[0];
     if (!imgFile) return;
-    props.setPreviewImg(imgFile);
+
     const reader = new FileReader();
     reader.readAsDataURL(imgFile);
 
     return new Promise<void>((resolve) => {
       reader.onload = () => {
         props.setFieldValue("petImg", reader.result);
-
+        props.setFieldValue("petImgData", imgFile);
         resolve();
       };
     });
