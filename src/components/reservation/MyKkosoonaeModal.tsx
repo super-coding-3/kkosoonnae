@@ -10,6 +10,7 @@ interface MyKkosoonaeModalProps {
 
 interface MypetInfo {
   petNumber: number;
+  petImg: string;
   petName: string;
   breed: string;
   weight: string;
@@ -27,6 +28,7 @@ const MyKkosoonaeModal: React.FC<MyKkosoonaeModalProps> = ({
       "api/reservation/my-pet"
     );
     setPetInfo(data);
+    console.log(data);
     return data;
   };
 
@@ -43,7 +45,7 @@ const MyKkosoonaeModal: React.FC<MyKkosoonaeModalProps> = ({
 
   return (
     <div>
-      <Modal show={openModal} onClose={() => setOpenModal(false)}>
+      <Modal show={openModal} onClose={() => setOpenModal(false)} size="md">
         <Modal.Header>내 꼬순내 정보 불러오기</Modal.Header>
         <Modal.Body>
           <div>
@@ -52,12 +54,7 @@ const MyKkosoonaeModal: React.FC<MyKkosoonaeModalProps> = ({
                 key={index}
                 className="border border-gray-400 rounded mb-2 flex items-center gap-4 px-2 py-2"
               >
-                <Avatar
-                  img="/img/common/icon-dog_normal.svg"
-                  size="lg"
-                  alt={pet.petName}
-                  rounded
-                />
+                <Avatar img={pet.petImg} size="lg" alt={pet.petName} rounded />
                 <div className="w-32">
                   <h3 className="text-lg font-bold">{pet.petName}</h3>
                   <p className="text-xs text-gray-500 to-MAIN_COLOR">
@@ -69,7 +66,7 @@ const MyKkosoonaeModal: React.FC<MyKkosoonaeModalProps> = ({
                   </p>
                 </div>
                 <button
-                  className="h-10 border border-gray-800 rounded text-xs text-gray-800 px-4 py-2"
+                  className="h-10 border border-gray-800 rounded text-xs text-gray-800 px-4 py-2 ml-auto"
                   onClick={() => handlePetSelect(pet)}
                 >
                   선택하기
