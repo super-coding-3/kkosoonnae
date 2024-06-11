@@ -24,11 +24,11 @@ interface MyPetInfosType {
   gender: string;
   weight: string;
   petImg: string;
+  petImgData: string;
 }
 
 const EditMyPet: React.FC = () => {
   const { petNo } = useParams() as { petNo: string };
-  const [previewImg, setPreviewImg] = useState<string | undefined>("");
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -39,44 +39,39 @@ const EditMyPet: React.FC = () => {
     gender: "",
     weight: "",
     petImg: "",
+    petImgData: "",
   });
 
   const handleFormSubmit = async (values: MyPetInfosType) => {
-    if (previewImg) {
-      const requestValues = new FormData();
-      const petUpdateValues = JSON.stringify({
-        name: values.name,
-        type: values.type,
-        birthDt: values.birthDt,
-        gender: values.gender,
-        weight: values.weight,
-      });
-      const petUpdateDatas = new Blob([petUpdateValues], {
-        type: "application/json",
-      });
-      requestValues.append("petUpdate", petUpdateDatas);
-      requestValues.append("petImg", previewImg);
-
-      await HttpClient.put(`/api/pet/update/${parseInt(petNo)}`, requestValues)
-        .then((response) => {
-          setToastMessage(`${values.name}의 정보가 수정되었습니다`);
-          setTimeout(() => {
-            window.location.href = "/mypage";
-          }, 1000);
-        })
-        .catch((error: any) => {
-          setToastMessage("오류가 발생했습니다");
-          setTimeout(() => {
-            setToastMessage(null);
-          }, 1000);
-        });
-    } else {
-      setToastMessage("반려동물의 이미지를 넣어주세요");
-      setTimeout(() => {
-        setToastMessage(null);
-      }, 1000);
-      return;
+    const requestValues = new FormData();
+    const petUpdateValues = JSON.stringify({
+      name: values.name,
+      type: values.type,
+      birthDt: values.birthDt,
+      gender: values.gender,
+      weight: values.weight,
+    });
+    const petUpdateDatas = new Blob([petUpdateValues], {
+      type: "application/json",
+    });
+    requestValues.append("petUpdate", petUpdateDatas);
+    if (values.petImgData != null) {
+      requestValues.append("petImg", values.petImgData);
     }
+
+    await HttpClient.put(`/api/pet/update/${parseInt(petNo)}`, requestValues)
+      .then((response) => {
+        setToastMessage(`${values.name}의 정보가 수정되었습니다`);
+        setTimeout(() => {
+          window.location.href = "/mypage";
+        }, 1000);
+      })
+      .catch((error: any) => {
+        setToastMessage("오류가 발생했습니다");
+        setTimeout(() => {
+          setToastMessage(null);
+        }, 1000);
+      });
   };
   const getMyPet = async (petNo: number) => {
     const res = await HttpClient.get(`/api/pet/pet-list/${petNo}`);
@@ -136,10 +131,10 @@ const EditMyPet: React.FC = () => {
         gender: resPetData.gender,
         weight: resPetData.weight,
         petImg: resPetData.img,
+        petImgData: "",
       };
 
       setMyPetInfos(petData);
-      setPreviewImg(resPetData.img);
     };
 
     fetchPet(setParam);
@@ -158,11 +153,7 @@ const EditMyPet: React.FC = () => {
       >
         {({ setFieldValue, values, dirty }) => (
           <Form className="pt-4 pb-24 px-4 font-bold">
-            <ImgMyPet
-              img={values.petImg}
-              setFieldValue={setFieldValue}
-              setPreviewImg={setPreviewImg}
-            />
+            <ImgMyPet img={values.petImg} setFieldValue={setFieldValue} />
             <InputMyPet name="name" label={MYPET_FORM_LABEL.name} />
             <InputMyPet name="type" label={MYPET_FORM_LABEL.type} />
             <CustomDatePickerMyPet
