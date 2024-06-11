@@ -54,7 +54,7 @@ function SalonCarousel() {
   const getSalonInfo = async () => {
     if (storeNo) {
       const { data } = await HttpClient.get<SalonServerResponse>(
-        `KkoSoonNae/store/${storeNo}`
+        `api/store/${storeNo}`
       );
       setSalonInfo(data.storeDetail);
     }

@@ -24,7 +24,7 @@ const MyKkosoonaeModal: React.FC<MyKkosoonaeModalProps> = ({
 
   const getPetInfo = async () => {
     const { data } = await HttpClient.get<MypetInfo[]>(
-      "KkoSoonNae/reservation/my-pet"
+      "api/reservation/my-pet"
     );
     setPetInfo(data);
     return data;
