@@ -3,6 +3,7 @@ import React, { SyntheticEvent, forwardRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
+import { CiCalendar } from "react-icons/ci";
 
 import { MYPET_FORM_LABEL } from "../../constants/constants";
 
@@ -24,10 +25,11 @@ const CustomDatePickerMyPet: React.FC<CustomDatePickerMyPetProps> = (props) => {
     ({ value, onClick }, ref) => (
       <button
         type="button"
-        className="h-10 p-2.5 w-full border-2 text-gray-500 text-start border-COMMONN_BORDER_GRAY appearance-none focus:border-MAIN_COLOR focus:outline-none focus:ring-transparent rounded-lg"
+        className="flex items-center gap-2 h-10 p-2.5 w-full border-2 text-gray-500 text-start border-COMMONN_BORDER_GRAY appearance-none focus:border-MAIN_COLOR focus:outline-none focus:ring-transparent rounded-lg"
         onClick={onClick}
         ref={ref}
       >
+        <CiCalendar />
         {value}
       </button>
     )
