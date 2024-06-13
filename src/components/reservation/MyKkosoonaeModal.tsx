@@ -3,7 +3,7 @@ import { Modal, Avatar } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 
 import HttpClient from "../../utils/api/customAxios";
-import SubmitBtn from "../common/SubmitBtn";
+import BtnSubmit from "../common/BtnSubmit";
 
 interface MyKkosoonaeModalProps {
   openModal: boolean;
@@ -89,13 +89,12 @@ const MyKkosoonaeModal: React.FC<MyKkosoonaeModalProps> = ({
           ) : (
             <div className="text-center">
               <p>등록된 내 꼬순내 정보가 없습니다.</p>
-              <button
+
+              <BtnSubmit
                 type="button"
+                value="내 꼬순내(펫) 등록하기"
                 onClick={() => navigate("/mypage")}
-                className="w-full my-4 py-2 text-white	 bg-MAIN_COLOR rounded"
-              >
-                내 꼬순내(펫) 등록하기
-              </button>
+              ></BtnSubmit>
             </div>
           )}
         </Modal.Body>
