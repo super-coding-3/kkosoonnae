@@ -45,7 +45,7 @@ function SalonCarousel() {
 
   const getSalonNumber = async () => {
     const { data } = await HttpClient.get<SalonNumberItem>(
-      "/api/store/allStore"
+      "/api/user/store/allStore"
     );
     setSalonNumber(data);
     return data;
@@ -54,7 +54,7 @@ function SalonCarousel() {
   const getSalonInfo = async () => {
     if (storeNo) {
       const { data } = await HttpClient.get<SalonServerResponse>(
-        `api/store/${storeNo}`
+        `api/user/store/${storeNo}`
       );
       setSalonInfo(data.storeDetail);
     }

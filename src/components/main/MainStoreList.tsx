@@ -19,7 +19,7 @@ const MainStoreList: React.FC = () => {
 
   const getMainStoreList = async () => {
     const { data } = await HttpClient.get<MainStoreItem[]>(
-      "api/search/main-stores/%EA%B0%95%EB%82%A8%EA%B5%AC"
+      "api/user/search/main-stores/%EA%B0%95%EB%82%A8%EA%B5%AC"
     );
     setMainStoreData(data);
     return data;

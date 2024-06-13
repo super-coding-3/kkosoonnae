@@ -29,12 +29,12 @@ const MyLikeStore: React.FC = () => {
   const [likeNo, setLikeNo] = useState<number>(0);
 
   const getMyLikeStore = async (): Promise<MyLikeStoreType[]> => {
-    const res = await HttpClient.get("/api/like-store");
+    const res = await HttpClient.get("/api/user/like-store");
     return res.data;
   };
 
   const deleteMyLikeStore = async (likeNo: number) => {
-    await HttpClient.delete(`/api/like-cancel/${likeNo}`);
+    await HttpClient.delete(`/api/user/like-cancel/${likeNo}`);
     setShowModalDelete(false);
     setShowToastMessage(true);
     setTimeout(() => {

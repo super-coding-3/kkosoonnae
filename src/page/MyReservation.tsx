@@ -32,12 +32,12 @@ const MyReservation: React.FC = () => {
   const [reservationNo, setReservationNo] = useState<number>(0);
 
   const getMyReservationDatas = async (): Promise<MyReservationDatasType[]> => {
-    const res = await HttpClient.get("/api/avail-list");
+    const res = await HttpClient.get("/api/user/avail-list");
     return res.data;
   };
 
   const deleteMyReservationDatas = async (reservationNo: number) => {
-    await HttpClient.delete(`/api/avail-cancel/${reservationNo}`);
+    await HttpClient.delete(`/api/user/avail-cancel/${reservationNo}`);
     setShowModalDelete(false);
     setShowToastMessage(true);
     setTimeout(() => {

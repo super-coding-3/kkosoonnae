@@ -28,12 +28,12 @@ const MyQnA: React.FC = () => {
   const [qnaNo, setQnANo] = useState<number>(0);
 
   const getMyQnADatas = async (): Promise<MyQnADatasType[]> => {
-    const res = await HttpClient.get("/api/qna/all-list");
+    const res = await HttpClient.get("/api/user/qna/all-list");
     return res.data;
   };
 
   const deleteMyQnADatas = async (qnaNo: number) => {
-    await HttpClient.delete(`/api/qna/deleteQna/${qnaNo}`);
+    await HttpClient.delete(`/api/user/qna/deleteQna/${qnaNo}`);
     setShowModalDelete(false);
     setShowToastMessage(true);
     setTimeout(() => {

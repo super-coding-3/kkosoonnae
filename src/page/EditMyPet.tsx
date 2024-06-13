@@ -59,7 +59,10 @@ const EditMyPet: React.FC = () => {
       requestValues.append("petImg", values.petImgData);
     }
 
-    await HttpClient.put(`/api/pet/update/${parseInt(petNo)}`, requestValues)
+    await HttpClient.put(
+      `/api/user/pet/update/${parseInt(petNo)}`,
+      requestValues
+    )
       .then((response) => {
         setToastMessage(`${values.name}의 정보가 수정되었습니다`);
         setTimeout(() => {
@@ -74,7 +77,7 @@ const EditMyPet: React.FC = () => {
       });
   };
   const getMyPet = async (petNo: number) => {
-    const res = await HttpClient.get(`/api/pet/pet-list/${petNo}`);
+    const res = await HttpClient.get(`/api/user/pet/pet-list/${petNo}`);
     return res.data;
   };
 
@@ -92,7 +95,7 @@ const EditMyPet: React.FC = () => {
   };
 
   const deleteMyPetDatas = async (petNo: number, petName: string) => {
-    await HttpClient.delete(`/api/pet/deletePet/${petNo}`)
+    await HttpClient.delete(`/api/user/pet/deletePet/${petNo}`)
       .then((response) => {
         if (response.data.message === "해당 반려동물은 현재 예약 상태입니다.") {
           setShowModalDelete(false);

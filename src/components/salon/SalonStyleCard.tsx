@@ -19,7 +19,7 @@ const SalonStyleCard: React.FC = () => {
 
   const getSalonCutStyle = async () => {
     const { data } = await HttpClient.get<CutStyleItem[]>(
-      `/api/store/${storeNo}/pethair`
+      `/api/user/store/${storeNo}/pethair`
     );
     setSalonCutStyle(data);
     return data;

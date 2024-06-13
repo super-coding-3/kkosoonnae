@@ -26,7 +26,7 @@ export const fetchStores = async (
   lon: number
 ): Promise<Store[]> => {
   try {
-    const response = await HttpClient.get("/api/store/nearby", {
+    const response = await HttpClient.get("/api/user/store/nearby", {
       params: { lat, lon },
     });
     return response.data;
