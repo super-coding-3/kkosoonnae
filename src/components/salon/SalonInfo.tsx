@@ -73,7 +73,6 @@ const SalonInfo: React.FC = () => {
   }, [storeNo]);
 
   const goReservation = () => {
-    console.log("실행");
     if (!token) {
       setReservationToastMessage("로그인이 필요합니다.");
       setTimeout(() => {
