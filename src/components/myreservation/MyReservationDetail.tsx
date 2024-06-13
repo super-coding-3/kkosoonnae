@@ -17,7 +17,7 @@ const MyReservationDetail: React.FC = () => {
   const getMyReservationDetailDatas =
     async (): Promise<reservationFormValues> => {
       const res = await HttpClient.get(
-        `/api/reservation/result-reservation/${reservationNo}`
+        `/api/user/reservation/result-reservation/${reservationNo}`
       );
       return res.data;
     };

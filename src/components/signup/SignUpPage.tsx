@@ -50,7 +50,7 @@ const SignUpPage: React.FC = () => {
               setToastMessage(null);
             }, 1000);
           } else if (doubleCheck === "complete") {
-            HttpClient.post("/api/customer/signUp", payload)
+            HttpClient.post("/api/user/customer/signUp", payload)
               .then((response) => {
                 setToastMessage("회원가입이 완료되었습니다!");
                 setTimeout(() => {

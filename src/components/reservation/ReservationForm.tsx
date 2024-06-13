@@ -85,7 +85,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
         characteristics: values.characteristics,
       };
       const response = await HttpClient.post(
-        "/api/reservation/make-reservation",
+        "/api/user/reservation/make-reservation",
         payload
       );
 

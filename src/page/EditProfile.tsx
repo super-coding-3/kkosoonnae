@@ -52,7 +52,7 @@ const EditProfile: React.FC = () => {
         setToastMessage(null);
       }, 1000);
     } else {
-      HttpClient.put("/api/customer/profile/update", values)
+      HttpClient.put("/api/user/customer/profile/update", values)
         .then(() => {
           setToastMessage("프로필 수정을 성공하였습니다");
           setTimeout(() => {
@@ -94,7 +94,7 @@ const EditProfile: React.FC = () => {
   };
 
   const getMyProfile = async (): Promise<MyProfileType> => {
-    const res = await HttpClient.get("/api/customer/profile");
+    const res = await HttpClient.get("/api/user/customer/profile");
     return res.data;
   };
 

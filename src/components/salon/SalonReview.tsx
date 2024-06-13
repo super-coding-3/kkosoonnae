@@ -25,11 +25,15 @@ const SalonReview: React.FC = () => {
   const [reviewListData, setReviewListData] = useState<ReviewListItem[]>([]);
 
   const getReviewList = async () => {
-    const { data } = await HttpClient.get<ReviewListItem[]>(
-      `/api/store/list-review/${storeNo}`
-    );
-    setReviewListData(data);
-    return data;
+    try {
+      const { data } = await HttpClient.get<ReviewListItem[]>(
+        `/api/user/store/list-review/${storeNo}`
+      );
+      setReviewListData(data);
+      return data;
+    } catch (error) {
+      setReviewListData([]);
+    }
   };
 
   useEffect(() => {
@@ -38,7 +42,7 @@ const SalonReview: React.FC = () => {
 
   return (
     <div>
-      {reviewListData ? (
+      {reviewListData.length > 0 ? (
         <div className="flex items-center gap-4">
           <h2 className="text-black text-xl font-semibold">
             {reviewListData[0]?.storeName}

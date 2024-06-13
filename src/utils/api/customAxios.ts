@@ -12,10 +12,10 @@ HttpClient.interceptors.request.use(
   (config) => {
     if (config.headers) {
       config.headers.Authorization = localStorage.getItem("token");
-      if (config.url?.includes("/api/pet/addPet")) {
+      if (config.url?.includes("/api/user/pet/addPet")) {
         config.headers["Content-Type"] = "multipart/form-data";
       }
-      if (config.url?.includes("/api/pet/update/")) {
+      if (config.url?.includes("/api/user/pet/update/")) {
         config.headers["Content-Type"] = "multipart/form-data";
       }
     }
