@@ -1,5 +1,3 @@
-import HttpClient from "../utils/api/customAxios";
-
 import React, { useEffect, useState } from "react";
 import { format, parse, parseISO } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -11,6 +9,7 @@ import OuterLayout from "../components/common/OuterLayout";
 import PageTitle from "../components/common/PageTitle";
 import Nav from "../components/common/Nav";
 import MyReservationCard from "../components/myreservation/MyReservationCard";
+import useAxios from "../hooks/useAxios";
 
 interface MyReservationDatasType {
   reservationNo: number;
@@ -31,13 +30,14 @@ const MyReservation: React.FC = () => {
   const [showToastMessage, setShowToastMessage] = useState<boolean>(false);
   const [reservationNo, setReservationNo] = useState<number>(0);
 
-  const getMyReservationDatas = async (): Promise<MyReservationDatasType[]> => {
-    const res = await HttpClient.get("/api/user/mypage/avail-list");
-    return res.data;
-  };
+  // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
+  const { isLoading, error, handleRequest } = useAxios();
 
   const deleteMyReservationDatas = async (reservationNo: number) => {
-    await HttpClient.delete(`/api/user/mypage/avail-cancel/${reservationNo}`);
+    handleRequest({
+      url: `/api/user/mypage/avail-cancel/${reservationNo}`,
+      method: "DELETE",
+    });
     setShowModalDelete(false);
     setShowToastMessage(true);
     setTimeout(() => {
@@ -62,17 +62,11 @@ const MyReservation: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      const resReservationDatas = await getMyReservationDatas();
-      const reservationDatas: MyReservationDatasType[] =
-        resReservationDatas.map((item) => ({
-          ...item,
-          reservationDate: formatDate(item.reservationDate),
-          reservationTime: formatTime(item.reservationTime),
-        }));
-      setMyReservationDatas(reservationDatas);
-    };
-    fetchProfile();
+    handleRequest({
+      url: "/api/user/mypage/avail-list",
+      method: "GET",
+      setData: setMyReservationDatas,
+    });
   }, []);
 
   return (
@@ -86,8 +80,8 @@ const MyReservation: React.FC = () => {
             <MyReservationCard
               key={item.reservationNo}
               reservationNo={item.reservationNo}
-              date={item.reservationDate}
-              time={item.reservationTime}
+              date={formatDate(item.reservationDate)}
+              time={formatTime(item.reservationTime)}
               status={item.reservationStatus}
               storeImg={item.storeImg}
               storeName={item.storeName}

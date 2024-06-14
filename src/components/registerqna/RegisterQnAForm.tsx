@@ -1,5 +1,3 @@
-import HttpClient from "../../utils/api/customAxios";
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Form, Formik } from "formik";
@@ -8,6 +6,7 @@ import ToastMessage from "../common/ToastMessage";
 import BtnSubmit from "../common/BtnSubmit";
 import RegisterQnAFormGroup from "./RegisterQnAFormGroup";
 import { QnASchema } from "../../schema/formSchema";
+import useAxios from "../../hooks/useAxios";
 
 interface RegisterQnAFormProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -20,17 +19,23 @@ interface QnAType {
 
 const RegisterQnAForm: React.FC<RegisterQnAFormProps> = (props) => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  //TODO: 로딩 처리
+  const { isLoading, error, handleRequest } = useAxios();
+
   const handleFormSubmit = (values: QnAType) => {
-    HttpClient.post("/api/user/qna/create", values)
-      .then((response) => {
-        props.setStep(2);
-      })
-      .catch((error: any) => {
-        setToastMessage("오류가 발생했습니다");
-        setTimeout(() => {
-          setToastMessage(null);
-        }, 2000);
-      });
+    handleRequest({
+      url: "/api/user/qna/create",
+      method: "POST",
+      body: values,
+    });
+    if (!error) {
+      props.setStep(2);
+    } else {
+      setToastMessage(error);
+      setTimeout(() => {
+        setToastMessage(null);
+      }, 2000);
+    }
   };
 
   const initialValues = { title: "", content: "" };

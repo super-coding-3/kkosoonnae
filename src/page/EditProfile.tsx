@@ -1,5 +1,3 @@
-import HttpClient from "../utils/api/customAxios";
-
 import React, { useEffect, useState } from "react";
 import { Form, Formik } from "formik";
 import { EditProfileSchema } from "../schema/formSchema";
@@ -14,6 +12,7 @@ import EditProfileFormGroup from "../components/editprofile/EditProfileFormGroup
 import EditProfileErrorMsg from "../components/editprofile/EditProfileErrorMsg";
 import CheckAvailabilityApi from "../components/common/CheckAvailabilityApi";
 import ToastMessage from "../components/common/ToastMessage";
+import useAxios from "../hooks/useAxios";
 
 interface MyProfileType {
   nickName: string;
@@ -36,6 +35,9 @@ const EditProfile: React.FC = () => {
     addressDtl: "",
   });
 
+  // TODO: 로딩 화면 구현
+  const { isLoading, error, handleRequest } = useAxios();
+
   const handleshowPostcode = () => {
     setShowPostcode(true);
   };
@@ -52,19 +54,22 @@ const EditProfile: React.FC = () => {
         setToastMessage(null);
       }, 1000);
     } else {
-      HttpClient.put("/api/user/customer/profile/update", values)
-        .then(() => {
-          setToastMessage("프로필 수정을 성공하였습니다");
-          setTimeout(() => {
-            window.location.href = "/mypage";
-          }, 1000);
-        })
-        .catch((error: any) => {
-          setToastMessage(error);
-          setTimeout(() => {
-            setToastMessage(null);
-          }, 1000);
-        });
+      handleRequest({
+        url: "/api/user/customer/profile/update",
+        method: "PUT",
+        body: values,
+      });
+      if (!error) {
+        setToastMessage("프로필 수정을 성공하였습니다");
+        setTimeout(() => {
+          window.location.href = "/mypage";
+        }, 1000);
+      } else {
+        setToastMessage(error);
+        setTimeout(() => {
+          setToastMessage(null);
+        }, 1000);
+      }
     }
   };
 
@@ -77,7 +82,7 @@ const EditProfile: React.FC = () => {
     }
   };
 
-  const handlerNickNameDoubleCheck = async (nickName: string) => {
+  const handleNickNameDoubleCheck = async (nickName: string) => {
     if (nickName === userNinkName) {
       setToastMessage("현재 사용 중인 닉네임입니다");
       setTimeout(() => {
@@ -93,19 +98,13 @@ const EditProfile: React.FC = () => {
     }
   };
 
-  const getMyProfile = async (): Promise<MyProfileType> => {
-    const res = await HttpClient.get("/api/user/customer/profile");
-    return res.data;
-  };
-
   useEffect(() => {
-    const fetchProfile = async () => {
-      const profileData = await getMyProfile();
-      setMyProfileInfos(profileData);
-      setUserNinkName(profileData.nickName);
-    };
-
-    fetchProfile();
+    handleRequest({
+      url: "/api/user/customer/profile",
+      method: "GET",
+      setData: setMyProfileInfos,
+    });
+    setUserNinkName(myProfileInfos.nickName);
   }, []);
 
   const initialValues = myProfileInfos;
@@ -130,7 +129,7 @@ const EditProfile: React.FC = () => {
                 btnActive={true}
                 btnValue="중복확인"
                 onClick={() => {
-                  handlerNickNameDoubleCheck(values.nickName);
+                  handleNickNameDoubleCheck(values.nickName);
                 }}
               />
               <EditProfileFormGroup
