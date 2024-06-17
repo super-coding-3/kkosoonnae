@@ -36,7 +36,7 @@ const ReservationCheckList: React.FC<ReservationCheckListProps> = ({
         <h2 className="text-xl mt-4">예약확인</h2>
       </div>
 
-      <div className="flex flex-col gap-4 border-top-1 border-MAIN_COLOR border-b-1 p-8	">
+      <div className="flex flex-col gap-4 border-y-2 border-MAIN_LIGHT_COLOR p-8	">
         <p className="flex justify-between items-center">
           업체명
           <span className=" text-zinc-500 text-base">
