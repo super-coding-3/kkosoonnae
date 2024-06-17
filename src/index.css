@@ -130,3 +130,11 @@ button[data-testid="carousel-indicator"] {
     height: 9rem;
   }
 }
+
+.notice-accordion > div button:hover,
+.notice-accordion > div button:focus {
+  --tw-ring-opacity: 0;
+  --tw-bg-opacity: 0;
+  --tw-ring-color: rgb(255 255 255 / var(--tw-ring-opacity));
+  background-color: transparent;
+}
