@@ -16,7 +16,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div className="max-w-[640px] h-14 mx-auto my-0 bg-white shadow px-4 fixed top-0 left-0 right-0 z-10 flex justify-center items-center">
+    <header className="max-w-[640px] h-14 mx-auto my-0 bg-white shadow px-4 fixed top-0 left-0 right-0 z-10 flex justify-center items-center">
       <Link to="/">
         <img src="img/logo.svg" alt="꼬순내 로고" />
       </Link>
@@ -27,7 +27,7 @@ const Header: React.FC = () => {
         <CiSearch size={30} />
       </button>
       {isModalOpen && <SearchModal onClose={handleModalClose} />}
-    </div>
+    </header>
   );
 };
 
