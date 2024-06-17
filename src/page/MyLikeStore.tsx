@@ -1,5 +1,3 @@
-import HttpClient from "../utils/api/customAxios";
-
 import React, { useEffect, useState } from "react";
 
 import OuterLayout from "../components/common/OuterLayout";
@@ -9,6 +7,8 @@ import MyLikeStoreCard from "../components/mylikestore/MyLikeStoreCard";
 import PageNothing from "../components/common/PageNothing";
 import ModalDelete from "../components/common/ModalDelete";
 import ToastMessage from "../components/common/ToastMessage";
+import useAxios from "../hooks/useAxios";
+import { Spinner } from "flowbite-react";
 
 interface MyLikeStoreType {
   likeNo: number;
@@ -28,13 +28,14 @@ const MyLikeStore: React.FC = () => {
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
   const [likeNo, setLikeNo] = useState<number>(0);
 
-  const getMyLikeStore = async (): Promise<MyLikeStoreType[]> => {
-    const res = await HttpClient.get("/api/user/mypage/like-store");
-    return res.data;
-  };
+  // TODO: ERROR 시 뜨는 컴포넌트 구현
+  const { isLoading, error, handleRequest } = useAxios();
 
   const deleteMyLikeStore = async (likeNo: number) => {
-    await HttpClient.delete(`/api/user/mypage/like-cancel/${likeNo}`);
+    handleRequest({
+      url: `/api/user/mypage/like-cancel/${likeNo}`,
+      method: "DELETE",
+    });
     setShowModalDelete(false);
     setShowToastMessage(true);
     setTimeout(() => {
@@ -48,18 +49,21 @@ const MyLikeStore: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      const LikeStore = await getMyLikeStore();
-      setMyLikeStore(LikeStore);
-    };
-    fetchProfile();
+    handleRequest({
+      url: "/api/user/mypage/like-store",
+      method: "GET",
+      setData: setMyLikeStore,
+    });
   }, []);
 
   return (
     <OuterLayout>
       <PageTitle title="관심매장" leftBtn={true} />
       <div className="pt-4 pb-24 px-4">
-        {myLikeStore.length === 0 ? (
+        {isLoading ? (
+          // TODO: 로딩 화면 변경
+          <Spinner aria-label="Extra large spinner example" size="xl" />
+        ) : myLikeStore.length === 0 ? (
           <PageNothing message="관심매장이 없습니다" />
         ) : (
           myLikeStore.map((item: MyLikeStoreType) => (

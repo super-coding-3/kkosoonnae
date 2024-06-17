@@ -1,5 +1,3 @@
-import HttpClient from "../utils/api/customAxios";
-
 import React, { useEffect, useState } from "react";
 
 import OuterLayout from "../components/common/OuterLayout";
@@ -9,6 +7,7 @@ import MyReviewCard from "../components/myreview/MyReviewCard";
 import PageNothing from "../components/common/PageNothing";
 import ToastMessage from "../components/common/ToastMessage";
 import ModalDelete from "../components/common/ModalDelete";
+import useAxios from "../hooks/useAxios";
 
 interface MyReviewType {
   reviewNo: number;
@@ -26,13 +25,14 @@ const MyReview: React.FC = () => {
   const [showToastMessage, setShowToastMessage] = useState<boolean>(false);
   const [reviewNo, setReviewNo] = useState<number>(0);
 
-  const getMyReview = async (): Promise<MyReviewType[]> => {
-    const res = await HttpClient.get("/api/user/mypage/my-review-list");
-    return res.data;
-  };
+  // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
+  const { isLoading, error, handleRequest } = useAxios();
 
   const deleteMyReview = async (reviewNo: number) => {
-    await HttpClient.delete(`/api/user/mypage/my-review/${reviewNo}`);
+    handleRequest({
+      url: `/api/user/mypage/my-review/${reviewNo}`,
+      method: "DELETE",
+    });
     setShowModalDelete(false);
     setShowToastMessage(true);
     setTimeout(() => {
@@ -46,11 +46,11 @@ const MyReview: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      const prevReview = await getMyReview();
-      setMyReview(prevReview);
-    };
-    fetchProfile();
+    handleRequest({
+      url: "/api/user/mypage/my-review-list",
+      method: "GET",
+      setData: setMyReview,
+    });
   }, []);
 
   return (

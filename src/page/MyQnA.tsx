@@ -1,5 +1,3 @@
-import HttpClient from "../utils/api/customAxios";
-
 import React, { useEffect, useState } from "react";
 import { format, parseISO } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -11,6 +9,7 @@ import OuterLayout from "../components/common/OuterLayout";
 import PageTitle from "../components/common/PageTitle";
 import Nav from "../components/common/Nav";
 import MyQnACard from "../components/myqna/MyQnACard";
+import useAxios from "../hooks/useAxios";
 
 interface MyQnADatasType {
   status?: string;
@@ -27,13 +26,14 @@ const MyQnA: React.FC = () => {
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
   const [qnaNo, setQnANo] = useState<number>(0);
 
-  const getMyQnADatas = async (): Promise<MyQnADatasType[]> => {
-    const res = await HttpClient.get("/api/user/qna/all-list");
-    return res.data;
-  };
+  // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
+  const { isLoading, error, handleRequest } = useAxios();
 
   const deleteMyQnADatas = async (qnaNo: number) => {
-    await HttpClient.delete(`/api/user/qna/deleteQna/${qnaNo}`);
+    handleRequest({
+      url: `/api/user/qna/deleteQna/${qnaNo}`,
+      method: "DELETE",
+    });
     setShowModalDelete(false);
     setShowToastMessage(true);
     setTimeout(() => {
@@ -52,15 +52,11 @@ const MyQnA: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      const resQnADatas: MyQnADatasType[] = await getMyQnADatas();
-      const qnaDatas: MyQnADatasType[] = resQnADatas.map((item) => ({
-        ...item,
-        createDt: formatDate(item.createDt),
-      }));
-      setMyQnADatas(qnaDatas);
-    };
-    fetchProfile();
+    handleRequest({
+      url: "/api/user/qna/all-list",
+      method: "GET",
+      setData: setMyQnADatas,
+    });
   }, []);
 
   return (
@@ -84,7 +80,7 @@ const MyQnA: React.FC = () => {
               onClick={() => {
                 handlerQnACancel(item.qnaNo);
               }}
-              createDt={item.createDt}
+              createDt={formatDate(item.createDt)}
             />
           ))}
           <ModalDelete
