@@ -27,15 +27,16 @@ const ReservationCheckList: React.FC<ReservationCheckListProps> = ({
 
   return (
     <div className="px-4 pb-24">
-      <CheckTitle className="py-8 flex flex-col items-center">
+      <div className="py-8 flex flex-col items-center">
         <img
           src="/img/reservation/icon-reservation.svg"
           alt="예약확인 아이콘"
+          className="w-[80px]shadow-md"
         />
         <h2 className="text-xl mt-4">예약확인</h2>
-      </CheckTitle>
+      </div>
 
-      <ReservationCheck className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 border-top-1 border-MAIN_COLOR border-b-1 p-8	">
         <p className="flex justify-between items-center">
           업체명
           <span className=" text-zinc-500 text-base">
@@ -86,16 +87,18 @@ const ReservationCheckList: React.FC<ReservationCheckListProps> = ({
             {reservationData.characteristics}
           </span>
         </p>
-      </ReservationCheck>
+      </div>
       {showReservationComponent ? (
         <div className="flex items-center gap-1 my-4">
-          <BtnBorder>이전</BtnBorder>
-          <BtnMain
-            className=" bg-MAIN_COLOR text-MAIN_IVORY rounded"
+          <button className="text-sm w-1/2 h-11 flex justify-center items-center border border-MAIN_COLOR bg-white rounded">
+            이전
+          </button>
+          <button
+            className="text-sm w-1/2 h-11 flex justify-center items-center bg-MAIN_COLOR text-MAIN_IVORY rounded"
             onClick={onReservationComplete}
           >
             예약완료
-          </BtnMain>
+          </button>
         </div>
       ) : (
         <BtnSubmit value="확인 완료" onClick={onReservationComplete} />
@@ -104,39 +107,4 @@ const ReservationCheckList: React.FC<ReservationCheckListProps> = ({
   );
 };
 
-const ReservationCheck = styled.div`
-  border-top: 1px solid #492d28;
-  border-bottom: 1px solid #492d28;
-  padding: 30px;
-`;
-
-const CheckTitle = styled.div`
-  img {
-    width: 80px;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  }
-`;
-
-const BtnBorder = styled.button`
-  width: 49%;
-  height: 44px;
-  border-radius: 8px;
-  border: 1px solid #492d28;
-  background: var(--White, #fff);
-  color: #492d28;
-  font-size: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const BtnMain = styled.button`
-  width: 49%;
-  height: 44px;
-  border-radius: 8px;
-  font-size: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 export default ReservationCheckList;
