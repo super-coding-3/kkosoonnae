@@ -1,6 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { reservationFormValues } from "../reservation/ReservationForm";
 import BtnSubmit from "./BtnSubmit";
 

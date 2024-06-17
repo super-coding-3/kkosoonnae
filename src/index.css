@@ -26,6 +26,9 @@ code {
     height: 100%;
   }
 }
+button[data-testid="carousel-indicator"] {
+  display: none;
+}
 
 .result-card-img > img {
   max-height: 280px;
