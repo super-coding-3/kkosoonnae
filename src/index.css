@@ -151,3 +151,7 @@ button[data-testid="carousel-indicator"] {
   background: none;
   padding-left: 30px;
 }
+
+.reservation-formgroup input[readonly] {
+  background: #f7f7f7;
+}

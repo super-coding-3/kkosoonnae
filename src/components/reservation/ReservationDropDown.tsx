@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
 import { Field, ErrorMessage, useFormikContext } from "formik";
 import HttpClient from "../../utils/api/customAxios";
 
@@ -33,14 +32,17 @@ function ReservationDropDown() {
   }, [storeNo]);
 
   return (
-    <DropDowngroup>
-      <label htmlFor="cutStyle">스타일</label>
-      <div>
+    <div className="flex items-center">
+      <label htmlFor="cutStyle" className="w-[80px] text-black text-sm">
+        스타일
+      </label>
+      <div style={{ width: "calc(100% - 80px)" }}>
         <Field
           as="select"
           id="cutStyle"
           name="cutStyle"
           onChange={handleStyleChange}
+          className="w-full border-1 border-gray-300 rounded"
         >
           <option value="">선택해주세요</option>
           {cutStyleState.map((item, index) => (
@@ -49,33 +51,14 @@ function ReservationDropDown() {
             </option>
           ))}
         </Field>
-        <ErrorMessage name="style" component="p" />
+        <ErrorMessage
+          name="style"
+          component="p"
+          className="text-xs text-red-600"
+        />
       </div>
-    </DropDowngroup>
+    </div>
   );
 }
 
-const DropDowngroup = styled.div`
-  display: flex;
-  align-items: center;
-
-  label {
-    width: 80px;
-    color: #000;
-    font-size: 1rem;
-  }
-  div {
-    width: calc(100% - 80px);
-    select {
-      width: 100%;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-  }
-
-  p {
-    font-size: 11px;
-    color: red;
-  }
-`;
 export default ReservationDropDown;
