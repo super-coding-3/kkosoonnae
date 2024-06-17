@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Accordion } from "flowbite-react";
 import HttpClient from "../../utils/api/customAxios";
 

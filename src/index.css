@@ -138,3 +138,16 @@ button[data-testid="carousel-indicator"] {
   --tw-ring-color: rgb(255 255 255 / var(--tw-ring-opacity));
   background-color: transparent;
 }
+
+/* 예약하기 datapicker */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+.react-datepicker__input-container input {
+  height: 44px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  background: none;
+  padding-left: 30px;
+}

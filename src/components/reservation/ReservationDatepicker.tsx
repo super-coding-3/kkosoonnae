@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import { useState } from "react";
 import { ErrorMessage, useFormikContext } from "formik";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -22,10 +21,12 @@ function ReservationDatepicker({ label, name }: ReservationDatepickerProps) {
   const { setFieldValue } = useFormikContext<FormValues>();
 
   return (
-    <DatepickerGroup>
-      <label htmlFor={name}>{label}</label>
-      <DatePickerWrap>
-        <CiCalendar />
+    <div className="flex items-center">
+      <label htmlFor={name} className="w-[80px] text-black text-sm">
+        {label}
+      </label>
+      <div className="relative" style={{ width: "calc(100% - 80px)" }}>
+        <CiCalendar className="text-gray absolute h-[20px] w-[20px] left-1 top-3" />
         <DatePicker
           locale={ko}
           dateFormat="yyyy.MM.dd"
@@ -35,49 +36,14 @@ function ReservationDatepicker({ label, name }: ReservationDatepickerProps) {
             setFieldValue(name, date.toISOString().slice(0, 10));
           }}
         />
-      </DatePickerWrap>
+      </div>
       <ErrorMessage
         name={name}
         component="p"
         className="text-xs text-red-600"
       />
-    </DatepickerGroup>
+    </div>
   );
 }
 
-const DatepickerGroup = styled.div`
-  display: flex;
-  align-items: center;
-  label {
-    width: 80px;
-    color: #000;
-    font-size: 1rem;
-  }
-`;
-
-const DatePickerWrap = styled.div`
-  position: relative;
-  width: calc(100% - 80px);
-  > svg {
-    color: #888;
-    position: absolute;
-    height: 20px;
-    width: 20px;
-    left: 4px;
-    top: 11px;
-  }
-  .react-datepicker-wrapper {
-    width: 100%;
-    .react-datepicker__input-container {
-      input {
-        height: 44px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        width: 100%;
-        background: none;
-        padding-left: 30px;
-      }
-    }
-  }
-`;
 export default ReservationDatepicker;
