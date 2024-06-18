@@ -26,6 +26,9 @@ code {
     height: 100%;
   }
 }
+button[data-testid="carousel-indicator"] {
+  display: none;
+}
 
 .result-card-img > img {
   max-height: 280px;
@@ -126,4 +129,29 @@ code {
   .likestore-fragment-height {
     height: 9rem;
   }
+}
+
+.notice-accordion > div button:hover,
+.notice-accordion > div button:focus {
+  --tw-ring-opacity: 0;
+  --tw-bg-opacity: 0;
+  --tw-ring-color: rgb(255 255 255 / var(--tw-ring-opacity));
+  background-color: transparent;
+}
+
+/* 예약하기 datapicker */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+.react-datepicker__input-container input {
+  height: 44px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  background: none;
+  padding-left: 30px;
+}
+
+.reservation-formgroup input[readonly] {
+  background: #f7f7f7;
 }

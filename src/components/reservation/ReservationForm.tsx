@@ -1,5 +1,4 @@
 import { useState } from "react";
-import styled from "styled-components";
 import { Formik, Form } from "formik";
 import { reservationSchema } from "../../schema/formSchema";
 import HttpClient from "../../utils/api/customAxios";
@@ -13,6 +12,7 @@ import ReservationTextArea from "./ReservationTextArea";
 import MyKkosoonaeModal from "./MyKkosoonaeModal";
 import ReservationCheckList from "../common/ReservationCheckList";
 import ReservationOk from "../../components/reservation/ReservationOk";
+import BtnSubmit from "../common/BtnSubmit";
 
 interface ReservationFormProps {
   salonNamefix?: string;
@@ -105,9 +105,13 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
       {step === 1 ? (
         <>
           <div className="flex justify-end my-3 px-4">
-            <BtnMyPetInfo onClick={() => setIsModalOpen(true)}>
-              <img src="/img/common/icon-dog_star.svg" alt="" /> 정보불러오기
-            </BtnMyPetInfo>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="w-40 h-12 rounded-md flex justify-center items-center border-2 border-MAIN_COLOR text-MAIN_COLOR"
+            >
+              <img src="/img/common/icon-dog_star.svg" alt="" className="w-9" />{" "}
+              정보불러오기
+            </button>
           </div>
 
           <Formik
@@ -170,15 +174,13 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
 
                 <BtnSubmit
                   type="submit"
-                  className="my-4 rounded"
                   onClick={() => {
                     setFieldValue("petName", petName);
                     setFieldValue("breed", breed);
                     setFieldValue("weight", weight);
                   }}
-                >
-                  예약하기
-                </BtnSubmit>
+                  value={"예약하기"}
+                ></BtnSubmit>
               </Form>
             )}
           </Formik>
@@ -200,24 +202,4 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
   );
 };
 
-const BtnMyPetInfo = styled.button`
-  width: 150px;
-  height: 50px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid #492d28;
-  color: #492d28;
-  img {
-    width: 38px;
-  }
-`;
-
-const BtnSubmit = styled.button`
-  width: 100%;
-  height: 44px;
-  color: #fff;
-  background: #492d28;
-`;
 export default ReservationForm;

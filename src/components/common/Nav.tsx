@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useLocation, Link } from "react-router-dom";
 import { FiHome, FiMapPin, FiInfo, FiUser, FiLock } from "react-icons/fi";
 
@@ -33,7 +32,7 @@ const Nav: React.FC = () => {
   };
 
   return (
-    <NavWrap>
+    <nav className="max-w-[640px] h-[70px] mx-auto flex justify-around items-center px-4 fixed bottom-0 left-0 right-0 z-10 border-t-2 border-gray-100 bg-white">
       {renderNavLink(
         "/",
         <FiHome className="block" size={24} color={onActive("/")} />,
@@ -64,30 +63,8 @@ const Nav: React.FC = () => {
             <FiLock className="block" size={24} color={onActive("/login")} />,
             "로그인"
           )}
-    </NavWrap>
+    </nav>
   );
 };
 
-const NavWrap = styled.nav`
-  max-width: 640px;
-  min-width: 375px;
-  height: 70px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0 0.5rem;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 5;
-  border-top: 1px solid #ddd;
-  background: #fff;
-  a {
-    span {
-      color: #888;
-    }
-  }
-`;
 export default Nav;

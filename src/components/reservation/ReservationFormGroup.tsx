@@ -1,5 +1,3 @@
-import React from "react";
-import styled from "styled-components";
 import { Field, ErrorMessage } from "formik";
 
 interface ReservationFormGroupProps {
@@ -18,46 +16,27 @@ function ReservationFormGroup({
   readOnly = false,
 }: ReservationFormGroupProps) {
   return (
-    <FormGroup>
-      <label htmlFor={name}>{label}</label>
-      <div>
+    <div className="flex items-center">
+      <label htmlFor={name} className="w-[80px] text-black text-sm">
+        {label}
+      </label>
+      <div style={{ width: "calc(100% - 80px)" }}>
         <Field
           type={type}
           id={name}
           name={name}
           value={value}
           readOnly={readOnly}
+          className="w-full  border-1 border-gray-300 rounded"
         />
-        <ErrorMessage name={name} component="p" />
+        <ErrorMessage
+          name={name}
+          component="p"
+          className="text-xs text-red-600"
+        />
       </div>
-    </FormGroup>
+    </div>
   );
 }
 
-const FormGroup = styled.div`
-  display: flex;
-  align-items: center;
-
-  label {
-    width: 80px;
-    color: #000;
-    font-size: 1rem;
-  }
-  div {
-    width: calc(100% - 80px);
-    input {
-      width: 100%;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      &[readonly] {
-        background: #f7f7f7;
-      }
-    }
-  }
-
-  p {
-    font-size: 11px;
-    color: red;
-  }
-`;
 export default ReservationFormGroup;

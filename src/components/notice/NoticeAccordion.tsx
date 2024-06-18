@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import { useState, useEffect } from "react";
 import { Accordion } from "flowbite-react";
 import HttpClient from "../../utils/api/customAxios";
 
@@ -26,11 +25,16 @@ function NoticeAccordion() {
   }, []);
 
   return (
-    <NoticeAccordionWrap className="px-4 py-4">
-      <Accordion collapseAll>
+    <div className="px-4 py-4 notice-accordion">
+      <Accordion
+        collapseAll
+        className="border-0 border-b-2 border-gray-100 rounded-none"
+      >
         {data.map((item, index) => (
-          <Accordion.Panel key={index}>
-            <Accordion.Title> {item.noticeTitle}</Accordion.Title>
+          <Accordion.Panel key={index} className=" rounded-none">
+            <Accordion.Title className="p-4 border-b-2 border-gray-100 rounded-none">
+              {item.noticeTitle}
+            </Accordion.Title>
             <Accordion.Content>
               <p className="mb-1 text-gray-500 dark:text-gray-400">
                 {item.noticeContent}
@@ -42,31 +46,8 @@ function NoticeAccordion() {
           </Accordion.Panel>
         ))}
       </Accordion>
-    </NoticeAccordionWrap>
+    </div>
   );
 }
 
-const NoticeAccordionWrap = styled.div`
-  > div {
-    border: none;
-    border-bottom: 1px solid #e8eaed;
-    border-radius: 0;
-    button {
-      padding: 1rem;
-
-      &:hover {
-        --tw-bg-opacity: 0;
-        background-color: none;
-      }
-      &:focus {
-        --tw-ring-opacity: 0;
-        --tw-ring-color: none;
-      }
-      &.hover\:bg-gray-100:hover {
-        --tw-bg-opacity: 0;
-        background-color: none;
-      }
-    }
-  }
-`;
 export default NoticeAccordion;
