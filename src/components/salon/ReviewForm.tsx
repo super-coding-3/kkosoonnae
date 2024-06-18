@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import HttpClient from "../../utils/api/customAxios";
 import { FaStar } from "react-icons/fa";
 
 import ToastMessage from "../common/ToastMessage";
+import BtnSubmit from "../common/BtnSubmit";
 
 interface ReviewSalonNumberItem {
   storeNo?: number;
@@ -94,7 +94,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
   }, []);
 
   return (
-    <ReviewFormWrap>
+    <div>
       <form onSubmit={handleSubmit}>
         <div className="flex items-center gap-2">
           <strong>총점</strong>
@@ -107,6 +107,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
                     type="checkbox"
                     checked={starValue <= rating}
                     onChange={() => handleRatingClick(starValue)}
+                    className="hidden"
                   />
                   <FaStar
                     className="star"
@@ -126,34 +127,15 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
             placeholder="리뷰를 작성해주세요"
             rows={4}
             required
-            className="rounded"
+            className="w-full border-1 border-gray-200 rounded"
           />
         </div>
 
-        <BtnReviewSubmit type="submit" className="rounded">
-          리뷰 작성
-        </BtnReviewSubmit>
+        <BtnSubmit type="submit" value="예약" />
         {reviewToastMessage && <ToastMessage message={reviewToastMessage} />}
       </form>
-    </ReviewFormWrap>
+    </div>
   );
 };
-
-const ReviewFormWrap = styled.div`
-  input[type="checkbox"] {
-    display: none;
-  }
-  textarea {
-    width: 100%;
-    border: 1px solid #ddd;
-  }
-`;
-
-const BtnReviewSubmit = styled.button`
-  width: 100%;
-  height: 44px;
-  color: #fff;
-  background: #492d28;
-`;
 
 export default ReviewForm;

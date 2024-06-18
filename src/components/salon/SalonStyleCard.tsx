@@ -5,6 +5,7 @@ import { Card } from "flowbite-react";
 import { RiScissorsFill } from "react-icons/ri";
 
 import HttpClient from "../../utils/api/customAxios";
+import { MdDiversity1 } from "react-icons/md";
 
 interface CutStyleItem {
   styleId: number | null;
@@ -32,8 +33,8 @@ const SalonStyleCard: React.FC = () => {
   return (
     <>
       {salonCutStyle.map((item, index) => (
-        <CardItem key={index}>
-          <Card className="" imgAlt={item.styleName} imgSrc={item.img}>
+        <div className="style-card-item" key={index}>
+          <Card imgAlt={item.styleName} imgSrc={item.img}>
             <p className="font-normal text-gray-700 dark:text-gray-400 flex items-center gap-1">
               {item.styleName} <RiScissorsFill />
             </p>
@@ -42,20 +43,10 @@ const SalonStyleCard: React.FC = () => {
               {item.price}원 ~
             </h5>
           </Card>
-        </CardItem>
+        </div>
       ))}
     </>
   );
 };
-
-const CardItem = styled.div`
-  width: 48%;
-  > div {
-    div {
-      padding: 10px;
-      gap: 5px;
-    }
-  }
-`;
 
 export default SalonStyleCard;

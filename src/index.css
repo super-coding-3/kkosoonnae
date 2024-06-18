@@ -155,3 +155,7 @@ button[data-testid="carousel-indicator"] {
 .reservation-formgroup input[readonly] {
   background: #f7f7f7;
 }
+.style-card-item div div {
+  padding: 1rem;
+  gap: 5px;
+}
