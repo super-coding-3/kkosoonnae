@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 
 import FavoriteButton from "./FavoriteButton";
 import HttpClient from "../../utils/api/customAxios";
 import ToastMessage from "../common/ToastMessage";
+import BtnSubmit from "../common/BtnSubmit";
 
 interface SalonNumberItem {
   storeNo?: number;
@@ -120,9 +120,9 @@ const SalonInfo: React.FC = () => {
               <span>{salonInfo.content}</span>
             </li>
           </ul>
-          <BtnReservation className="my-4" onClick={goReservation}>
-            예약
-          </BtnReservation>
+          <div className="my-4">
+            <BtnSubmit value="예약" onClick={goReservation} />
+          </div>
         </>
       )}
       {reservationToastMessage && (
@@ -131,12 +131,5 @@ const SalonInfo: React.FC = () => {
     </div>
   );
 };
-
-const BtnReservation = styled.button`
-  width: 100%;
-  height: 44px;
-  color: #fff;
-  background: #492d28;
-`;
 
 export default SalonInfo;
