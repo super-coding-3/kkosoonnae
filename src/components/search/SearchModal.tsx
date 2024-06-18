@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Card } from "flowbite-react";
 import { IoIosClose } from "react-icons/io";
@@ -30,12 +29,9 @@ function SearchModal({ onClose }: SearchModalProps) {
   };
 
   return (
-    <SearchModalWrap>
+    <div className="search-modal fixed top-0 bottom-0 bg-white z-10 mx-auto mt-0 px-2 py-4 overflow-y-auto">
       <div className="relative flex justify-between items-center gap-2">
-        <SeacrhInput
-          className="mid-size"
-          onSearchComplete={handleSearchComplete}
-        />
+        <SeacrhInput onSearchComplete={handleSearchComplete} />
         <button onClick={onClose}>
           <IoIosClose size={44} />
         </button>
@@ -72,23 +68,8 @@ function SearchModal({ onClose }: SearchModalProps) {
           </NavLink>
         ))}
       </div>
-    </SearchModalWrap>
+    </div>
   );
 }
-
-const SearchModalWrap = styled.div`
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  background: #fff;
-  z-index: 10;
-  padding: 0.8rem 1rem;
-  width: 640px;
-  margin: 0 auto 80px;
-  overflow-y: auto;
-  @media all and (max-width: 640px) {
-    width: 100%;
-  }
-`;
 
 export default SearchModal;

@@ -1,5 +1,3 @@
-import React from "react";
-import styled from "styled-components";
 import { Tabs } from "flowbite-react";
 
 import SalonInfo from "./SalonInfo";

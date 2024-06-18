@@ -176,3 +176,10 @@ button[data-testid="carousel-indicator"] {
   --tw-ring-opacity: 0;
   --tw-ring-color: none;
 }
+
+.search-modal {
+  width: 640px;
+  @media all and (max-width: 640px) {
+    width: 100%;
+  }
+}
