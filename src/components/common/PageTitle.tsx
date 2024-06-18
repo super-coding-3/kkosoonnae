@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 
 interface pageTitleProps {
   title: React.ReactNode;
@@ -33,19 +32,3 @@ const PageTitle: React.FC<pageTitleProps> = (props) => {
 };
 
 export default PageTitle;
-
-const TitleDiv = styled.nav`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  align-items: center;
-  padding: 10px 6px;
-  height: 55px;
-  font-size: 20px;
-  font-weight: bold;
-  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.12);
-  background: #fff;
-  z-index: 5;
-`;
