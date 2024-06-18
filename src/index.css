@@ -159,3 +159,20 @@ button[data-testid="carousel-indicator"] {
   padding: 1rem;
   gap: 5px;
 }
+
+.salon-tabs div button[role="tab"] {
+  width: 50%;
+  color: #dddddd;
+  font-size: 1.2rem;
+}
+
+.salon-tabs div button[aria-selected="true"] {
+  font-weight: bold;
+  color: #816f6b;
+  border-color: #816f6b;
+}
+
+.salon-tabs div button:focus {
+  --tw-ring-opacity: 0;
+  --tw-ring-color: none;
+}
