@@ -6,7 +6,7 @@ interface OuterLayoutProps {
 
 const OuterLayout: React.FC<OuterLayoutProps> = ({ children }) => {
   return (
-    <section className="h-full max-w-[640px] relative mx-auto bg-white border border-gray-200">
+    <section className="min-h-screen max-w-[640px] relative mx-auto bg-white border border-gray-200">
       {children}
     </section>
   );

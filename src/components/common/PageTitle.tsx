@@ -14,7 +14,7 @@ const PageTitle: React.FC<pageTitleProps> = (props) => {
     navigate(-1);
   };
   return (
-    <TitleDiv>
+    <div className="flex flex-row	justify-between sticky top-0 items-center py-4 px-2 h-[55px] text-xl font-bold shadow bg-white z-10">
       {props.leftBtn ? (
         <button onClick={handleBack}>
           <img src="/img/title/left.svg" alt="back" width={"25px"} />
@@ -28,7 +28,7 @@ const PageTitle: React.FC<pageTitleProps> = (props) => {
           <img src="/img/logo.svg" alt="logo" width={"40px"} />
         </div>
       </Link>
-    </TitleDiv>
+    </div>
   );
 };
 
