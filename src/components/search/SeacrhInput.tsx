@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { IoIosSearch } from "react-icons/io";
 import HttpClient from "../../utils/api/customAxios";
 
 interface SearchInputProps {
-  className?: string;
   onSearchComplete: (data: SearchResultItem[]) => void;
 }
 
@@ -16,10 +14,7 @@ interface SearchResultItem {
   averageScope: null;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({
-  className,
-  onSearchComplete,
-}) => {
+const SearchInput: React.FC<SearchInputProps> = ({ onSearchComplete }) => {
   const [searchKeywordQuery, setSearchKeywordQuery] = useState("");
 
   const handleSearch = async () => {
@@ -38,52 +33,25 @@ const SearchInput: React.FC<SearchInputProps> = ({
   };
 
   return (
-    <SeacrhInputWrap className={className}>
+    <div
+      className="relative flex items-center"
+      style={{ width: "calc(100% - 55px)" }}
+    >
       <input
         type="text"
         placeholder="동이름 또는 매장명을 입력해주세요"
         value={searchKeywordQuery}
         onChange={onChangeSearch}
+        className="w-full rounded border-[1px] border-gray-300  indent-4 pr-[50px]"
       />
-      <BtnSearch onClick={handleSearch}>
-        <IoIosSearch size={28} />
-      </BtnSearch>
-    </SeacrhInputWrap>
+      <button
+        onClick={handleSearch}
+        className="w-11 h-11 absolute top-0 right-0 text-center"
+      >
+        <IoIosSearch size={28} className="inline-block" />
+      </button>
+    </div>
   );
 };
-
-const SeacrhInputWrap = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-
-  &.mid-size {
-    width: calc(100% - 55px);
-  }
-  &.full-size {
-    width: 100%;
-  }
-  input {
-    width: 100%;
-    border-radius: 6px;
-    background: #eff2f3;
-    text-indent: 10px;
-    border: none;
-    height: 44px;
-    padding-right: 50px;
-  }
-`;
-
-const BtnSearch = styled.button`
-  width: 44px;
-  height: 44px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  text-align: center;
-  img {
-    display: inline-block;
-  }
-`;
 
 export default SearchInput;

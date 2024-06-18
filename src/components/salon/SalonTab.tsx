@@ -1,5 +1,3 @@
-import React from "react";
-import styled from "styled-components";
 import { Tabs } from "flowbite-react";
 
 import SalonInfo from "./SalonInfo";
@@ -8,9 +6,9 @@ import SalonReview from "./SalonReview";
 
 function SalonTab() {
   return (
-    <SalonTabWrap className="pb-4">
-      <Tabs aria-label="Tabs with underline" style="underline">
-        <Tabs.Item active title="매장정보">
+    <div className="pb-4">
+      <Tabs className="salon-tabs" style="underline">
+        <Tabs.Item active title="매장정보" style={{ width: "50%" }}>
           <SalonInfo />
           <SalonStyle />
         </Tabs.Item>
@@ -18,27 +16,8 @@ function SalonTab() {
           <SalonReview />
         </Tabs.Item>
       </Tabs>
-    </SalonTabWrap>
+    </div>
   );
 }
-
-const SalonTabWrap = styled.div`
-  div {
-    button[role="tab"] {
-      width: 50%;
-      color: #dddddd;
-      font-size: 1.2rem;
-      &[aria-selected="true"] {
-        font-weight: bold;
-        color: #816f6b;
-        border-color: #816f6b;
-      }
-      &:focus {
-        --tw-ring-opacity: 0;
-        --tw-ring-color: none;
-      }
-    }
-  }
-`;
 
 export default SalonTab;

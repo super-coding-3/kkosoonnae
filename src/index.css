@@ -29,7 +29,10 @@ code {
 button[data-testid="carousel-indicator"] {
   display: none;
 }
-
+.result-card-img > div {
+  gap: 5px;
+  padding: 1rem;
+}
 .result-card-img > img {
   max-height: 280px;
 }
@@ -154,4 +157,32 @@ button[data-testid="carousel-indicator"] {
 
 .reservation-formgroup input[readonly] {
   background: #f7f7f7;
+}
+.style-card-item div div {
+  padding: 1rem;
+  gap: 5px;
+}
+
+.salon-tabs div button[role="tab"] {
+  width: 50%;
+  color: #dddddd;
+  font-size: 1.2rem;
+}
+
+.salon-tabs div button[aria-selected="true"] {
+  font-weight: bold;
+  color: #816f6b;
+  border-color: #816f6b;
+}
+
+.salon-tabs div button:focus {
+  --tw-ring-opacity: 0;
+  --tw-ring-color: none;
+}
+
+.search-modal {
+  width: 640px;
+  @media all and (max-width: 640px) {
+    width: 100%;
+  }
 }

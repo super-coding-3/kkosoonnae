@@ -28,18 +28,16 @@ function NoticeAccordion() {
     <div className="px-4 py-4 notice-accordion">
       <Accordion
         collapseAll
-        className="border-0 border-b-2 border-gray-100 rounded-none"
+        className="border-0 border-b-[1px] border-gray-200 rounded-none"
       >
         {data.map((item, index) => (
           <Accordion.Panel key={index} className=" rounded-none">
-            <Accordion.Title className="p-4 border-b-2 border-gray-100 rounded-none">
+            <Accordion.Title className="p-4 border-b-[1px] border-gray-200 rounded-none">
               {item.noticeTitle}
             </Accordion.Title>
             <Accordion.Content>
-              <p className="mb-1 text-gray-500 dark:text-gray-400">
-                {item.noticeContent}
-              </p>
-              <p className="mb-2  text-gray-600 dark:text-gray-500 text-right">
+              <p className="mb-1 text-gray-500 ">{item.noticeContent}</p>
+              <p className="mb-2  text-gray-600  text-right">
                 {new Date(item.noticeDate).toLocaleDateString()}
               </p>
             </Accordion.Content>
