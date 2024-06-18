@@ -5,10 +5,10 @@ import { IoIosClose } from "react-icons/io";
 
 const SearchRecent: React.FC = () => {
   return (
-    <SearchRecentWrap>
+    <div className="mt-8">
       <h2>최근검색</h2>
-      <SearchRecentList>
-        <li className="flex items-center gap-2">
+      <div className="flex flex-row">
+        <li className="flex items-center gap-2 py-4 border-b-[1px] border-gray-200">
           <img src="/img/search/icon-search-keyword.svg" alt="" />
           <strong>역삼동</strong>
           <button className="ml-auto">
@@ -22,22 +22,9 @@ const SearchRecent: React.FC = () => {
             <IoIosClose size={24} style={{ color: "#ddd" }} />
           </button>
         </li>
-      </SearchRecentList>
-    </SearchRecentWrap>
+      </div>
+    </div>
   );
 };
-
-const SearchRecentWrap = styled.div`
-  margin-top: 30px;
-`;
-
-const SearchRecentList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #ddd;
-  }
-`;
 
 export default SearchRecent;

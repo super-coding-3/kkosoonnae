@@ -43,28 +43,25 @@ function SearchModal({ onClose }: SearchModalProps) {
             key={index}
             className="block mb-3"
           >
-            <div>
-              <Card
-                imgAlt="살롱이미지"
-                imgSrc={`${item?.img?.[0]}`}
-                className="result-card-img"
-              >
-                <div className="py-4 px-8">
-                  <div className="flex items-center gap-2">
-                    <strong>{item.storeName}</strong>
-                    <div className="flex items-center gap-2">
-                      <p className="flex text-xs items-center gap-1 text-MAIN_LIGHT_COLOR">
-                        <FaStar /> {item.averageScope}
-                      </p>
-                      <p className="flex text-xs items-center gap-1  text-MAIN_LIGHT_COLOR">
-                        <FaRegHeart /> 관심수 10
-                      </p>
-                    </div>
-                  </div>
-                  <p className="text-xs text-zinc-500">{item.roadAddress}</p>
+            <Card
+              imgAlt="살롱이미지"
+              imgSrc={`${item?.img?.[0]}`}
+              className="result-card-img"
+            >
+              <div className="flex items-center gap-2">
+                <strong>{item.storeName}</strong>
+                <div className="flex items-center gap-2">
+                  <p className="flex text-xs items-center gap-1 text-MAIN_LIGHT_COLOR">
+                    <FaStar /> {item.averageScope}
+                  </p>
+                  <p className="flex text-xs items-center gap-1  text-MAIN_LIGHT_COLOR">
+                    <FaRegHeart /> 관심수 10
+                    {/* TODO 관심수 api 연결 : 재익님 요청했음 */}
+                  </p>
                 </div>
-              </Card>
-            </div>
+              </div>
+              <p className="text-xs text-zinc-500">{item.roadAddress}</p>
+            </Card>
           </NavLink>
         ))}
       </div>

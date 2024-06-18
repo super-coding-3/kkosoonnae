@@ -29,7 +29,10 @@ code {
 button[data-testid="carousel-indicator"] {
   display: none;
 }
-
+.result-card-img > div {
+  gap: 5px;
+  padding: 1rem;
+}
 .result-card-img > img {
   max-height: 280px;
 }
