@@ -25,11 +25,11 @@ function SearchModal({ onClose }: SearchModalProps) {
 
   const handleSearchComplete = (data: SearchResultItem[]) => {
     setResultKeywordData(data);
-    console.log(data);
+    // console.log(data);
   };
 
   return (
-    <div className="search-modal fixed top-0 bottom-0 bg-white z-10 mx-auto mt-0 px-2 py-4 overflow-y-auto">
+    <div className="search-modal fixed top-0 bottom-0 bg-white z-30 mx-auto mt-0 px-2 pt-4 pb-20 overflow-y-auto ">
       <div className="relative flex justify-between items-center gap-2">
         <SeacrhInput onSearchComplete={handleSearchComplete} />
         <button onClick={onClose}>
