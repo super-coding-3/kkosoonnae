@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Card } from "flowbite-react";
 import { RiScissorsFill } from "react-icons/ri";
 
-import HttpClient from "../../utils/api/customAxios";
+import useAxios from "../../hooks/useAxios";
 
 interface CutStyleItem {
   styleId: number | null;
@@ -16,12 +16,26 @@ const SalonStyleCard: React.FC = () => {
   const [salonCutStyle, setSalonCutStyle] = useState<CutStyleItem[]>([]);
   const { storeNo } = useParams<{ storeNo: string }>();
 
-  const getSalonCutStyle = async () => {
-    const { data } = await HttpClient.get<CutStyleItem[]>(
-      `/api/user/store/${storeNo}/pethair`
-    );
-    setSalonCutStyle(data);
-    return data;
+  // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
+  const { isLoading, error, handleRequest, Loading } = useAxios();
+
+  const getSalonCutStyle = () => {
+    handleRequest({
+      url: `/api/user/store/${storeNo}/pethair`,
+      method: "GET",
+      setData: setSalonCutStyle,
+    });
+
+    if (isLoading) {
+      return <Loading />;
+    }
+    if (error) {
+      return (
+        <div className="my-8 px-4">
+          <p>데이터를 가져오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.</p>
+        </div>
+      );
+    }
   };
 
   useEffect(() => {
