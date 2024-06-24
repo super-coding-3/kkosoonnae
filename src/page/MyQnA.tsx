@@ -4,12 +4,13 @@ import { ko } from "date-fns/locale";
 
 import PageNothing from "../components/common/PageNothing";
 import ModalDelete from "../components/common/ModalDelete";
-import ToastMessage from "../components/common/ToastMessage";
 import OuterLayout from "../components/common/OuterLayout";
 import PageTitle from "../components/common/PageTitle";
 import Nav from "../components/common/Nav";
 import MyQnACard from "../components/myqna/MyQnACard";
+
 import useAxios from "../hooks/useAxios";
+import useToastMessage from "../hooks/useToastMessage";
 
 interface MyQnADatasType {
   status?: string;
@@ -22,12 +23,12 @@ interface MyQnADatasType {
 
 const MyQnA: React.FC = () => {
   const [myQnADatas, setMyQnADatas] = useState<MyQnADatasType[]>([]);
-  const [showToastMessage, setShowToastMessage] = useState<boolean>(false);
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
   const [qnaNo, setQnANo] = useState<number>(0);
 
   // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
   const { isLoading, error, handleRequest } = useAxios();
+  const { showToast, Toast } = useToastMessage();
 
   const deleteMyQnADatas = async (qnaNo: number) => {
     handleRequest({
@@ -35,10 +36,12 @@ const MyQnA: React.FC = () => {
       method: "DELETE",
     });
     setShowModalDelete(false);
-    setShowToastMessage(true);
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
+    showToast({
+      message: "문의가 취소되었습니다",
+      action: () => {
+        window.location.reload();
+      },
+    });
   };
 
   const handlerQnACancel = (qnaNo: number) => {
@@ -93,7 +96,7 @@ const MyQnA: React.FC = () => {
             delBtnValue="문의취소"
             cancelBtnValue="선택취소"
           />
-          {showToastMessage && <ToastMessage message="문의가 취소되었습니다" />}
+          <Toast />
         </div>
       )}
 

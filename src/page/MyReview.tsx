@@ -5,9 +5,9 @@ import PageTitle from "../components/common/PageTitle";
 import Nav from "../components/common/Nav";
 import MyReviewCard from "../components/myreview/MyReviewCard";
 import PageNothing from "../components/common/PageNothing";
-import ToastMessage from "../components/common/ToastMessage";
 import ModalDelete from "../components/common/ModalDelete";
 import useAxios from "../hooks/useAxios";
+import useToastMessage from "../hooks/useToastMessage";
 
 interface MyReviewType {
   reviewNo: number;
@@ -22,11 +22,11 @@ interface MyReviewType {
 const MyReview: React.FC = () => {
   const [myReview, setMyReview] = useState<MyReviewType[]>([]);
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
-  const [showToastMessage, setShowToastMessage] = useState<boolean>(false);
   const [reviewNo, setReviewNo] = useState<number>(0);
 
   // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
   const { isLoading, error, handleRequest } = useAxios();
+  const { showToast, Toast } = useToastMessage();
 
   const deleteMyReview = async (reviewNo: number) => {
     handleRequest({
@@ -34,10 +34,12 @@ const MyReview: React.FC = () => {
       method: "DELETE",
     });
     setShowModalDelete(false);
-    setShowToastMessage(true);
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
+    showToast({
+      message: "리뷰가 삭제되었습니다",
+      action: () => {
+        window.location.reload();
+      },
+    });
   };
 
   const handlerReviewCancel = (reviewNo: number) => {
@@ -84,7 +86,7 @@ const MyReview: React.FC = () => {
             delBtnValue="삭제"
             cancelBtnValue="취소"
           />
-          {showToastMessage && <ToastMessage message="리뷰가 삭제되었습니다" />}
+          <Toast />
         </div>
       )}
       <Nav />

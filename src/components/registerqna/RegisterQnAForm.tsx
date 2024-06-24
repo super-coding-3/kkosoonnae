@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Form, Formik } from "formik";
 
-import ToastMessage from "../common/ToastMessage";
 import BtnSubmit from "../common/BtnSubmit";
 import RegisterQnAFormGroup from "./RegisterQnAFormGroup";
 import { QnASchema } from "../../schema/formSchema";
 import useAxios from "../../hooks/useAxios";
+import useToastMessage from "../../hooks/useToastMessage";
 
 interface RegisterQnAFormProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -18,9 +18,9 @@ interface QnAType {
 }
 
 const RegisterQnAForm: React.FC<RegisterQnAFormProps> = (props) => {
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
   //TODO: 로딩 처리
   const { isLoading, error, handleRequest } = useAxios();
+  const { showToast, Toast } = useToastMessage();
 
   const handleFormSubmit = (values: QnAType) => {
     handleRequest({
@@ -31,10 +31,9 @@ const RegisterQnAForm: React.FC<RegisterQnAFormProps> = (props) => {
     if (!error) {
       props.setStep(2);
     } else {
-      setToastMessage(error);
-      setTimeout(() => {
-        setToastMessage(null);
-      }, 2000);
+      showToast({
+        message: "오류가 발생했습니다",
+      });
     }
   };
 
@@ -72,7 +71,7 @@ const RegisterQnAForm: React.FC<RegisterQnAFormProps> = (props) => {
             height={40}
           />
           <BtnSubmit type="submit" value="문의하기" />
-          {toastMessage && <ToastMessage message={toastMessage} />}
+          <Toast />
         </Form>
       </Formik>
     </div>

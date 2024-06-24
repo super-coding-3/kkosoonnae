@@ -5,7 +5,7 @@ import React from "react";
 const CheckAvailabilityApi = async (
   field: "loginId" | "nickName",
   value: string,
-  setToastMessage: React.Dispatch<React.SetStateAction<string | null>>,
+  showToast: (params: { message: string; action?: () => void }) => void,
   setDoubleCheck: React.Dispatch<React.SetStateAction<string>>
 ) => {
   let url = "";
@@ -24,16 +24,10 @@ const CheckAvailabilityApi = async (
     if (message?.includes("중복된 닉네임")) {
       setDoubleCheck("duplicated");
     }
-    setToastMessage(message);
-    setTimeout(() => {
-      setToastMessage(null);
-    }, 2000);
+    showToast({ message: message });
   } catch (error) {
-    console.log(error);
-    setToastMessage("오류가 발생했습니다");
-    setTimeout(() => {
-      setToastMessage(null);
-    }, 2000);
+    // console.log(error);
+    showToast({ message: "오류가 발생했습니다" });
   }
 };
 export default CheckAvailabilityApi;

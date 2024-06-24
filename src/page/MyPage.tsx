@@ -1,4 +1,4 @@
-import HttpClient from "../utils/api/customAxios";
+import useAxios from "../hooks/useAxios";
 
 import React, { useEffect, useState } from "react";
 import { BiDollarCircle } from "react-icons/bi";
@@ -6,7 +6,6 @@ import { SlArrowRight } from "react-icons/sl";
 import { PiPawPrintFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { parseISO } from "date-fns";
-import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -18,15 +17,13 @@ import MyPageMainBtn from "../components/mypage/MyPageMainBtn";
 import MyPagePetInfo from "../components/mypage/MyPagePetInfo";
 import MyPagePetAdd from "../components/mypage/MyPagePetAdd";
 import BtnLogout from "../components/common/BtnLogut";
-import ToastMessage from "../components/common/ToastMessage";
+import useToastMessage from "../hooks/useToastMessage";
 
-interface MyPageInfosType {
+interface UserInfosType {
   userNickname: string;
   pointRm: string;
-  myPet: Array<MyPetInfosType>;
 }
-
-interface MyPetInfosType {
+interface PetInfosType {
   petNo: number;
   img: string;
   name: string;
@@ -38,39 +35,34 @@ interface MyPetInfosType {
 }
 
 const MyPage: React.FC = () => {
-  const [mypageInfos, setMypageInfos] = useState<MyPageInfosType>({
+  const [userInfos, setUserInfos] = useState<UserInfosType>({
     userNickname: "",
     pointRm: "",
-    myPet: [],
   });
+  const [petInfos, setPetInfos] = useState<PetInfosType[]>();
   const [representative, setRepresentative] = useState<boolean>(false);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // TODO: 로딩 구현
+  const { isLoading, error, handleRequest } = useAxios();
+  const { showToast, Toast } = useToastMessage();
 
   const activeMainPetEdit = () => {
     setRepresentative(!representative);
   };
 
   const handlerMainPetEdit = async (petNo: number, petName: string) => {
-    await HttpClient.put(`/api/user/pet/main-pet/${petNo}`);
-    setToastMessage(`대표 꼬순내가 ${petName}(으)로 변경되었습니다`);
+    handleRequest({
+      url: `/api/user/pet/main-pet/${petNo}`,
+      method: "PUT",
+    });
+    if (!error) {
+      showToast({ message: `대표 꼬순내가 ${petName}(으)로 변경되었습니다` });
+    } else {
+      showToast({ message: "오류가 발생했습니다" });
+    }
     setTimeout(() => {
       window.location.reload();
     }, 1000);
-  };
-
-  const getPoints = async () => {
-    const res = await HttpClient.get("/api/user/point");
-    return res.data;
-  };
-
-  const getUserNickname = async () => {
-    const res = await HttpClient.get("/api/user/customer/nickname");
-    return res.data;
-  };
-
-  const getMyPet = async () => {
-    const res = await HttpClient.get("/api/user/pet/allPet-list");
-    return res.data;
   };
 
   const getPetAge = (birthDt: string) => {
@@ -88,25 +80,31 @@ const MyPage: React.FC = () => {
   };
 
   useEffect(() => {
-    axios.all([getPoints(), getUserNickname(), getMyPet()]).then(
-      axios.spread((pointRes, nicknameRes, mypetRes) => {
-        setMypageInfos((mypageInfos) => ({
-          ...mypageInfos,
-          userNickname: nicknameRes,
-          pointRm: pointRes.pointRm,
-          myPet: mypetRes.map((item: MyPetInfosType) => ({
-            petNo: item.petNo,
-            img: item.img,
-            name: item.name,
-            type: item.type,
-            birthDt: item.birthDt,
-            gender: item.gender,
-            weight: item.weight,
-            mainPet: item.mainPet,
-          })),
-        }));
-      })
-    );
+    handleRequest({
+      url: "/api/user/customer/nickname",
+      method: "GET",
+      setData: (data) =>
+        setUserInfos((prevState) => ({
+          ...prevState,
+          userNickname: data,
+        })),
+    });
+
+    handleRequest({
+      url: "/api/user/point",
+      method: "GET",
+      setData: (data) =>
+        setUserInfos((prevState) => ({
+          ...prevState,
+          pointRm: data.pointRm,
+        })),
+    });
+
+    handleRequest({
+      url: "/api/user/pet/allPet-list",
+      method: "GET",
+      setData: setPetInfos,
+    });
   }, []);
 
   var settings = {
@@ -124,11 +122,11 @@ const MyPage: React.FC = () => {
       <div className="pt-4 pb-24 px-4">
         <div className="flex justify-between items-center">
           <div className="font-black text-2xl username-size-change">
-            {JSON.stringify(mypageInfos) === "{}" ? (
+            {JSON.stringify(userInfos.userNickname) === "{}" ? (
               <div>익명의 집사님</div>
             ) : (
               <div className="flex items-center leading w-72 username-width-change">
-                <div className="truncate">{mypageInfos.userNickname}</div>
+                <div className="truncate">{userInfos.userNickname}</div>
                 <div className="w-7">님</div>
               </div>
             )}
@@ -150,10 +148,10 @@ const MyPage: React.FC = () => {
           </div>
           <div>
             <div className="flex justify-between items-center text-MAIN_GRAY gap-2">
-              {JSON.stringify(mypageInfos) === "{}" ? (
+              {JSON.stringify(userInfos.pointRm) === "" ? (
                 <div>포인트 없음</div>
               ) : (
-                <div>{mypageInfos.pointRm}원</div>
+                <div>{userInfos.pointRm}원</div>
               )}
               <SlArrowRight />
             </div>
@@ -166,7 +164,7 @@ const MyPage: React.FC = () => {
               <PiPawPrintFill color="#492D28" size="25px" />
             </div>
             <div>
-              {mypageInfos.myPet.length > 1 && (
+              {petInfos != undefined && petInfos.length > 1 && (
                 <div>
                   <button
                     className="p-1 border-2 border-solid border-MAIN_COLOR rounded text-MAIN_COLOR"
@@ -182,9 +180,9 @@ const MyPage: React.FC = () => {
           </div>
         </div>
         <div className="mt-3">
-          {!(mypageInfos.myPet?.length === 0) ? (
+          {!(petInfos?.length === 0) ? (
             <Slider {...settings}>
-              {mypageInfos.myPet.map((item: MyPetInfosType) => (
+              {petInfos?.map((item: PetInfosType) => (
                 <div className="pr-2" key={item.petNo}>
                   <MyPagePetInfo
                     petNo={item.petNo}
@@ -203,11 +201,11 @@ const MyPage: React.FC = () => {
                 </div>
               ))}
               <div className="pr-6">
-                <MyPagePetAdd userName={mypageInfos.userNickname} />
+                <MyPagePetAdd userName={userInfos.userNickname} />
               </div>
             </Slider>
           ) : (
-            <MyPagePetAdd userName={mypageInfos.userNickname} />
+            <MyPagePetAdd userName={userInfos.userNickname} />
           )}
         </div>
         <div className="flex flex-col justify-center items-start mt-7 gap-3">
@@ -220,7 +218,7 @@ const MyPage: React.FC = () => {
             <MyPageMainBtn title="문의하기" link="/register_qna" />
           </div>
         </div>
-        {toastMessage && <ToastMessage message={toastMessage} />}
+        <Toast />
       </div>
       <Nav />
     </OuterLayout>

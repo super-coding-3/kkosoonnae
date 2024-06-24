@@ -11,8 +11,8 @@ import EditProfileInput from "../components/editprofile/EditProfileInput";
 import EditProfileFormGroup from "../components/editprofile/EditProfileFormGroup";
 import EditProfileErrorMsg from "../components/editprofile/EditProfileErrorMsg";
 import CheckAvailabilityApi from "../components/common/CheckAvailabilityApi";
-import ToastMessage from "../components/common/ToastMessage";
 import useAxios from "../hooks/useAxios";
+import useToastMessage from "../hooks/useToastMessage";
 
 interface MyProfileType {
   nickName: string;
@@ -24,9 +24,8 @@ interface MyProfileType {
 
 const EditProfile: React.FC = () => {
   const [showPostcode, setShowPostcode] = useState<boolean>(false);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [doubleCheck, setDoubleCheck] = useState<string>("noProgress");
-  const [userNinkName, setUserNinkName] = useState<string | null>(null);
+  const [userNickName, setUserNickName] = useState<string>();
   const [myProfileInfos, setMyProfileInfos] = useState<MyProfileType>({
     nickName: "",
     phone: "",
@@ -37,22 +36,17 @@ const EditProfile: React.FC = () => {
 
   // TODO: 로딩 화면 구현
   const { isLoading, error, handleRequest } = useAxios();
+  const { showToast, Toast } = useToastMessage();
 
   const handleshowPostcode = () => {
     setShowPostcode(true);
   };
 
   const handleFormSubmit = (values: MyProfileType) => {
-    if (values.nickName !== userNinkName && doubleCheck === "noProgress") {
-      setToastMessage("닉네임 중복확인을 진행해주세요");
-      setTimeout(() => {
-        setToastMessage(null);
-      }, 1000);
+    if (values.nickName !== userNickName && doubleCheck === "noProgress") {
+      showToast({ message: "닉네임 중복확인을 진행해주세요" });
     } else if (doubleCheck === "duplicated") {
-      setToastMessage("이미 사용 중인 닉네임으로 수정할 수 없습니다");
-      setTimeout(() => {
-        setToastMessage(null);
-      }, 1000);
+      showToast({ message: "이미 사용 중인 닉네임으로 수정할 수 없습니다" });
     } else {
       handleRequest({
         url: "/api/user/customer/profile/update",
@@ -60,41 +54,34 @@ const EditProfile: React.FC = () => {
         body: values,
       });
       if (!error) {
-        setToastMessage("프로필 수정을 성공하였습니다");
-        setTimeout(() => {
-          window.location.href = "/mypage";
-        }, 1000);
+        showToast({
+          message: "프로필 수정을 성공하였습니다",
+          action: () => {
+            window.location.href = "/mypage";
+          },
+        });
       } else {
-        setToastMessage(error);
-        setTimeout(() => {
-          setToastMessage(null);
-        }, 1000);
+        showToast({ message: "오류가 발생했습니다" });
       }
     }
   };
 
   const handleFormNotChange = (dirty: boolean) => {
     if (!dirty) {
-      setToastMessage("프로필을 수정해주세요");
-      setTimeout(() => {
-        setToastMessage(null);
-      }, 1000);
+      showToast({ message: "프로필을 수정해주세요" });
     }
   };
 
-  const handleNickNameDoubleCheck = async (nickName: string) => {
-    if (nickName === userNinkName) {
-      setToastMessage("현재 사용 중인 닉네임입니다");
-      setTimeout(() => {
-        setToastMessage(null);
-      }, 1000);
+  const handleNickNameDoubleCheck = (nickName: string) => {
+    const trimmedNickName = nickName.trim().toLowerCase();
+    const trimmedUserNickName = userNickName?.trim().toLowerCase();
+
+    console.log(trimmedNickName, trimmedUserNickName);
+
+    if (trimmedNickName === trimmedUserNickName) {
+      showToast({ message: "현재 사용 중인 닉네임입니다" });
     } else {
-      await CheckAvailabilityApi(
-        "nickName",
-        nickName,
-        setToastMessage,
-        setDoubleCheck
-      );
+      CheckAvailabilityApi("nickName", nickName, showToast, setDoubleCheck);
     }
   };
 
@@ -102,9 +89,12 @@ const EditProfile: React.FC = () => {
     handleRequest({
       url: "/api/user/customer/profile",
       method: "GET",
-      setData: setMyProfileInfos,
+      setData: (data: typeof myProfileInfos) => {
+        setMyProfileInfos(data);
+        setUserNickName(data.nickName);
+      },
     });
-    setUserNinkName(myProfileInfos.nickName);
+    setUserNickName(myProfileInfos.nickName);
   }, []);
 
   const initialValues = myProfileInfos;
@@ -175,7 +165,7 @@ const EditProfile: React.FC = () => {
                   handleFormNotChange(dirty);
                 }}
               />
-              {toastMessage && <ToastMessage message={toastMessage} />}
+              <Toast />
             </Form>
           )}
         </Formik>

@@ -1,5 +1,3 @@
-import HttpClient from "../utils/api/customAxios";
-
 import React, { useEffect, useState } from "react";
 import { Form, Formik } from "formik";
 import { EditMyPetSchema } from "../schema/formSchema";
@@ -14,8 +12,9 @@ import InputMyPet from "../components/mypet/InputMyPet";
 import CustomDatePickerMyPet from "../components/mypet/CustomDatePickerMyPet";
 import SelectMyPetGender from "../components/mypet/SelectMyPetGender";
 import ModalDelete from "../components/common/ModalDelete";
-import ToastMessage from "../components/common/ToastMessage";
 import { MYPET_FORM_LABEL } from "../constants/constants";
+import useAxios from "../hooks/useAxios";
+import useToastMessage from "../hooks/useToastMessage";
 
 interface MyPetInfosType {
   name: string;
@@ -30,7 +29,6 @@ interface MyPetInfosType {
 const EditMyPet: React.FC = () => {
   const { petNo } = useParams() as { petNo: string };
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const [myPetInfos, setMyPetInfos] = useState<MyPetInfosType>({
     name: "",
@@ -41,6 +39,10 @@ const EditMyPet: React.FC = () => {
     petImg: "",
     petImgData: "",
   });
+
+  // TODO : 로딩 처리
+  const { isLoading, error, handleRequest } = useAxios();
+  const { showToast, Toast } = useToastMessage();
 
   const handleFormSubmit = async (values: MyPetInfosType) => {
     const requestValues = new FormData();
@@ -59,26 +61,23 @@ const EditMyPet: React.FC = () => {
       requestValues.append("petImg", values.petImgData);
     }
 
-    await HttpClient.put(
-      `/api/user/pet/update/${parseInt(petNo)}`,
-      requestValues
-    )
-      .then((response) => {
-        setToastMessage(`${values.name}의 정보가 수정되었습니다`);
-        setTimeout(() => {
+    handleRequest({
+      url: `/api/user/pet/update/${parseInt(petNo)}`,
+      method: "PUT",
+      body: requestValues,
+    });
+    if (!error) {
+      showToast({
+        message: `${values.name}의 정보가 수정되었습니다`,
+        action: () => {
           window.location.href = "/mypage";
-        }, 1000);
-      })
-      .catch((error: any) => {
-        setToastMessage("오류가 발생했습니다");
-        setTimeout(() => {
-          setToastMessage(null);
-        }, 1000);
+        },
       });
-  };
-  const getMyPet = async (petNo: number) => {
-    const res = await HttpClient.get(`/api/user/pet/pet-list/${petNo}`);
-    return res.data;
+    } else {
+      showToast({
+        message: "오류가 발생했습니다",
+      });
+    }
   };
 
   const handlerClickDelete = () => {
@@ -87,56 +86,53 @@ const EditMyPet: React.FC = () => {
 
   const handleFormNotChange = (dirty: boolean) => {
     if (!dirty) {
-      setToastMessage("반려동물의 정보를 수정해주세요");
-      setTimeout(() => {
-        setToastMessage(null);
-      }, 1000);
+      showToast({ message: "반려동물의 정보를 수정해주세요" });
     }
   };
 
   const deleteMyPetDatas = async (petNo: number, petName: string) => {
-    await HttpClient.delete(`/api/user/pet/deletePet/${petNo}`)
-      .then((response) => {
-        if (response.data.message === "해당 반려동물은 현재 예약 상태입니다.") {
-          setShowModalDelete(false);
-          setToastMessage(
-            `${petName}은 미용이 예약되어 있어 삭제할 수 없습니다`
-          );
-          setTimeout(() => {
-            setToastMessage(null);
-          }, 1000);
-        } else {
-          setShowModalDelete(false);
-          setToastMessage(`${petName}의 정보가 삭제되었습니다`);
-          setTimeout(() => {
-            setToastMessage(null);
-          }, 1000);
-        }
-      })
-      .catch((error: any) => {
-        setToastMessage("오류가 발생했습니다");
-        setTimeout(() => {
-          setToastMessage(null);
-        }, 1000);
-      });
+    const response = await handleRequest({
+      url: `/api/user/pet/deletePet/${petNo}`,
+      method: "DELETE",
+    });
+    if (!error) {
+      if (response?.data.message === "해당 반려동물은 현재 예약 상태입니다.") {
+        setShowModalDelete(false);
+        showToast({
+          message: `${petName}은 미용이 예약되어 있어 삭제할 수 없습니다`,
+        });
+      } else {
+        setShowModalDelete(false);
+        showToast({
+          message: `${petName}의 정보가 삭제되었습니다`,
+          action: () => {
+            window.location.href = "/mypage";
+          },
+        });
+      }
+    } else {
+      showToast({ message: "오류가 발생했습니다" });
+    }
   };
 
   useEffect(() => {
     const setParam = parseInt(petNo);
 
     const fetchPet = async (petNo: number) => {
-      const resPetData = await getMyPet(petNo);
+      const resPetData = await handleRequest({
+        url: `/api/user/pet/pet-list/${petNo}`,
+        method: "GET",
+      });
 
       const petData = {
-        name: resPetData.name,
-        type: resPetData.type,
-        birthDt: resPetData.birthDt,
-        gender: resPetData.gender,
-        weight: resPetData.weight,
-        petImg: resPetData.img,
+        name: resPetData?.data.name,
+        type: resPetData?.data.type,
+        birthDt: resPetData?.data.birthDt,
+        gender: resPetData?.data.gender,
+        weight: resPetData?.data.weight,
+        petImg: resPetData?.data.img,
         petImgData: "",
       };
-
       setMyPetInfos(petData);
     };
 
@@ -194,7 +190,7 @@ const EditMyPet: React.FC = () => {
               delBtnValue="삭제"
               cancelBtnValue="취소"
             />
-            {toastMessage && <ToastMessage message={toastMessage} />}
+            <Toast />
           </Form>
         )}
       </Formik>

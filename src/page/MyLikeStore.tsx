@@ -6,9 +6,9 @@ import Nav from "../components/common/Nav";
 import MyLikeStoreCard from "../components/mylikestore/MyLikeStoreCard";
 import PageNothing from "../components/common/PageNothing";
 import ModalDelete from "../components/common/ModalDelete";
-import ToastMessage from "../components/common/ToastMessage";
 import useAxios from "../hooks/useAxios";
 import { Spinner } from "flowbite-react";
+import useToastMessage from "../hooks/useToastMessage";
 
 interface MyLikeStoreType {
   likeNo: number;
@@ -24,12 +24,11 @@ interface MyLikeStoreType {
 
 const MyLikeStore: React.FC = () => {
   const [myLikeStore, setMyLikeStore] = useState<MyLikeStoreType[]>([]);
-  const [showToastMessage, setShowToastMessage] = useState<boolean>(false);
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
   const [likeNo, setLikeNo] = useState<number>(0);
 
-  // TODO: ERROR 시 뜨는 컴포넌트 구현
   const { isLoading, error, handleRequest } = useAxios();
+  const { showToast, Toast } = useToastMessage();
 
   const deleteMyLikeStore = async (likeNo: number) => {
     handleRequest({
@@ -37,10 +36,18 @@ const MyLikeStore: React.FC = () => {
       method: "DELETE",
     });
     setShowModalDelete(false);
-    setShowToastMessage(true);
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
+    if (!error) {
+      showToast({
+        message: "관심매장이 삭제되었습니다",
+        action: () => {
+          window.location.reload();
+        },
+      });
+    } else {
+      showToast({
+        message: "오류가 발생했습니다",
+      });
+    }
   };
 
   const handlerLikeStoreCancel = (likeNo: number) => {
@@ -93,9 +100,7 @@ const MyLikeStore: React.FC = () => {
           delBtnValue="삭제"
           cancelBtnValue="취소"
         />
-        {showToastMessage && (
-          <ToastMessage message="관심매장이 삭제되었습니다" />
-        )}
+        <Toast />
       </div>
       <Nav />
     </OuterLayout>
