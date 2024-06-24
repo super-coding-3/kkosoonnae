@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import HttpClient from "../../utils/api/customAxios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+import useAxios from "../../hooks/useAxios";
 interface SalonNumberItem {
   storeNo?: number;
   storeName: string;
@@ -33,6 +33,9 @@ function SalonCarousel() {
 
   const { storeNo } = useParams<{ storeNo: string }>();
 
+  // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
+  const { isLoading, error, handleRequest, Loading } = useAxios();
+
   const settings = {
     dots: false,
     infinite: true,
@@ -43,20 +46,33 @@ function SalonCarousel() {
     arrows: false,
   };
 
-  const getSalonNumber = async () => {
-    const { data } = await HttpClient.get<SalonNumberItem>(
-      "/api/user/store/allStore"
-    );
-    setSalonNumber(data);
-    return data;
+  const getSalonNumber = () => {
+    handleRequest({
+      url: "/api/user/store/allStore",
+      method: "GET",
+      setData: setSalonNumber,
+    });
   };
 
   const getSalonInfo = async () => {
     if (storeNo) {
-      const { data } = await HttpClient.get<SalonServerResponse>(
-        `api/user/store/${storeNo}`
+      handleRequest({
+        url: `api/user/store/${storeNo}`,
+        method: "GET",
+        setData: (data: SalonServerResponse) => {
+          setSalonInfo(data.storeDetail);
+        },
+      });
+    }
+    if (isLoading) {
+      return <Loading />;
+    }
+    if (error) {
+      return (
+        <div className="my-8 px-4">
+          <p>데이터를 가져오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.</p>
+        </div>
       );
-      setSalonInfo(data.storeDetail);
     }
   };
 
