@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
+import useAxios from "../../hooks/useAxios";
+
 import FavoriteButton from "./FavoriteButton";
-import HttpClient from "../../utils/api/customAxios";
 import ToastMessage from "../common/ToastMessage";
 import BtnSubmit from "../common/BtnSubmit";
 
@@ -37,31 +38,51 @@ const SalonInfo: React.FC = () => {
   const [reservationToastMessage, setReservationToastMessage] = useState("");
 
   const { storeNo } = useParams<{ storeNo: string }>();
+
   const navigate = useNavigate();
+
+  // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
+  const { isLoading, error, handleRequest, Loading } = useAxios();
 
   const handleFavoriteClick = () => {
     console.log(`미용실을 즐겨찾기에 추가/제거했습니다.`);
   };
 
-  const getSalonNumber = async () => {
-    const { data } = await HttpClient.get<SalonNumberItem>(
-      "/api/user/store/allStore"
-    );
-    setSalonNumber(data);
-    return data;
+  const getSalonNumber = () => {
+    handleRequest({
+      url: "/api/user/store/allStore",
+      method: "GET",
+      setData: setSalonNumber,
+    });
   };
 
-  const getSalonInfo = async () => {
+  const getSalonInfo = () => {
     if (storeNo) {
-      const { data } = await HttpClient.get<SalonServerResponse>(
-        `api/user/store/${storeNo}`
+      handleRequest({
+        url: `api/user/store/${storeNo}`,
+        method: "GET",
+        setData: (data: SalonServerResponse) => {
+          setSalonInfo(data.storeDetail);
+        },
+      });
+    }
+    if (isLoading) {
+      return <Loading />;
+    }
+    if (error) {
+      return (
+        <div className="my-8 px-4">
+          <p>데이터를 가져오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.</p>
+        </div>
       );
-      setSalonInfo(data.storeDetail);
     }
   };
 
-  function formatTime(timeString: string): string {
-    const [hours, minutes, seconds] = timeString.split(":").map(Number);
+  function formatTime(timeString: string | undefined): string {
+    if (!timeString) {
+      return "";
+    }
+    const [hours, minutes] = timeString.split(":").map(Number);
     return `${hours.toString().padStart(2, "0")}:${minutes
       .toString()
       .padStart(2, "0")}`;
@@ -107,8 +128,8 @@ const SalonInfo: React.FC = () => {
             <li className="flex items-center gap-2 mb-2">
               <img src="/img/salon/icon-clock.svg" alt="" />
               <span>
-                {formatTime(salonInfo.openingTime)} -{" "}
-                {formatTime(salonInfo.closingTime)}
+                {formatTime(salonInfo?.openingTime)} -{" "}
+                {formatTime(salonInfo?.closingTime)}
               </span>
             </li>
             <li className="flex items-center gap-2 mb-2">
