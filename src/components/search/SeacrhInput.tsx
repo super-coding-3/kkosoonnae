@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
-import HttpClient from "../../utils/api/customAxios";
+import useAxios from "../../hooks/useAxios";
 
 interface SearchInputProps {
   onSearchComplete: (data: SearchResultItem[]) => void;
@@ -17,16 +17,28 @@ interface SearchResultItem {
 const SearchInput: React.FC<SearchInputProps> = ({ onSearchComplete }) => {
   const [searchKeywordQuery, setSearchKeywordQuery] = useState("");
 
+  // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
+  const { isLoading, error, handleRequest, Loading } = useAxios();
+
   const handleSearch = async () => {
-    try {
-      const response = await HttpClient.get(
-        `/api/user/search/stores/?nameAddressKeyword=${searchKeywordQuery}`
-      );
-      onSearchComplete(response.data);
-    } catch (error) {
-      console.error("검색 요청 실패:", error);
-    }
+    handleRequest({
+      url: `/api/user/search/stores/?nameAddressKeyword=${searchKeywordQuery}`,
+      method: "GET",
+      setData: onSearchComplete,
+    });
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return (
+      <div className="my-8 px-4">
+        <p>데이터를 가져오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.</p>
+      </div>
+    );
+  }
 
   const onChangeSearch = (e: any) => {
     setSearchKeywordQuery(e.target.value);

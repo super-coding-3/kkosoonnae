@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { LuMapPin } from "react-icons/lu";
 import { FaStar, FaRegHeart } from "react-icons/fa";
 
-import HttpClient from "../../utils/api/customAxios";
+import useAxios from "../../hooks/useAxios";
 
 interface MainStoreItem {
   storeNo: number;
@@ -17,17 +17,28 @@ interface MainStoreItem {
 const MainStoreList: React.FC = () => {
   const [mainStoreData, setMainStoreData] = useState<MainStoreItem[]>([]);
 
-  const getMainStoreList = async () => {
-    const { data } = await HttpClient.get<MainStoreItem[]>(
-      "api/user/search/main-stores/%EA%B0%95%EB%82%A8%EA%B5%AC"
-    );
-    setMainStoreData(data);
-    return data;
-  };
+  // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
+  const { isLoading, error, handleRequest, Loading } = useAxios();
 
   useEffect(() => {
-    getMainStoreList();
+    handleRequest({
+      url: "api/user/search/main-stores/%EA%B0%95%EB%82%A8%EA%B5%AC",
+      method: "GET",
+      setData: setMainStoreData,
+    });
   }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return (
+      <div className="my-8 px-4">
+        <p>데이터를 가져오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="my-8 px-4 ">

@@ -4,6 +4,7 @@ import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
 import Nav from "../components/common/Nav";
 import MainContent from "../components/main/MainContent";
+import Loading from "../components/common/Loading";
 
 const Main: React.FC = () => {
   return (

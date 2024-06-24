@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import HttpClient from "../utils/api/customAxios";
+import Loading from "../components/common/Loading";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
 
@@ -58,6 +59,7 @@ const useAxios = () => {
     isLoading,
     error,
     handleRequest,
+    Loading,
   };
 };
 
