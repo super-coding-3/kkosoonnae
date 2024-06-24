@@ -4,12 +4,12 @@ import { ko } from "date-fns/locale";
 
 import PageNothing from "../components/common/PageNothing";
 import ModalDelete from "../components/common/ModalDelete";
-import ToastMessage from "../components/common/ToastMessage";
 import OuterLayout from "../components/common/OuterLayout";
 import PageTitle from "../components/common/PageTitle";
 import Nav from "../components/common/Nav";
 import MyReservationCard from "../components/myreservation/MyReservationCard";
 import useAxios from "../hooks/useAxios";
+import useToastMessage from "../hooks/useToastMessage";
 
 interface MyReservationDatasType {
   reservationNo: number;
@@ -27,7 +27,7 @@ const MyReservation: React.FC = () => {
     MyReservationDatasType[]
   >([]);
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
-  const [showToastMessage, setShowToastMessage] = useState<boolean>(false);
+  const { showToast, Toast } = useToastMessage();
   const [reservationNo, setReservationNo] = useState<number>(0);
 
   // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
@@ -39,10 +39,12 @@ const MyReservation: React.FC = () => {
       method: "DELETE",
     });
     setShowModalDelete(false);
-    setShowToastMessage(true);
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
+    showToast({
+      message: "예약이 취소되었습니다",
+      action: () => {
+        window.location.reload();
+      },
+    });
   };
 
   const handlerClickCancel = (reservationNo: number) => {
@@ -102,7 +104,7 @@ const MyReservation: React.FC = () => {
             delBtnValue="예약취소"
             cancelBtnValue="선택취소"
           />
-          {showToastMessage && <ToastMessage message="예약이 취소되었습니다" />}
+          <Toast />
         </div>
       )}
       <Nav />

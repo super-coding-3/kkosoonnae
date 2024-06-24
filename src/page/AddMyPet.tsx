@@ -1,5 +1,3 @@
-import HttpClient from "../utils/api/customAxios";
-
 import React, { useState } from "react";
 import { Formik, Form } from "formik";
 
@@ -13,7 +11,8 @@ import { EditMyPetSchema } from "../schema/formSchema";
 import CustomDatePickerMyPet from "../components/mypet/CustomDatePickerMyPet";
 import { MYPET_FORM_LABEL } from "../constants/constants";
 import SelectMyPetGender from "../components/mypet/SelectMyPetGender";
-import ToastMessage from "../components/common/ToastMessage";
+import useAxios from "../hooks/useAxios";
+import useToastMessage from "../hooks/useToastMessage";
 
 interface MyPetInfosType {
   name: string;
@@ -26,7 +25,9 @@ interface MyPetInfosType {
 }
 
 const AddMyPet: React.FC = () => {
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  // TODO: 로딩 처리
+  const { isLoading, error, handleRequest } = useAxios();
+  const { showToast, Toast } = useToastMessage();
 
   const handleFormSubmit = async (values: MyPetInfosType) => {
     if (values.petImgData) {
@@ -44,34 +45,36 @@ const AddMyPet: React.FC = () => {
       requestValues.append("petAddDto", petAddDtoDatas);
       requestValues.append("petImg", values.petImgData);
 
-      await HttpClient.post("/api/user/pet/addPet", requestValues)
-        .then(() => {
-          setToastMessage(`${values.name}(이)가 등록되었습니다`);
-          setTimeout(function () {
+      handleRequest({
+        url: "/api/user/pet/addPet",
+        method: "POST",
+        body: requestValues,
+      });
+      if (!error) {
+        showToast({
+          message: `${values.name}(이)가 등록되었습니다`,
+          action: () => {
             window.location.href = "/mypage";
-          }, 1000);
-        })
-        .catch((error: any) => {
-          setToastMessage("오류가 발생했습니다");
-          setTimeout(() => {
-            setToastMessage(null);
-          }, 1000);
+          },
         });
+      } else {
+        showToast({
+          message: "오류가 발생했습니다",
+        });
+      }
     } else {
-      setToastMessage("반려동물의 이미지를 넣어주세요");
-      setTimeout(function () {
-        setToastMessage(null);
-      }, 3000);
+      showToast({
+        message: "반려동물의 이미지를 넣어주세요",
+      });
       return;
     }
   };
 
   const handleFormIsValid = (isValid: boolean) => {
     if (!isValid) {
-      setToastMessage("반려동물의 정보를 올바르게 작성해주세요");
-      setTimeout(() => {
-        setToastMessage(null);
-      }, 1000);
+      showToast({
+        message: "반려동물의 정보를 올바르게 작성해주세요",
+      });
     }
   };
 
@@ -129,7 +132,7 @@ const AddMyPet: React.FC = () => {
                 handleFormIsValid(isValid);
               }}
             />
-            {toastMessage && <ToastMessage message={toastMessage} />}
+            <Toast />
           </Form>
         )}
       </Formik>

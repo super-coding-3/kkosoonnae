@@ -1,20 +1,21 @@
 import React from "react";
-import HttpClient from "../../utils/api/customAxios";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate } from "react-router-dom";
 import { LoginSchema } from "../../schema/formSchema";
-import { useState } from "react";
 
-import ToastMessage from "../common/ToastMessage";
+import useAxios from "../../hooks/useAxios";
+import useToastMessage from "../../hooks/useToastMessage";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const { isLoading, error, handleRequest } = useAxios();
+  const { showToast, Toast } = useToastMessage();
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full px-4 font-bold text-sm max-w-[640px] min-w-[375px] mx-auto">
-      {toastMessage && <ToastMessage message={toastMessage} />}
+      <Toast />
       <Formik
         initialValues={{
           loginId: "",
@@ -25,20 +26,26 @@ const LoginPage: React.FC = () => {
             loginId: values.loginId,
             password: values.password,
           };
-          HttpClient.post("/api/user/customer/login", payload)
-            .then((response) => {
-              setToastMessage("로그인이 성공하였습니다!");
-              const res = response.data;
-              const token = res.data.token;
-              localStorage.setItem("token", token);
-              setTimeout(() => {
+          handleRequest({
+            url: "/api/user/customer/login",
+            method: "POST",
+            body: payload,
+            setData: (data) => {
+              localStorage.setItem("token", data.data.token);
+            },
+          });
+          if (!error) {
+            showToast({
+              message: "로그인이 성공하였습니다!",
+              action: () => {
                 navigate("/");
-              }, 1000); // 1초 후에 페이지 이동
-            })
-            .catch((error) => {
-              setToastMessage("로그인이 실패하였습니다");
-              console.log(error);
+              },
             });
+          } else {
+            showToast({
+              message: "error",
+            });
+          }
           setSubmitting(false);
         }}
         validationSchema={LoginSchema}

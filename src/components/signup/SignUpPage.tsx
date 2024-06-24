@@ -1,4 +1,3 @@
-import HttpClient from "../../utils/api/customAxios";
 import React from "react";
 
 import { useState } from "react";
@@ -9,17 +8,20 @@ import { useNavigate } from "react-router-dom";
 import Postcode from "../common/PostCode";
 import formFields from "./FormFields";
 import CheckAvailabilityApi from "../common/CheckAvailabilityApi";
-import ToastMessage from "../common/ToastMessage";
+import useToastMessage from "../../hooks/useToastMessage";
+import useAxios from "../../hooks/useAxios";
 
 const SignUpPage: React.FC = () => {
   const navigate = useNavigate();
   const [showPostcode, setShowPostcode] = useState(false);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [doubleCheck, setDoubleCheck] = useState<string>("noProgress");
+
+  const { isLoading, error, handleRequest } = useAxios();
+  const { showToast, Toast } = useToastMessage();
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full mt-2 font-bold text-sm max-w-[640px] min-w-[375px] mx-auto p-4">
-      {toastMessage && <ToastMessage message={toastMessage} />}
+      <Toast />
       <Formik
         initialValues={{
           loginId: "",
@@ -45,23 +47,27 @@ const SignUpPage: React.FC = () => {
             addressDtl: values.addressDtl,
           };
           if (doubleCheck === "noProgress") {
-            setToastMessage("닉네임 중복확인을 진행해주세요");
-            setTimeout(() => {
-              setToastMessage(null);
-            }, 1000);
+            showToast({
+              message: "닉네임 중복확인을 진행해주세요",
+            });
           } else if (doubleCheck === "complete") {
-            HttpClient.post("/api/user/customer/signUp", payload)
-              .then((response) => {
-                setToastMessage("회원가입이 완료되었습니다!");
-                setTimeout(() => {
+            handleRequest({
+              url: "/api/user/customer/signUp",
+              method: "POST",
+              body: payload,
+            });
+            if (!error) {
+              showToast({
+                message: "회원가입이 완료되었습니다!",
+                action: () => {
                   navigate("/");
-                }, 800);
-              })
-              .catch((error) => {
-                setTimeout(() => {
-                  setToastMessage(error.response.data.message);
-                }, 800);
+                },
               });
+            } else {
+              showToast({
+                message: "오류가 발생했습니다",
+              });
+            }
             setSubmitting(false);
           }
         }}
@@ -84,11 +90,10 @@ const SignUpPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => {
-                        setToastMessage(null);
                         CheckAvailabilityApi(
                           field.name as "loginId" | "nickName",
                           values[field.name as "loginId" | "nickName"],
-                          setToastMessage,
+                          showToast,
                           setDoubleCheck
                         );
                       }}
