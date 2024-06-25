@@ -26,25 +26,30 @@ const MyReservation: React.FC = () => {
   const [myReservationDatas, setMyReservationDatas] = useState<
     MyReservationDatasType[]
   >([]);
+  const [loadingMyReservation, setLoadingMyReservation] =
+    useState<boolean>(false);
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
   const { showToast, Toast } = useToastMessage();
   const [reservationNo, setReservationNo] = useState<number>(0);
 
-  // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
-  const { isLoading, error, handleRequest } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
 
   const deleteMyReservationDatas = async (reservationNo: number) => {
     handleRequest({
       url: `/api/user/mypage/avail-cancel/${reservationNo}`,
       method: "DELETE",
     });
-    setShowModalDelete(false);
-    showToast({
-      message: "예약이 취소되었습니다",
-      action: () => {
-        window.location.reload();
-      },
-    });
+    if (!error) {
+      setShowModalDelete(false);
+      showToast({
+        message: "예약이 취소되었습니다",
+        action: () => {
+          window.location.reload();
+        },
+      });
+    } else {
+      showToast({ message: "오류가 발생했습니다" });
+    }
   };
 
   const handlerClickCancel = (reservationNo: number) => {
@@ -67,14 +72,23 @@ const MyReservation: React.FC = () => {
     handleRequest({
       url: "/api/user/mypage/avail-list",
       method: "GET",
-      setData: setMyReservationDatas,
+      setData: (data) => {
+        setMyReservationDatas(data);
+        setLoadingMyReservation(true);
+      },
     });
+    if (error) {
+      showToast({
+        message: "오류가 발생했습니다. 잠시 후 다시 실행해주세요",
+      });
+    }
   }, []);
 
   return (
     <OuterLayout>
       <PageTitle title="예약내역" leftBtn={true} />
-      {myReservationDatas.length === 0 ? (
+      {Loading}
+      {myReservationDatas.length === 0 && loadingMyReservation ? (
         <PageNothing message="예약내역이 없습니다" />
       ) : (
         <div className="pt-4 pb-24 px-4">

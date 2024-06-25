@@ -40,8 +40,7 @@ const EditMyPet: React.FC = () => {
     petImgData: "",
   });
 
-  // TODO : 로딩 처리
-  const { isLoading, error, handleRequest } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
   const { showToast, Toast } = useToastMessage();
 
   const handleFormSubmit = async (values: MyPetInfosType) => {
@@ -144,6 +143,7 @@ const EditMyPet: React.FC = () => {
   return (
     <OuterLayout>
       <PageTitle title="내꼬순내 수정" leftBtn={true} />
+      {Loading}
       <Formik
         initialValues={initialValues}
         onSubmit={handleFormSubmit}

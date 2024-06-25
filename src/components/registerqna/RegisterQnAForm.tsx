@@ -18,8 +18,7 @@ interface QnAType {
 }
 
 const RegisterQnAForm: React.FC<RegisterQnAFormProps> = (props) => {
-  //TODO: 로딩 처리
-  const { isLoading, error, handleRequest } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
   const { showToast, Toast } = useToastMessage();
 
   const handleFormSubmit = (values: QnAType) => {
@@ -41,6 +40,7 @@ const RegisterQnAForm: React.FC<RegisterQnAFormProps> = (props) => {
 
   return (
     <div className="pt-4 px-4">
+      {Loading}
       <div className="flex justify-between items-center pb-3 border-b-2 border-COMMONN_BORDER_GRAY">
         <div className="font-bold text-xl">꼬순내 고객센터</div>
         <Link

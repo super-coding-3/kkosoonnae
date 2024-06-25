@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik, Form } from "formik";
 
 import OuterLayout from "../components/common/OuterLayout";
@@ -25,8 +25,7 @@ interface MyPetInfosType {
 }
 
 const AddMyPet: React.FC = () => {
-  // TODO: 로딩 처리
-  const { isLoading, error, handleRequest } = useAxios();
+  const { error, handleRequest } = useAxios();
   const { showToast, Toast } = useToastMessage();
 
   const handleFormSubmit = async (values: MyPetInfosType) => {
