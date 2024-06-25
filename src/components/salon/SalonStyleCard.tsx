@@ -26,9 +26,6 @@ const SalonStyleCard: React.FC = () => {
       setData: setSalonCutStyle,
     });
 
-    if (isLoading) {
-      return <Loading />;
-    }
     if (error) {
       return (
         <div className="my-8 px-4">
@@ -44,6 +41,7 @@ const SalonStyleCard: React.FC = () => {
 
   return (
     <>
+      {isLoading && Loading}
       {salonCutStyle.map((item, index) => (
         <div className="style-card-item" key={index}>
           <Card imgAlt={item.styleName} imgSrc={item.img}>

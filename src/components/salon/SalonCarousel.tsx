@@ -55,19 +55,15 @@ function SalonCarousel() {
     });
   };
 
-  const getSalonInfo = async () => {
-    if (storeNo) {
-      handleRequest({
-        url: `api/user/store/${storeNo}`,
-        method: "GET",
-        setData: (data: SalonServerResponse) => {
-          setSalonInfo(data.storeDetail);
-        },
-      });
-    }
-    if (isLoading) {
-      return <Loading />;
-    }
+  const getSalonInfo = () => {
+    handleRequest({
+      url: `api/user/store/${storeNo}`,
+      method: "GET",
+      setData: (data: SalonServerResponse) => {
+        setSalonInfo(data.storeDetail);
+      },
+    });
+
     if (error) {
       return (
         <div className="my-8 px-4">
@@ -83,16 +79,19 @@ function SalonCarousel() {
   }, [storeNo]);
 
   return (
-    <div>
-      <Slider {...settings} className="salon-slick h-64 w-full">
-        {salonInfo?.img?.[0] && (
-          <img src={salonInfo.img[0]} alt="" className="h-full" />
-        )}
-        {salonInfo?.img?.[1] && (
-          <img src={salonInfo.img[1]} alt="" className="h-full" />
-        )}
-      </Slider>
-    </div>
+    <>
+      {isLoading && Loading}
+      <div>
+        <Slider {...settings} className="salon-slick h-64 w-full">
+          {salonInfo?.img?.[0] && (
+            <img src={salonInfo.img[0]} alt="" className="h-full" />
+          )}
+          {salonInfo?.img?.[1] && (
+            <img src={salonInfo.img[1]} alt="" className="h-full" />
+          )}
+        </Slider>
+      </div>
+    </>
   );
 }
 

@@ -57,18 +57,14 @@ const SalonInfo: React.FC = () => {
   };
 
   const getSalonInfo = () => {
-    if (storeNo) {
-      handleRequest({
-        url: `api/user/store/${storeNo}`,
-        method: "GET",
-        setData: (data: SalonServerResponse) => {
-          setSalonInfo(data.storeDetail);
-        },
-      });
-    }
-    if (isLoading) {
-      return <Loading />;
-    }
+    handleRequest({
+      url: `api/user/store/${storeNo}`,
+      method: "GET",
+      setData: (data: SalonServerResponse) => {
+        setSalonInfo(data.storeDetail);
+      },
+    });
+
     if (error) {
       return (
         <div className="my-8 px-4">
@@ -112,6 +108,7 @@ const SalonInfo: React.FC = () => {
 
   return (
     <div>
+      {isLoading && Loading}
       {salonInfo && (
         <>
           <div className="w-full flex items-center gap-2">

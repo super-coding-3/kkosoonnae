@@ -20,17 +20,13 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearchComplete }) => {
   // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
   const { isLoading, error, handleRequest, Loading } = useAxios();
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     handleRequest({
       url: `/api/user/search/stores/?nameAddressKeyword=${searchKeywordQuery}`,
       method: "GET",
       setData: onSearchComplete,
     });
   };
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   if (error) {
     return (
@@ -45,24 +41,27 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearchComplete }) => {
   };
 
   return (
-    <div
-      className="relative flex items-center"
-      style={{ width: "calc(100% - 55px)" }}
-    >
-      <input
-        type="text"
-        placeholder="동이름 또는 매장명을 입력해주세요"
-        value={searchKeywordQuery}
-        onChange={onChangeSearch}
-        className="w-full rounded border-[1px] border-gray-300  indent-4 pr-[50px]"
-      />
-      <button
-        onClick={handleSearch}
-        className="w-11 h-11 absolute top-0 right-0 text-center"
+    <>
+      {isLoading && Loading}
+      <div
+        className="relative flex items-center"
+        style={{ width: "calc(100% - 55px)" }}
       >
-        <IoIosSearch size={28} className="inline-block" />
-      </button>
-    </div>
+        <input
+          type="text"
+          placeholder="동이름 또는 매장명을 입력해주세요"
+          value={searchKeywordQuery}
+          onChange={onChangeSearch}
+          className="w-full rounded border-[1px] border-gray-300  indent-4 pr-[50px]"
+        />
+        <button
+          onClick={handleSearch}
+          className="w-11 h-11 absolute top-0 right-0 text-center"
+        >
+          <IoIosSearch size={28} className="inline-block" />
+        </button>
+      </div>
+    </>
   );
 };
 
