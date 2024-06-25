@@ -59,7 +59,7 @@ const useAxios = () => {
     isLoading,
     error,
     handleRequest,
-    Loading,
+    Loading: isLoading ? <Loading /> : null,
   };
 };
 

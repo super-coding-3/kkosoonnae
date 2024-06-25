@@ -25,7 +25,6 @@ function SearchModal({ onClose }: SearchModalProps) {
 
   const handleSearchComplete = (data: SearchResultItem[]) => {
     setResultKeywordData(data);
-    // console.log(data);
   };
 
   return (
