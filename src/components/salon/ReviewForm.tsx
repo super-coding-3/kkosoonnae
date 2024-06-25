@@ -131,7 +131,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
           />
         </div>
 
-        <BtnSubmit type="submit" value="예약" />
+        <BtnSubmit type="submit" value="리뷰작성" />
         {reviewToastMessage && <ToastMessage message={reviewToastMessage} />}
       </form>
     </div>

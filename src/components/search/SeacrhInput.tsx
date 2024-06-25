@@ -22,7 +22,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearchComplete }) => {
 
   const handleSearch = () => {
     handleRequest({
-      url: `/api/user/search/stores/?nameAddressKeyword=${searchKeywordQuery}`,
+      url: `/api/user/search/stores/${searchKeywordQuery}`,
       method: "GET",
       setData: onSearchComplete,
     });
@@ -36,7 +36,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearchComplete }) => {
     );
   }
 
-  const onChangeSearch = (e: any) => {
+  const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKeywordQuery(e.target.value);
   };
 
