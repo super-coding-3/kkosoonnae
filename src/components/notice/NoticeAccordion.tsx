@@ -16,7 +16,7 @@ function NoticeAccordion() {
   const [noticeData, setNoticeData] = useState<NoticeItem[]>([]);
 
   // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
-  const { isLoading, error, handleRequest, Loading } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
 
   const getNoticeData = async () => {
     try {
@@ -43,7 +43,7 @@ function NoticeAccordion() {
 
   return (
     <>
-      {isLoading && Loading}
+      {Loading}
       <div className="px-4 py-4 notice-accordion">
         <Accordion
           collapseAll

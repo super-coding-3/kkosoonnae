@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Formik, Form } from "formik";
 import { reservationSchema } from "../../schema/formSchema";
-import HttpClient from "../../utils/api/customAxios";
+import useAxios from "../../hooks/useAxios";
 
 import ReservationFormGroup from "./ReservationFormGroup";
 import ReservationTimeRadio from "./ReservationTimeRadio";
@@ -37,6 +37,8 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
   salonNumber,
   onPetSelect,
 }) => {
+  const { error, handleRequest, Loading } = useAxios();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [reservationData, setReservationData] =
@@ -84,24 +86,32 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
         weight: values.weight,
         characteristics: values.characteristics,
       };
-      const response = await HttpClient.post(
-        "/api/user/reservation/make-reservation",
-        payload
-      );
+
+      await handleRequest({
+        url: "/api/user/reservation/make-reservation",
+        method: "POST",
+        body: payload,
+      });
 
       setReservationData(values);
       setStep(2);
-    } catch (error) {
-      console.error("예약 요청 실패:", error);
+    } catch (err) {
+      if (error) {
+        return (
+          <div className="my-8 px-4">
+            <p>예약하기가 실패됬습니다. 다시 예약해주세요.</p>
+          </div>
+        );
+      }
     }
   };
-
   const handleReservationComplete = () => {
     setStep(3);
   };
 
   return (
     <div>
+      {Loading}
       {step === 1 ? (
         <>
           <div className="flex justify-end my-3 px-4">

@@ -80,7 +80,7 @@ function SalonCarousel() {
 
   return (
     <>
-      {isLoading && Loading}
+      {Loading}
       <div>
         <Slider {...settings} className="salon-slick h-64 w-full">
           {salonInfo?.img?.[0] && (

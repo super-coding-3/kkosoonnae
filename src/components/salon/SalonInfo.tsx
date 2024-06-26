@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import useAxios from "../../hooks/useAxios";
+import useToastMessage from "../../hooks/useToastMessage";
 
 import FavoriteButton from "./FavoriteButton";
-import ToastMessage from "../common/ToastMessage";
 import BtnSubmit from "../common/BtnSubmit";
 
 interface SalonNumberItem {
@@ -30,19 +30,18 @@ interface SalonServerResponse {
 }
 
 const SalonInfo: React.FC = () => {
+  const { error, handleRequest, Loading } = useAxios();
+  const { showToast, Toast } = useToastMessage();
+
   const [salonNumber, setSalonNumber] = useState<SalonNumberItem | null>(null);
   const [salonInfo, setSalonInfo] = useState<SalonInfoItem | null>(null);
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token")
   );
-  const [reservationToastMessage, setReservationToastMessage] = useState("");
 
   const { storeNo } = useParams<{ storeNo: string }>();
 
   const navigate = useNavigate();
-
-  // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
-  const { isLoading, error, handleRequest, Loading } = useAxios();
 
   const handleFavoriteClick = () => {
     console.log(`미용실을 즐겨찾기에 추가/제거했습니다.`);
@@ -66,11 +65,9 @@ const SalonInfo: React.FC = () => {
     });
 
     if (error) {
-      return (
-        <div className="my-8 px-4">
-          <p>데이터를 가져오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.</p>
-        </div>
-      );
+      showToast({
+        message: "매장정보를 불러올수없습니다",
+      });
     }
   };
 
@@ -91,7 +88,9 @@ const SalonInfo: React.FC = () => {
 
   const goReservation = () => {
     if (!token) {
-      setReservationToastMessage("로그인이 필요합니다.");
+      showToast({
+        message: "로그인이 필요합니다.",
+      });
       setTimeout(() => {
         navigate("/login");
       }, 3000);
@@ -108,7 +107,7 @@ const SalonInfo: React.FC = () => {
 
   return (
     <div>
-      {isLoading && Loading}
+      {Loading}
       {salonInfo && (
         <>
           <div className="w-full flex items-center gap-2">
@@ -143,9 +142,7 @@ const SalonInfo: React.FC = () => {
           </div>
         </>
       )}
-      {reservationToastMessage && (
-        <ToastMessage message={reservationToastMessage} />
-      )}
+      <Toast />
     </div>
   );
 };

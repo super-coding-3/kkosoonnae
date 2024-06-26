@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import HttpClient from "../../utils/api/customAxios";
 import { FaStar } from "react-icons/fa";
 
-import ToastMessage from "../common/ToastMessage";
+import useAxios from "../../hooks/useAxios";
+import useToastMessage from "../../hooks/useToastMessage";
+
 import BtnSubmit from "../common/BtnSubmit";
 
 interface ReviewSalonNumberItem {
@@ -21,6 +22,9 @@ interface ReviewFormProps {
 }
 
 const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
+  const { isLoading, error, handleRequest } = useAxios();
+  const { showToast, Toast } = useToastMessage();
+
   const { storeNo } = useParams<{ storeNo: string }>();
   const navigate = useNavigate();
 
@@ -29,7 +33,6 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
     null
   );
   const [content, setContent] = useState("");
-  const [reviewToastMessage, setReviewToastMessage] = useState("");
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token")
   );
@@ -39,24 +42,21 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
     setRating(selectedRating);
   };
 
-  //리뷰 내용 담기
   const handleContentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setContent(event.target.value);
   };
 
-  // 매장 번호
-  const getSalonNumber = async () => {
-    const { data } = await HttpClient.get<ReviewSalonNumberItem>(
-      "/api/user/store/allStore"
-    );
-    setSalonNumber(data);
-    return data;
+  const getSalonNumber = () => {
+    handleRequest({
+      url: "/api/user/store/allStore",
+      method: "GET",
+      setData: setSalonNumber,
+    });
   };
 
-  // 리뷰 내용 post 호출
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const payload = {
@@ -66,27 +66,38 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
       createDt: new Date().toISOString(),
     };
 
-    HttpClient.post(`/api/user/review/${storeNo}/reviews`, payload)
-      .then((response) => {
-        if (response.status === 200) {
-          setReviewToastMessage(response.data);
-          onSubmit({ rating, content });
-          setRating(0);
-          setContent("");
-
-          const timer = setTimeout(() => {
-            setReviewToastMessage("");
-          }, 3000);
-
-          return () => clearTimeout(timer);
-        }
-      })
-      .catch((error: any) => {
-        setReviewToastMessage("로그인이 필요합니다.");
-        setTimeout(() => {
-          navigate("/login");
-        }, 3000);
+    try {
+      await handleRequest({
+        url: `/api/user/review/${storeNo}/reviews`,
+        method: "POST",
+        body: payload,
       });
+      showToast({
+        message: "리뷰가 등록되었습니다.",
+        action: () => {
+          window.location.reload();
+        },
+      });
+
+      onSubmit({ rating, content });
+      setRating(0);
+      setContent("");
+
+      const timer = setTimeout(() => {
+        showToast({
+          message: "",
+        });
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    } catch (err) {
+      showToast({
+        message: "로그인이 필요합니다.",
+      });
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+    }
   };
 
   useEffect(() => {
@@ -130,9 +141,8 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
             className="w-full border-1 border-gray-200 rounded"
           />
         </div>
-
-        <BtnSubmit type="submit" value="예약" />
-        {reviewToastMessage && <ToastMessage message={reviewToastMessage} />}
+        <BtnSubmit type="submit" value="리뷰작성" />
+        <Toast />
       </form>
     </div>
   );

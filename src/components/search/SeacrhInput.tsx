@@ -17,12 +17,11 @@ interface SearchResultItem {
 const SearchInput: React.FC<SearchInputProps> = ({ onSearchComplete }) => {
   const [searchKeywordQuery, setSearchKeywordQuery] = useState("");
 
-  // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
-  const { isLoading, error, handleRequest, Loading } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
 
   const handleSearch = () => {
     handleRequest({
-      url: `/api/user/search/stores/?nameAddressKeyword=${searchKeywordQuery}`,
+      url: `/api/user/search/stores/${searchKeywordQuery}`,
       method: "GET",
       setData: onSearchComplete,
     });
@@ -36,13 +35,13 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearchComplete }) => {
     );
   }
 
-  const onChangeSearch = (e: any) => {
+  const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKeywordQuery(e.target.value);
   };
 
   return (
     <>
-      {isLoading && Loading}
+      {Loading}
       <div
         className="relative flex items-center"
         style={{ width: "calc(100% - 55px)" }}

@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Field, ErrorMessage, useFormikContext } from "formik";
-import HttpClient from "../../utils/api/customAxios";
+
+import useAxios from "../../hooks/useAxios";
 
 interface CutStyleItem {
   cutStyle: string;
 }
 
 function ReservationDropDown() {
+  const { error, handleRequest, Loading } = useAxios();
+
   const [cutStyleState, setCutStyleState] = useState<CutStyleItem[]>([]);
 
   const { storeNo } = useParams<{ storeNo: string }>();
@@ -20,11 +23,23 @@ function ReservationDropDown() {
   };
 
   const getCutstyle = async () => {
-    const { data } = await HttpClient.get<CutStyleItem[]>(
-      `/api/user/reservation/style-list/${storeNo}`
-    );
-    setCutStyleState(data);
-    return data;
+    try {
+      await handleRequest({
+        url: `/api/user/reservation/style-list/${storeNo}`,
+        method: "GET",
+        setData: setCutStyleState,
+      });
+      return cutStyleState;
+    } catch (err) {
+      if (error) {
+        return (
+          <div className="my-8 px-4">
+            <p>매장 컷 스타일을 가져오지 못했습니다.</p>
+          </div>
+        );
+      }
+      return [];
+    }
   };
 
   useEffect(() => {
@@ -33,6 +48,7 @@ function ReservationDropDown() {
 
   return (
     <div className="flex items-center">
+      {Loading}
       <label htmlFor="cutStyle" className="w-[80px] text-black text-sm">
         스타일
       </label>

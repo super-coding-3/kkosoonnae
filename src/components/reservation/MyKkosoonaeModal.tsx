@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Modal, Avatar } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 
-import HttpClient from "../../utils/api/customAxios";
+import useAxios from "../../hooks/useAxios";
+
 import BtnSubmit from "../common/BtnSubmit";
 
 interface MyKkosoonaeModalProps {
@@ -24,16 +25,25 @@ const MyKkosoonaeModal: React.FC<MyKkosoonaeModalProps> = ({
   setOpenModal,
   onPetSelect,
 }) => {
+  const { error, handleRequest, Loading } = useAxios();
   const [petInfo, setPetInfo] = useState<MypetInfo[]>([]);
   const navigate = useNavigate();
 
   const getPetInfo = async () => {
     try {
-      const { data } = await HttpClient.get<MypetInfo[]>(
-        "api/user/reservation/my-pet"
-      );
-      setPetInfo(data);
-    } catch (error) {
+      await handleRequest({
+        url: "api/user/reservation/my-pet",
+        method: "GET",
+        setData: setPetInfo,
+      });
+    } catch (err) {
+      if (error) {
+        return (
+          <div className="my-8 px-4">
+            <p>펫 정보를 불러올수 없습니다.</p>
+          </div>
+        );
+      }
       setPetInfo([]);
     }
   };
@@ -51,6 +61,7 @@ const MyKkosoonaeModal: React.FC<MyKkosoonaeModalProps> = ({
 
   return (
     <div>
+      {Loading}
       <Modal show={openModal} onClose={() => setOpenModal(false)} size="md">
         <Modal.Header>내 꼬순내 정보 불러오기</Modal.Header>
         <Modal.Body>
