@@ -37,7 +37,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
   salonNumber,
   onPetSelect,
 }) => {
-  const { isLoading, error, handleRequest, Loading } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [step, setStep] = useState(1);
@@ -111,7 +111,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
 
   return (
     <div>
-      {isLoading && Loading}
+      {Loading}
       {step === 1 ? (
         <>
           <div className="flex justify-end my-3 px-4">

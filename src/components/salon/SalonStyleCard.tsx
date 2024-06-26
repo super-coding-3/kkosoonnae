@@ -16,8 +16,7 @@ const SalonStyleCard: React.FC = () => {
   const [salonCutStyle, setSalonCutStyle] = useState<CutStyleItem[]>([]);
   const { storeNo } = useParams<{ storeNo: string }>();
 
-  // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
-  const { isLoading, error, handleRequest, Loading } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
 
   const getSalonCutStyle = () => {
     handleRequest({
@@ -41,7 +40,7 @@ const SalonStyleCard: React.FC = () => {
 
   return (
     <>
-      {isLoading && Loading}
+      {Loading}
       {salonCutStyle.map((item, index) => (
         <div className="style-card-item" key={index}>
           <Card imgAlt={item.styleName} imgSrc={item.img}>

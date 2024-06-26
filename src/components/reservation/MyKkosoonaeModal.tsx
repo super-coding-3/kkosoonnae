@@ -25,7 +25,7 @@ const MyKkosoonaeModal: React.FC<MyKkosoonaeModalProps> = ({
   setOpenModal,
   onPetSelect,
 }) => {
-  const { isLoading, error, handleRequest, Loading } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
   const [petInfo, setPetInfo] = useState<MypetInfo[]>([]);
   const navigate = useNavigate();
 
@@ -61,7 +61,7 @@ const MyKkosoonaeModal: React.FC<MyKkosoonaeModalProps> = ({
 
   return (
     <div>
-      {isLoading && Loading}
+      {Loading}
       <Modal show={openModal} onClose={() => setOpenModal(false)} size="md">
         <Modal.Header>내 꼬순내 정보 불러오기</Modal.Header>
         <Modal.Body>

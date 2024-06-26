@@ -30,7 +30,7 @@ interface SalonServerResponse {
 }
 
 const SalonInfo: React.FC = () => {
-  const { isLoading, error, handleRequest, Loading } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
   const { showToast, Toast } = useToastMessage();
 
   const [salonNumber, setSalonNumber] = useState<SalonNumberItem | null>(null);
@@ -107,7 +107,7 @@ const SalonInfo: React.FC = () => {
 
   return (
     <div>
-      {isLoading && Loading}
+      {Loading}
       {salonInfo && (
         <>
           <div className="w-full flex items-center gap-2">

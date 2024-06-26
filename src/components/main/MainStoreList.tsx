@@ -18,7 +18,7 @@ const MainStoreList: React.FC = () => {
   const [mainStoreData, setMainStoreData] = useState<MainStoreItem[]>([]);
 
   // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
-  const { isLoading, error, handleRequest, Loading } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
 
   const getSalonList = async () => {
     try {
@@ -46,7 +46,7 @@ const MainStoreList: React.FC = () => {
 
   return (
     <>
-      {isLoading && Loading}
+      {Loading}
       <div className="my-8 px-4 ">
         <h2 className="mt-4 flex items-center gap-2 text-xl">
           <LuMapPin />

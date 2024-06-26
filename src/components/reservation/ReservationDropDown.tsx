@@ -9,7 +9,7 @@ interface CutStyleItem {
 }
 
 function ReservationDropDown() {
-  const { isLoading, error, handleRequest, Loading } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
 
   const [cutStyleState, setCutStyleState] = useState<CutStyleItem[]>([]);
 
@@ -48,7 +48,7 @@ function ReservationDropDown() {
 
   return (
     <div className="flex items-center">
-      {isLoading && Loading}
+      {Loading}
       <label htmlFor="cutStyle" className="w-[80px] text-black text-sm">
         스타일
       </label>
