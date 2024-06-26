@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import HttpClient from "../../utils/api/customAxios";
 import { FaStar } from "react-icons/fa";
+
+import useAxios from "../../hooks/useAxios";
 
 import ToastMessage from "../common/ToastMessage";
 import BtnSubmit from "../common/BtnSubmit";
@@ -21,6 +22,7 @@ interface ReviewFormProps {
 }
 
 const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
+  const { isLoading, error, handleRequest } = useAxios();
   const { storeNo } = useParams<{ storeNo: string }>();
   const navigate = useNavigate();
 
@@ -47,16 +49,17 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
   };
 
   // 매장 번호
-  const getSalonNumber = async () => {
-    const { data } = await HttpClient.get<ReviewSalonNumberItem>(
-      "/api/user/store/allStore"
-    );
-    setSalonNumber(data);
-    return data;
+  const getSalonNumber = () => {
+    handleRequest({
+      url: "/api/user/store/allStore",
+      method: "GET",
+      setData: setSalonNumber,
+    });
   };
 
   // 리뷰 내용 post 호출
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const payload = {
@@ -66,27 +69,30 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
       createDt: new Date().toISOString(),
     };
 
-    HttpClient.post(`/api/user/review/${storeNo}/reviews`, payload)
-      .then((response) => {
-        if (response.status === 200) {
-          setReviewToastMessage(response.data);
-          onSubmit({ rating, content });
-          setRating(0);
-          setContent("");
-
-          const timer = setTimeout(() => {
-            setReviewToastMessage("");
-          }, 3000);
-
-          return () => clearTimeout(timer);
-        }
-      })
-      .catch((error: any) => {
-        setReviewToastMessage("로그인이 필요합니다.");
-        setTimeout(() => {
-          navigate("/login");
-        }, 3000);
+    try {
+      await handleRequest({
+        url: `/api/user/review/${storeNo}/reviews`,
+        method: "POST",
+        body: payload,
       });
+
+      setReviewToastMessage("리뷰가 등록되었습니다.");
+      onSubmit({ rating, content });
+      setRating(0);
+      setContent("");
+
+      const timer = setTimeout(() => {
+        setReviewToastMessage("");
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    } catch (err) {
+      console.error("Error submitting review:", err);
+      setReviewToastMessage("로그인이 필요합니다.");
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+    }
   };
 
   useEffect(() => {

@@ -30,6 +30,8 @@ interface SalonServerResponse {
 }
 
 const SalonInfo: React.FC = () => {
+  const { isLoading, error, handleRequest, Loading } = useAxios();
+
   const [salonNumber, setSalonNumber] = useState<SalonNumberItem | null>(null);
   const [salonInfo, setSalonInfo] = useState<SalonInfoItem | null>(null);
   const [token, setToken] = useState<string | null>(
@@ -40,9 +42,6 @@ const SalonInfo: React.FC = () => {
   const { storeNo } = useParams<{ storeNo: string }>();
 
   const navigate = useNavigate();
-
-  // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
-  const { isLoading, error, handleRequest, Loading } = useAxios();
 
   const handleFavoriteClick = () => {
     console.log(`미용실을 즐겨찾기에 추가/제거했습니다.`);
