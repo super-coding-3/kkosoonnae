@@ -99,9 +99,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
       if (error) {
         return (
           <div className="my-8 px-4">
-            <p>
-              데이터를 가져오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.
-            </p>
+            <p>예약하기가 실패됬습니다. 다시 예약해주세요.</p>
           </div>
         );
       }
