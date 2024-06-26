@@ -3,8 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 
 import useAxios from "../../hooks/useAxios";
+import useToastMessage from "../../hooks/useToastMessage";
 
-import ToastMessage from "../common/ToastMessage";
 import BtnSubmit from "../common/BtnSubmit";
 
 interface ReviewSalonNumberItem {
@@ -23,6 +23,8 @@ interface ReviewFormProps {
 
 const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
   const { isLoading, error, handleRequest } = useAxios();
+  const { showToast, Toast } = useToastMessage();
+
   const { storeNo } = useParams<{ storeNo: string }>();
   const navigate = useNavigate();
 
@@ -31,7 +33,6 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
     null
   );
   const [content, setContent] = useState("");
-  const [reviewToastMessage, setReviewToastMessage] = useState("");
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token")
   );
@@ -75,20 +76,24 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
         method: "POST",
         body: payload,
       });
-
-      setReviewToastMessage("리뷰가 등록되었습니다.");
+      showToast({
+        message: "리뷰가 등록되었습니다.",
+      });
       onSubmit({ rating, content });
       setRating(0);
       setContent("");
 
       const timer = setTimeout(() => {
-        setReviewToastMessage("");
+        showToast({
+          message: "",
+        });
       }, 3000);
 
       return () => clearTimeout(timer);
     } catch (err) {
-      console.error("Error submitting review:", err);
-      setReviewToastMessage("로그인이 필요합니다.");
+      showToast({
+        message: "로그인이 필요합니다.",
+      });
       setTimeout(() => {
         navigate("/login");
       }, 3000);
@@ -136,9 +141,8 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
             className="w-full border-1 border-gray-200 rounded"
           />
         </div>
-
         <BtnSubmit type="submit" value="리뷰작성" />
-        {reviewToastMessage && <ToastMessage message={reviewToastMessage} />}
+        <Toast />
       </form>
     </div>
   );
