@@ -42,14 +42,12 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
     setRating(selectedRating);
   };
 
-  //리뷰 내용 담기
   const handleContentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setContent(event.target.value);
   };
 
-  // 매장 번호
   const getSalonNumber = () => {
     handleRequest({
       url: "/api/user/store/allStore",
@@ -57,8 +55,6 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
       setData: setSalonNumber,
     });
   };
-
-  // 리뷰 내용 post 호출
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -78,7 +74,11 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
       });
       showToast({
         message: "리뷰가 등록되었습니다.",
+        action: () => {
+          window.location.reload();
+        },
       });
+
       onSubmit({ rating, content });
       setRating(0);
       setContent("");
