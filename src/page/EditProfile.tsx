@@ -34,8 +34,7 @@ const EditProfile: React.FC = () => {
     addressDtl: "",
   });
 
-  // TODO: 로딩 화면 구현
-  const { isLoading, error, handleRequest } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
   const { showToast, Toast } = useToastMessage();
 
   const handleshowPostcode = () => {
@@ -103,6 +102,7 @@ const EditProfile: React.FC = () => {
     <OuterLayout>
       <PageTitle title="프로필 수정" leftBtn={true} />
       <div className="flex justify-center items-center pt-4 px-4 font-bold">
+        {Loading}
         <Formik
           initialValues={initialValues}
           onSubmit={handleFormSubmit}

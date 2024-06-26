@@ -6,48 +6,56 @@ import { LoginSchema } from "../../schema/formSchema";
 
 import useAxios from "../../hooks/useAxios";
 import useToastMessage from "../../hooks/useToastMessage";
+interface LoginType {
+  loginId: string;
+  password: string;
+}
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const { isLoading, error, handleRequest } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
   const { showToast, Toast } = useToastMessage();
+
+  const handleFormSubmit = (values: LoginType) => {
+    const payload = {
+      loginId: values.loginId,
+      password: values.password,
+    };
+    handleRequest({
+      url: "/api/user/customer/login",
+      method: "POST",
+      body: payload,
+      setData: (data) => {
+        localStorage.setItem("token", data.data.token);
+      },
+    });
+    if (!error) {
+      showToast({
+        message: "로그인이 성공하였습니다!",
+        action: () => {
+          navigate("/");
+        },
+      });
+    } else {
+      showToast({
+        message: "error",
+      });
+    }
+  };
+
+  const initialValues = {
+    loginId: "",
+    password: "",
+  };
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full px-4 font-bold text-sm max-w-[640px] min-w-[375px] mx-auto">
+      {Loading}
       <Toast />
       <Formik
-        initialValues={{
-          loginId: "",
-          password: "",
-        }}
-        onSubmit={(values, { setSubmitting }) => {
-          const payload = {
-            loginId: values.loginId,
-            password: values.password,
-          };
-          handleRequest({
-            url: "/api/user/customer/login",
-            method: "POST",
-            body: payload,
-            setData: (data) => {
-              localStorage.setItem("token", data.data.token);
-            },
-          });
-          if (!error) {
-            showToast({
-              message: "로그인이 성공하였습니다!",
-              action: () => {
-                navigate("/");
-              },
-            });
-          } else {
-            showToast({
-              message: "error",
-            });
-          }
-          setSubmitting(false);
-        }}
+        initialValues={initialValues}
+        onSubmit={handleFormSubmit}
         validationSchema={LoginSchema}
       >
         {({ isSubmitting }) => (

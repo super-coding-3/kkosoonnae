@@ -21,11 +21,11 @@ interface MyReviewType {
 
 const MyReview: React.FC = () => {
   const [myReview, setMyReview] = useState<MyReviewType[]>([]);
+  const [loadingMyReview, setLoadingMyReview] = useState<boolean>(false);
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
   const [reviewNo, setReviewNo] = useState<number>(0);
 
-  // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
-  const { isLoading, error, handleRequest } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
   const { showToast, Toast } = useToastMessage();
 
   const deleteMyReview = async (reviewNo: number) => {
@@ -34,12 +34,18 @@ const MyReview: React.FC = () => {
       method: "DELETE",
     });
     setShowModalDelete(false);
-    showToast({
-      message: "리뷰가 삭제되었습니다",
-      action: () => {
-        window.location.reload();
-      },
-    });
+    if (!error) {
+      showToast({
+        message: "리뷰가 삭제되었습니다",
+        action: () => {
+          window.location.reload();
+        },
+      });
+    } else {
+      showToast({
+        message: "오류가 발생했습니다",
+      });
+    }
   };
 
   const handlerReviewCancel = (reviewNo: number) => {
@@ -51,14 +57,23 @@ const MyReview: React.FC = () => {
     handleRequest({
       url: "/api/user/mypage/my-review-list",
       method: "GET",
-      setData: setMyReview,
+      setData: (data) => {
+        setMyReview(data);
+        setLoadingMyReview(true);
+      },
     });
+    if (error) {
+      showToast({
+        message: "오류가 발생했습니다. 잠시 후 다시 실행해주세요",
+      });
+    }
   }, []);
 
   return (
     <OuterLayout>
       <PageTitle title="내가 쓴 리뷰" leftBtn={true} />
-      {myReview.length === 0 ? (
+      {Loading}
+      {myReview.length === 0 && loadingMyReview ? (
         <PageNothing message="리뷰내역이 없습니다" />
       ) : (
         <div className="pt-4 pb-24 px-4">

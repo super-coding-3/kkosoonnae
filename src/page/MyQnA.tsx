@@ -23,11 +23,11 @@ interface MyQnADatasType {
 
 const MyQnA: React.FC = () => {
   const [myQnADatas, setMyQnADatas] = useState<MyQnADatasType[]>([]);
+  const [loadingMyQnA, setLoadingMyQnA] = useState<boolean>(false);
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
   const [qnaNo, setQnANo] = useState<number>(0);
 
-  // TODO: ERROR 시 뜨는 컴포넌트 구현, 로딩 화면 구현
-  const { isLoading, error, handleRequest } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
   const { showToast, Toast } = useToastMessage();
 
   const deleteMyQnADatas = async (qnaNo: number) => {
@@ -36,12 +36,18 @@ const MyQnA: React.FC = () => {
       method: "DELETE",
     });
     setShowModalDelete(false);
-    showToast({
-      message: "문의가 취소되었습니다",
-      action: () => {
-        window.location.reload();
-      },
-    });
+    if (!error) {
+      showToast({
+        message: "문의가 취소되었습니다",
+        action: () => {
+          window.location.reload();
+        },
+      });
+    } else {
+      showToast({
+        message: "오류가 발생했습니다.",
+      });
+    }
   };
 
   const handlerQnACancel = (qnaNo: number) => {
@@ -58,14 +64,23 @@ const MyQnA: React.FC = () => {
     handleRequest({
       url: "/api/user/qna/all-list",
       method: "GET",
-      setData: setMyQnADatas,
+      setData: (data) => {
+        setMyQnADatas(data);
+        setLoadingMyQnA(true);
+      },
     });
+    if (error) {
+      showToast({
+        message: "오류가 발생했습니다. 잠시 후 다시 실행해주세요",
+      });
+    }
   }, []);
 
   return (
     <OuterLayout>
       <PageTitle title="내 문의내역" leftBtn={true} />
-      {myQnADatas.length === 0 ? (
+      {Loading}
+      {myQnADatas.length === 0 && loadingMyQnA ? (
         <PageNothing message="문의내역이 없습니다" />
       ) : (
         <div className="pt-4 pb-24 px-4">

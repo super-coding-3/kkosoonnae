@@ -42,8 +42,7 @@ const MyPage: React.FC = () => {
   const [petInfos, setPetInfos] = useState<PetInfosType[]>();
   const [representative, setRepresentative] = useState<boolean>(false);
 
-  // TODO: 로딩 구현
-  const { isLoading, error, handleRequest } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
   const { showToast, Toast } = useToastMessage();
 
   const activeMainPetEdit = () => {
@@ -80,31 +79,43 @@ const MyPage: React.FC = () => {
   };
 
   useEffect(() => {
-    handleRequest({
-      url: "/api/user/customer/nickname",
-      method: "GET",
-      setData: (data) =>
-        setUserInfos((prevState) => ({
-          ...prevState,
-          userNickname: data,
-        })),
-    });
+    if (localStorage.getItem("token") === null) {
+      showToast({
+        message: "로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.",
+        action: () => {
+          window.location.href = "/login";
+        },
+      });
+    } else {
+      handleRequest({
+        url: "/api/user/customer/nickname",
+        method: "GET",
+        setData: (data) =>
+          setUserInfos((prevState) => ({
+            ...prevState,
+            userNickname: data,
+          })),
+      });
 
-    handleRequest({
-      url: "/api/user/point",
-      method: "GET",
-      setData: (data) =>
-        setUserInfos((prevState) => ({
-          ...prevState,
-          pointRm: data.pointRm,
-        })),
-    });
+      handleRequest({
+        url: "/api/user/point",
+        method: "GET",
+        setData: (data) =>
+          setUserInfos((prevState) => ({
+            ...prevState,
+            pointRm: data.pointRm,
+          })),
+      });
 
-    handleRequest({
-      url: "/api/user/pet/allPet-list",
-      method: "GET",
-      setData: setPetInfos,
-    });
+      handleRequest({
+        url: "/api/user/pet/allPet-list",
+        method: "GET",
+        setData: setPetInfos,
+      });
+      if (error) {
+        showToast({ message: "오류가 발생했습니다" });
+      }
+    }
   }, []);
 
   var settings = {
@@ -119,6 +130,7 @@ const MyPage: React.FC = () => {
   return (
     <OuterLayout>
       <PageTitle title="마이페이지" leftBtn={false} />
+      {Loading}
       <div className="pt-4 pb-24 px-4">
         <div className="flex justify-between items-center">
           <div className="font-black text-2xl username-size-change">

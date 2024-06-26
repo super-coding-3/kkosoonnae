@@ -1,9 +1,7 @@
 import React from "react";
 
 import { useEffect, useState } from "react";
-import { Store } from "./LocationApi";
-
-
+import { Store } from "../../page/MyLocationStore";
 
 declare global {
   interface Window {
@@ -19,8 +17,14 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
   const [map, setMap] = useState<any>(null);
   const [filteredStores, setFilteredStores] = useState<Store[]>(stores);
   const [searchTerm, setSearchTerm] = useState("");
-  const [markers, setMarkers] = useState<any[]>([]); {/* 마커 위치 지정 */}
-  const [overlays, setOverlays] = useState<any[]>([]); {/* 오버레이 위치 지정 */}
+  const [markers, setMarkers] = useState<any[]>([]);
+  {
+    /* 마커 위치 지정 */
+  }
+  const [overlays, setOverlays] = useState<any[]>([]);
+  {
+    /* 오버레이 위치 지정 */
+  }
 
   useEffect(() => {
     const initializeMap = (latitude: number, longitude: number) => {
@@ -91,11 +95,10 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
     initializeMap(initialLat, initialLon);
   }, []);
 
-
   useEffect(() => {
     if (map) {
-      markers.forEach((marker) => marker.setMap(null));  
-      overlays.forEach((overlay) => overlay.setMap(null)); 
+      markers.forEach((marker) => marker.setMap(null));
+      overlays.forEach((overlay) => overlay.setMap(null));
 
       const newMarkers: any[] = [];
       const newOverlays: any[] = [];
@@ -128,8 +131,8 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
         newOverlays.push(customOverlay);
       });
 
-      setMarkers(newMarkers); 
-      setOverlays(newOverlays); 
+      setMarkers(newMarkers);
+      setOverlays(newOverlays);
     }
   }, [filteredStores, map]);
 
@@ -143,16 +146,16 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
 
   return (
     <>
-    <h1 className="text-xl font-semibold">내 주변 매장 지도</h1>
-    <input
-      type="text"
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-      placeholder="매장 검색"
-      className="w-full mt-2 rounded-lg p-2 border mb-4"
-    />
-    <div id="map" className="w-full h-72 rounded-xl border" />
-  </>
+      <h1 className="text-xl font-semibold">내 주변 매장 지도</h1>
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="매장 검색"
+        className="w-full mt-2 rounded-lg p-2 border mb-4"
+      />
+      <div id="map" className="w-full h-72 rounded-xl border" />
+    </>
   );
 };
 

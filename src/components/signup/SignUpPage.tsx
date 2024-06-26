@@ -11,66 +11,71 @@ import CheckAvailabilityApi from "../common/CheckAvailabilityApi";
 import useToastMessage from "../../hooks/useToastMessage";
 import useAxios from "../../hooks/useAxios";
 
+interface SignUpType {
+  loginId: string;
+  email: string;
+  password: string;
+  phone: string;
+  nickName: string;
+  zipCode: string;
+  address: string;
+  addressDtl: string;
+}
+
 const SignUpPage: React.FC = () => {
   const navigate = useNavigate();
   const [showPostcode, setShowPostcode] = useState(false);
   const [doubleCheck, setDoubleCheck] = useState<string>("noProgress");
 
-  const { isLoading, error, handleRequest } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
   const { showToast, Toast } = useToastMessage();
+
+  const handleFormSubmit = (values: SignUpType) => {
+    if (doubleCheck === "noProgress") {
+      showToast({
+        message: "닉네임 중복확인을 진행해주세요",
+      });
+    } else if (doubleCheck === "complete") {
+      handleRequest({
+        url: "/api/user/customer/signUp",
+        method: "POST",
+        body: values,
+      });
+      if (!error) {
+        showToast({
+          message: "회원가입이 완료되었습니다!",
+          action: () => {
+            navigate("/login");
+          },
+        });
+      } else {
+        showToast({
+          message: "오류가 발생했습니다",
+        });
+      }
+    }
+  };
+
+  const initialValues = {
+    loginId: "",
+    password: "",
+    passwordCheck: "",
+    email: "",
+    phone: "",
+    nickName: "",
+    zipCode: "",
+    address: "",
+    addressDtl: "",
+  };
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full mt-2 font-bold text-sm max-w-[640px] min-w-[375px] mx-auto p-4">
+      {Loading}
       <Toast />
       <Formik
-        initialValues={{
-          loginId: "",
-          password: "",
-          passwordCheck: "",
-          email: "",
-          phone: "",
-          nickName: "",
-          zipCode: "",
-          address: "",
-          addressDtl: "",
-        }}
+        initialValues={initialValues}
         validationSchema={SignupSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          const payload = {
-            loginId: values.loginId,
-            email: values.email,
-            password: values.password,
-            phone: values.phone,
-            nickName: values.nickName,
-            zipCode: values.zipCode,
-            address: values.address,
-            addressDtl: values.addressDtl,
-          };
-          if (doubleCheck === "noProgress") {
-            showToast({
-              message: "닉네임 중복확인을 진행해주세요",
-            });
-          } else if (doubleCheck === "complete") {
-            handleRequest({
-              url: "/api/user/customer/signUp",
-              method: "POST",
-              body: payload,
-            });
-            if (!error) {
-              showToast({
-                message: "회원가입이 완료되었습니다!",
-                action: () => {
-                  navigate("/");
-                },
-              });
-            } else {
-              showToast({
-                message: "오류가 발생했습니다",
-              });
-            }
-            setSubmitting(false);
-          }
-        }}
+        onSubmit={handleFormSubmit}
       >
         {({ setFieldValue, values }) => (
           <Form className="w-full">

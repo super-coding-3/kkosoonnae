@@ -7,7 +7,6 @@ import MyLikeStoreCard from "../components/mylikestore/MyLikeStoreCard";
 import PageNothing from "../components/common/PageNothing";
 import ModalDelete from "../components/common/ModalDelete";
 import useAxios from "../hooks/useAxios";
-import { Spinner } from "flowbite-react";
 import useToastMessage from "../hooks/useToastMessage";
 
 interface MyLikeStoreType {
@@ -24,10 +23,11 @@ interface MyLikeStoreType {
 
 const MyLikeStore: React.FC = () => {
   const [myLikeStore, setMyLikeStore] = useState<MyLikeStoreType[]>([]);
+  const [loadingMyLikeStore, setLoadingMyLikeStore] = useState<boolean>(false);
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
   const [likeNo, setLikeNo] = useState<number>(0);
 
-  const { isLoading, error, handleRequest } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
   const { showToast, Toast } = useToastMessage();
 
   const deleteMyLikeStore = async (likeNo: number) => {
@@ -59,18 +59,24 @@ const MyLikeStore: React.FC = () => {
     handleRequest({
       url: "/api/user/mypage/like-store",
       method: "GET",
-      setData: setMyLikeStore,
+      setData: (data) => {
+        setMyLikeStore(data);
+        setLoadingMyLikeStore(true);
+      },
     });
+    if (error) {
+      showToast({
+        message: "오류가 발생했습니다. 잠시 후 다시 실행해주세요",
+      });
+    }
   }, []);
 
   return (
     <OuterLayout>
       <PageTitle title="관심매장" leftBtn={true} />
       <div className="pt-4 pb-24 px-4">
-        {isLoading ? (
-          // TODO: 로딩 화면 변경
-          <Spinner aria-label="Extra large spinner example" size="xl" />
-        ) : myLikeStore.length === 0 ? (
+        {Loading}
+        {myLikeStore.length === 0 && loadingMyLikeStore ? (
           <PageNothing message="관심매장이 없습니다" />
         ) : (
           myLikeStore.map((item: MyLikeStoreType) => (
