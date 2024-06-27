@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { format, parseISO } from "date-fns";
 import { ko } from "date-fns/locale";
 
-import PageNothing from "../components/common/PageNothing";
-import ModalDelete from "../components/common/ModalDelete";
-import OuterLayout from "../components/common/OuterLayout";
-import PageTitle from "../components/common/PageTitle";
-import Nav from "../components/common/Nav";
-import MyQnACard from "../components/myqna/MyQnACard";
+import PageNothing from "../../components/common/PageNothing";
+import ModalDelete from "../../components/common/ModalDelete";
+import OuterLayout from "../../components/common/OuterLayout";
+import PageTitle from "../../components/common/PageTitle";
+import Nav from "../../components/common/Nav";
+import MyQnACard from "../../components/myqna/MyQnACard";
 
-import useAxios from "../hooks/useAxios";
-import useToastMessage from "../hooks/useToastMessage";
+import useAxios from "../../hooks/useAxios";
+import useToastMessage from "../../hooks/useToastMessage";
 
 interface MyQnADatasType {
   status?: string;

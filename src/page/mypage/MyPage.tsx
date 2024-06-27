@@ -1,4 +1,4 @@
-import useAxios from "../hooks/useAxios";
+import useAxios from "../../hooks/useAxios";
 
 import React, { useEffect, useState } from "react";
 import { BiDollarCircle } from "react-icons/bi";
@@ -10,15 +10,15 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import OuterLayout from "../components/common/OuterLayout";
-import Nav from "../components/common/Nav";
-import PageTitle from "../components/common/PageTitle";
-import MyPageMainBtn from "../components/mypage/MyPageMainBtn";
-import MyPagePetInfo from "../components/mypage/MyPagePetInfo";
-import MyPagePetAdd from "../components/mypage/MyPagePetAdd";
-import BtnLogout from "../components/common/BtnLogut";
-import useToastMessage from "../hooks/useToastMessage";
-import { ROUTER_PATH } from "../constants/constants";
+import OuterLayout from "../../components/common/OuterLayout";
+import Nav from "../../components/common/Nav";
+import PageTitle from "../../components/common/PageTitle";
+import MyPageMainBtn from "../../components/mypage/MyPageMainBtn";
+import MyPagePetInfo from "../../components/mypage/MyPagePetInfo";
+import MyPagePetAdd from "../../components/mypage/MyPagePetAdd";
+import BtnLogout from "../../components/common/BtnLogut";
+import useToastMessage from "../../hooks/useToastMessage";
+import { ROUTER_PATH } from "../../constants/constants";
 
 interface UserInfosType {
   userNickname: string;

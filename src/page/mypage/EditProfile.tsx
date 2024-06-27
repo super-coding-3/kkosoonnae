@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Form, Formik } from "formik";
-import { EditProfileSchema } from "../schema/formSchema";
+import { EditProfileSchema } from "../../schema/formSchema";
 
-import OuterLayout from "../components/common/OuterLayout";
-import PageTitle from "../components/common/PageTitle";
-import Nav from "../components/common/Nav";
-import BtnSubmit from "../components/common/BtnSubmit";
-import Postcode from "../components/common/PostCode";
-import EditProfileInput from "../components/editprofile/EditProfileInput";
-import EditProfileFormGroup from "../components/editprofile/EditProfileFormGroup";
-import EditProfileErrorMsg from "../components/editprofile/EditProfileErrorMsg";
-import CheckAvailabilityApi from "../components/common/CheckAvailabilityApi";
-import useAxios from "../hooks/useAxios";
-import useToastMessage from "../hooks/useToastMessage";
-import { ROUTER_PATH } from "../constants/constants";
+import OuterLayout from "../../components/common/OuterLayout";
+import PageTitle from "../../components/common/PageTitle";
+import Nav from "../../components/common/Nav";
+import BtnSubmit from "../../components/common/BtnSubmit";
+import Postcode from "../../components/common/PostCode";
+import EditProfileInput from "../../components/editprofile/EditProfileInput";
+import EditProfileFormGroup from "../../components/editprofile/EditProfileFormGroup";
+import EditProfileErrorMsg from "../../components/editprofile/EditProfileErrorMsg";
+import CheckAvailabilityApi from "../../components/common/CheckAvailabilityApi";
+import useAxios from "../../hooks/useAxios";
+import useToastMessage from "../../hooks/useToastMessage";
+import { ROUTER_PATH } from "../../constants/constants";
 
 interface MyProfileType {
   nickName: string;

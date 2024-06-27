@@ -4,20 +4,20 @@ import { ROUTER_PATH } from "./constants/constants";
 import Main from "./page/Main";
 import Salon from "./page/Salon";
 import Reservation from "./page/Reservation";
-import Signup from "./page/Signup";
-import Login from "./page/Login";
+import Signup from "./page/auth/Signup";
+import Login from "./page/auth/Login";
 import Notice from "./page/Notice";
-import MyPage from "./page/MyPage";
-import EditProfile from "./page/EditProfile";
-import MyLocationStore from "./page/MyLocationStore";
-import EditMyPet from "./page/EditMyPet";
-import AddMyPet from "./page/AddMyPet";
-import MyReservation from "./page/MyReservation";
+import MyPage from "./page/mypage/MyPage";
+import EditProfile from "./page/mypage/EditProfile";
+import MyLocationStore from "./page/mylocationstore/MyLocationStore";
+import EditMyPet from "./page/mypage/EditMyPet";
+import AddMyPet from "./page/mypage/AddMyPet";
+import MyReservation from "./page/mypage/MyReservation";
 import MyReservationDetail from "./components/myreservation/MyReservationDetail";
-import MyReview from "./page/MyReview";
-import MyLikeStore from "./page/MyLikeStore";
-import RegisterQnA from "./page/RegisterQnA";
-import MyQnA from "./page/MyQnA";
+import MyReview from "./page/mypage/MyReview";
+import MyLikeStore from "./page/mypage/MyLikeStore";
+import RegisterQnA from "./page/mypage/RegisterQnA";
+import MyQnA from "./page/mypage/MyQnA";
 
 const CustomRouter: React.FC = () => {
   return (

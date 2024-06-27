@@ -1,18 +1,18 @@
 import React from "react";
 import { Formik, Form } from "formik";
 
-import OuterLayout from "../components/common/OuterLayout";
-import PageTitle from "../components/common/PageTitle";
-import Nav from "../components/common/Nav";
-import BtnSubmit from "../components/common/BtnSubmit";
-import ImgMyPet from "../components/mypet/ImgMyPet";
-import InputMyPet from "../components/mypet/InputMyPet";
-import { EditMyPetSchema } from "../schema/formSchema";
-import CustomDatePickerMyPet from "../components/mypet/CustomDatePickerMyPet";
-import { MYPET_FORM_LABEL, ROUTER_PATH } from "../constants/constants";
-import SelectMyPetGender from "../components/mypet/SelectMyPetGender";
-import useAxios from "../hooks/useAxios";
-import useToastMessage from "../hooks/useToastMessage";
+import OuterLayout from "../../components/common/OuterLayout";
+import PageTitle from "../../components/common/PageTitle";
+import Nav from "../../components/common/Nav";
+import BtnSubmit from "../../components/common/BtnSubmit";
+import ImgMyPet from "../../components/mypet/ImgMyPet";
+import InputMyPet from "../../components/mypet/InputMyPet";
+import { EditMyPetSchema } from "../../schema/formSchema";
+import CustomDatePickerMyPet from "../../components/mypet/CustomDatePickerMyPet";
+import { MYPET_FORM_LABEL, ROUTER_PATH } from "../../constants/constants";
+import SelectMyPetGender from "../../components/mypet/SelectMyPetGender";
+import useAxios from "../../hooks/useAxios";
+import useToastMessage from "../../hooks/useToastMessage";
 
 interface MyPetInfosType {
   name: string;
