@@ -13,6 +13,7 @@ import EditProfileErrorMsg from "../components/editprofile/EditProfileErrorMsg";
 import CheckAvailabilityApi from "../components/common/CheckAvailabilityApi";
 import useAxios from "../hooks/useAxios";
 import useToastMessage from "../hooks/useToastMessage";
+import { ROUTER_PATH } from "../constants/constants";
 
 interface MyProfileType {
   nickName: string;
@@ -56,7 +57,7 @@ const EditProfile: React.FC = () => {
         showToast({
           message: "프로필 수정을 성공하였습니다",
           action: () => {
-            window.location.href = "/mypage";
+            window.location.href = ROUTER_PATH.mypage;
           },
         });
       } else {

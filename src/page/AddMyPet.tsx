@@ -9,7 +9,7 @@ import ImgMyPet from "../components/mypet/ImgMyPet";
 import InputMyPet from "../components/mypet/InputMyPet";
 import { EditMyPetSchema } from "../schema/formSchema";
 import CustomDatePickerMyPet from "../components/mypet/CustomDatePickerMyPet";
-import { MYPET_FORM_LABEL } from "../constants/constants";
+import { MYPET_FORM_LABEL, ROUTER_PATH } from "../constants/constants";
 import SelectMyPetGender from "../components/mypet/SelectMyPetGender";
 import useAxios from "../hooks/useAxios";
 import useToastMessage from "../hooks/useToastMessage";
@@ -53,7 +53,7 @@ const AddMyPet: React.FC = () => {
         showToast({
           message: `${values.name}(이)가 등록되었습니다`,
           action: () => {
-            window.location.href = "/mypage";
+            window.location.href = ROUTER_PATH.mypage;
           },
         });
       } else {

@@ -12,7 +12,7 @@ import InputMyPet from "../components/mypet/InputMyPet";
 import CustomDatePickerMyPet from "../components/mypet/CustomDatePickerMyPet";
 import SelectMyPetGender from "../components/mypet/SelectMyPetGender";
 import ModalDelete from "../components/common/ModalDelete";
-import { MYPET_FORM_LABEL } from "../constants/constants";
+import { MYPET_FORM_LABEL, ROUTER_PATH } from "../constants/constants";
 import useAxios from "../hooks/useAxios";
 import useToastMessage from "../hooks/useToastMessage";
 
@@ -69,7 +69,7 @@ const EditMyPet: React.FC = () => {
       showToast({
         message: `${values.name}의 정보가 수정되었습니다`,
         action: () => {
-          window.location.href = "/mypage";
+          window.location.href = ROUTER_PATH.mypage;
         },
       });
     } else {
@@ -105,7 +105,7 @@ const EditMyPet: React.FC = () => {
         showToast({
           message: `${petName}의 정보가 삭제되었습니다`,
           action: () => {
-            window.location.href = "/mypage";
+            window.location.href = ROUTER_PATH.mypage;
           },
         });
       }

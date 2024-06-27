@@ -5,6 +5,7 @@ import { LuMapPin } from "react-icons/lu";
 import { FaStar, FaRegHeart } from "react-icons/fa";
 
 import useAxios from "../../hooks/useAxios";
+import { ROUTER_PATH } from "../../constants/constants";
 
 interface MainStoreItem {
   storeNo: number;
@@ -56,7 +57,7 @@ const MainStoreList: React.FC = () => {
           {mainStoreData.map((item, index) => (
             <li key={index} className="border-b-2 border-gray-200 py-2 px-2">
               <Link
-                to={`/salon/${item.storeNo}`}
+                to={`${ROUTER_PATH.salon}${item.storeNo}`}
                 className="flex items-center justify-start gap-3"
               >
                 <Avatar

@@ -5,6 +5,7 @@ import { IoIosClose } from "react-icons/io";
 import { FaStar, FaRegHeart } from "react-icons/fa";
 
 import SeacrhInput from "./SeacrhInput";
+import { ROUTER_PATH } from "../../constants/constants";
 
 interface SearchModalProps {
   onClose: () => void;
@@ -38,7 +39,7 @@ function SearchModal({ onClose }: SearchModalProps) {
       <div className="mt-4">
         {resultKeywordData.map((item, index) => (
           <NavLink
-            to={`/salon/${item.storeNo}`}
+            to={`${ROUTER_PATH.salon}${item.storeNo}`}
             key={index}
             className="block mb-3"
           >

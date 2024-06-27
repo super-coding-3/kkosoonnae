@@ -5,6 +5,7 @@ import PageComplete from "../components/common/PageComplete";
 import OuterLayout from "../components/common/OuterLayout";
 import PageTitle from "../components/common/PageTitle";
 import Nav from "../components/common/Nav";
+import { ROUTER_PATH } from "../constants/constants";
 
 const RegisterQnA: React.FC = () => {
   const [step, setStep] = useState(1);
@@ -18,7 +19,7 @@ const RegisterQnA: React.FC = () => {
           title="문의 접수가 완료되었습니다"
           description="접수하신 내용은 최대한 빠르게 답변드리겠습니다"
           btnValue="확인"
-          link="/my_qna"
+          link={ROUTER_PATH.myQnA}
         />
       )}
       <Nav />

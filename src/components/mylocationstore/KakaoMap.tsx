@@ -2,6 +2,7 @@ import React from "react";
 
 import { useEffect, useState } from "react";
 import { Store } from "../../page/MyLocationStore";
+import { ROUTER_PATH } from "../../constants/constants";
 
 declare global {
   interface Window {
@@ -116,7 +117,7 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ stores }) => {
 
         const content = `
           <div style="padding:2px; font-size:10px; background: white; border:1px solid black; border-radius:1px">
-          <a href="/salon/${store.storeNo}" target="_blank">${store.storeName}</a>
+          <a href="${ROUTER_PATH.salon}${store.storeNo}" target="_blank">${store.storeName}</a>
           </div>
         `;
 
