@@ -1,4 +1,4 @@
-import useAxios from "../hooks/useAxios";
+import useAxios from "../../hooks/useAxios";
 
 import React, { useEffect, useState } from "react";
 import { BiDollarCircle } from "react-icons/bi";
@@ -10,14 +10,15 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import OuterLayout from "../components/common/OuterLayout";
-import Nav from "../components/common/Nav";
-import PageTitle from "../components/common/PageTitle";
-import MyPageMainBtn from "../components/mypage/MyPageMainBtn";
-import MyPagePetInfo from "../components/mypage/MyPagePetInfo";
-import MyPagePetAdd from "../components/mypage/MyPagePetAdd";
-import BtnLogout from "../components/common/BtnLogut";
-import useToastMessage from "../hooks/useToastMessage";
+import OuterLayout from "../../components/common/OuterLayout";
+import Nav from "../../components/common/Nav";
+import PageTitle from "../../components/common/PageTitle";
+import MyPageMainBtn from "../../components/mypage/MyPageMainBtn";
+import MyPagePetInfo from "../../components/mypage/MyPagePetInfo";
+import MyPagePetAdd from "../../components/mypage/MyPagePetAdd";
+import BtnLogout from "../../components/common/BtnLogut";
+import useToastMessage from "../../hooks/useToastMessage";
+import { ROUTER_PATH } from "../../constants/constants";
 
 interface UserInfosType {
   userNickname: string;
@@ -83,7 +84,7 @@ const MyPage: React.FC = () => {
       showToast({
         message: "로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.",
         action: () => {
-          window.location.href = "/login";
+          window.location.href = ROUTER_PATH.login;
         },
       });
     } else {
@@ -146,7 +147,7 @@ const MyPage: React.FC = () => {
           <div className="flex gap-2">
             <BtnLogout />
             <Link
-              to="/edit_profile"
+              to={ROUTER_PATH.editProfile}
               className="p-1 border-2 border-solid border-MAIN_COLOR rounded text-MAIN_COLOR"
             >
               프로필 수정
@@ -222,12 +223,12 @@ const MyPage: React.FC = () => {
         </div>
         <div className="flex flex-col justify-center items-start mt-7 gap-3">
           <div className="flex justify-center items-center gap-3 w-full">
-            <MyPageMainBtn title="예약내역" link="/my_reservation" />
-            <MyPageMainBtn title="내가 쓴 리뷰" link="/my_review" />
+            <MyPageMainBtn title="예약내역" link={ROUTER_PATH.myReservation} />
+            <MyPageMainBtn title="내가 쓴 리뷰" link={ROUTER_PATH.myReview} />
           </div>
           <div className="flex justify-center items-center gap-3 w-full">
-            <MyPageMainBtn title="관심매장" link="/my_likestore" />
-            <MyPageMainBtn title="문의하기" link="/register_qna" />
+            <MyPageMainBtn title="관심매장" link={ROUTER_PATH.myLikeStore} />
+            <MyPageMainBtn title="문의하기" link={ROUTER_PATH.registerQnA} />
           </div>
         </div>
         <Toast />

@@ -3,7 +3,7 @@ import React from "react";
 import { Avatar } from "flowbite-react";
 import { Link } from "react-router-dom";
 
-import { PRICE_COMMA } from "../../constants/constants";
+import { PRICE_COMMA, ROUTER_PATH } from "../../constants/constants";
 
 interface MyReservationCardProps {
   reservationNo: number;
@@ -41,7 +41,7 @@ const MyReservationCard: React.FC<MyReservationCardProps> = (props) => {
           예약 취소
         </button>
         <Link
-          to={"/my_reservation/detail/" + props.reservationNo}
+          to={`${ROUTER_PATH.myReservationDetail}${props.reservationNo}`}
           className="w-1/2 bg-MAIN_LIGHT_COLOR text-MAIN_IVORY rounded-lg flex items-center justify-center"
         >
           <p>예약 상세</p>

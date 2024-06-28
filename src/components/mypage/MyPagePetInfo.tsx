@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { TbGenderFemale, TbGenderMale } from "react-icons/tb";
+import { ROUTER_PATH } from "../../constants/constants";
 
 interface MyPagePetInfoProps {
   petNo?: number;
@@ -64,11 +65,7 @@ const MyPagePetInfo: React.FC<MyPagePetInfoProps> = (props) => {
         </div>
       </div>
       <div className="w-full leading-10 text-center border-t-2 border-solid border-MAIN_LIGHT_COLOR">
-        {location.pathname === `/reservation/${storeNo}` ? (
-          <Link to="/edit_mykkosoonae">선택하기</Link>
-        ) : (
-          <Link to={"/edit_mykkosoonae/" + props.petNo}>수정하기</Link>
-        )}
+        <Link to={`${ROUTER_PATH.editMyPet}${props.petNo}`}>수정하기</Link>
       </div>
     </div>
   );

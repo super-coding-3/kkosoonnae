@@ -6,6 +6,7 @@ import useToastMessage from "../../hooks/useToastMessage";
 
 import FavoriteButton from "./FavoriteButton";
 import BtnSubmit from "../common/BtnSubmit";
+import { ROUTER_PATH } from "../../constants/constants";
 
 interface SalonNumberItem {
   storeNo?: number;
@@ -92,11 +93,11 @@ const SalonInfo: React.FC = () => {
         message: "로그인이 필요합니다.",
       });
       setTimeout(() => {
-        navigate("/login");
+        navigate(ROUTER_PATH.login);
       }, 3000);
     }
     if (token && salonInfo) {
-      navigate(`/reservation/${salonInfo.storeNo}`, {
+      navigate(`${ROUTER_PATH.reservation}${salonInfo.storeNo}`, {
         state: {
           salonNamefix: salonInfo.storeName,
           salonNumber: salonInfo.storeNo,

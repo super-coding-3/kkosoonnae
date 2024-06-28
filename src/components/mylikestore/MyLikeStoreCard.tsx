@@ -2,6 +2,7 @@ import React from "react";
 import { FaStar, FaTimes } from "react-icons/fa";
 import { HiHeart } from "react-icons/hi2";
 import { Link } from "react-router-dom";
+import { ROUTER_PATH } from "../../constants/constants";
 
 interface MyLikeStoreCardProps {
   storeNo: number;
@@ -20,7 +21,7 @@ const MyLikeStoreCard: React.FC<MyLikeStoreCardProps> = (props) => {
     <div className="flex justify-between items-center border-b-2 border-MAIN_LIGHT_COLOR w-full h-48 px-5 py-3 gap-3 mb-5 likestore-fragment-height">
       <div className="flex items-center gap-3 w-11/12 likestore-info-size-change">
         <Link
-          to={"/salon/" + props.storeNo}
+          to={`${ROUTER_PATH.salon}${props.storeNo}`}
           className="size-40 likestore-img-size-change"
         >
           <img
@@ -31,7 +32,7 @@ const MyLikeStoreCard: React.FC<MyLikeStoreCardProps> = (props) => {
         <div className="flex flex-col gap-2 w-2/3">
           <div className="flex w-full justify-between h-8">
             <Link
-              to={"/salon/" + props.storeNo}
+              to={`${ROUTER_PATH.salon}${props.storeNo}`}
               className="font-bold text-xl text-end"
             >
               {props.storeName}

@@ -6,6 +6,7 @@ import { LoginSchema } from "../../schema/formSchema";
 
 import useAxios from "../../hooks/useAxios";
 import useToastMessage from "../../hooks/useToastMessage";
+import { ROUTER_PATH } from "../../constants/constants";
 interface LoginType {
   loginId: string;
   password: string;
@@ -34,7 +35,7 @@ const LoginPage: React.FC = () => {
       showToast({
         message: "로그인이 성공하였습니다!",
         action: () => {
-          navigate("/");
+          navigate(ROUTER_PATH.main);
         },
       });
     } else {
@@ -92,7 +93,7 @@ const LoginPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => {
-                  navigate("/signup");
+                  navigate(ROUTER_PATH.signup);
                 }}
                 className="w-1/2 text-MAIN_COLOR h-16 rounded-lg text-lg mt-3 border-solid border-2 border-MAIN_COLOR"
               >

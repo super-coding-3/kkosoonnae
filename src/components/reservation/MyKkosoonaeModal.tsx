@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import useAxios from "../../hooks/useAxios";
 
 import BtnSubmit from "../common/BtnSubmit";
+import { ROUTER_PATH } from "../../constants/constants";
 
 interface MyKkosoonaeModalProps {
   openModal: boolean;
@@ -104,7 +105,7 @@ const MyKkosoonaeModal: React.FC<MyKkosoonaeModalProps> = ({
               <BtnSubmit
                 type="button"
                 value="내 꼬순내(펫) 등록하기"
-                onClick={() => navigate("/mypage")}
+                onClick={() => navigate(ROUTER_PATH.mypage)}
               ></BtnSubmit>
             </div>
           )}

@@ -6,6 +6,7 @@ import useAxios from "../../hooks/useAxios";
 import useToastMessage from "../../hooks/useToastMessage";
 
 import BtnSubmit from "../common/BtnSubmit";
+import { ROUTER_PATH } from "../../constants/constants";
 
 interface ReviewSalonNumberItem {
   storeNo?: number;
@@ -95,7 +96,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
         message: "로그인이 필요합니다.",
       });
       setTimeout(() => {
-        navigate("/login");
+        navigate(ROUTER_PATH.login);
       }, 3000);
     }
   };

@@ -10,6 +10,7 @@ import formFields from "./FormFields";
 import CheckAvailabilityApi from "../common/CheckAvailabilityApi";
 import useToastMessage from "../../hooks/useToastMessage";
 import useAxios from "../../hooks/useAxios";
+import { ROUTER_PATH } from "../../constants/constants";
 
 interface SignUpType {
   loginId: string;
@@ -45,7 +46,7 @@ const SignUpPage: React.FC = () => {
         showToast({
           message: "회원가입이 완료되었습니다!",
           action: () => {
-            navigate("/login");
+            navigate(ROUTER_PATH.login);
           },
         });
       } else {

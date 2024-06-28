@@ -7,6 +7,7 @@ import RegisterQnAFormGroup from "./RegisterQnAFormGroup";
 import { QnASchema } from "../../schema/formSchema";
 import useAxios from "../../hooks/useAxios";
 import useToastMessage from "../../hooks/useToastMessage";
+import { ROUTER_PATH } from "../../constants/constants";
 
 interface RegisterQnAFormProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -44,7 +45,7 @@ const RegisterQnAForm: React.FC<RegisterQnAFormProps> = (props) => {
       <div className="flex justify-between items-center pb-3 border-b-2 border-COMMONN_BORDER_GRAY">
         <div className="font-bold text-xl">꼬순내 고객센터</div>
         <Link
-          to="/my_qna"
+          to={ROUTER_PATH.myQnA}
           className="bg-MAIN_COLOR text-MAIN_IVORY rounded-lg h-fit w-fit py-1 px-2"
         >
           내 문의내역

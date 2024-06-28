@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { FiHome, FiMapPin, FiInfo, FiUser, FiLock } from "react-icons/fi";
+import { ROUTER_PATH } from "../../constants/constants";
 
 const Nav: React.FC = () => {
   const { pathname } = useLocation();
@@ -34,33 +35,49 @@ const Nav: React.FC = () => {
   return (
     <nav className="max-w-[640px] h-[70px] mx-auto flex justify-around items-center px-4 fixed bottom-0 left-0 right-0 z-10 border-t-2 border-gray-100 bg-white">
       {renderNavLink(
-        "/",
-        <FiHome className="block" size={24} color={onActive("/")} />,
+        ROUTER_PATH.main,
+        <FiHome
+          className="block"
+          size={24}
+          color={onActive(ROUTER_PATH.main)}
+        />,
         "홈"
       )}
       {renderNavLink(
-        "/my_location_store",
+        ROUTER_PATH.myLocationStore,
         <FiMapPin
           className="block"
           size={24}
-          color={onActive("/my_location_store")}
+          color={onActive(ROUTER_PATH.myLocationStore)}
         />,
         "내주변"
       )}
       {renderNavLink(
-        "/notice",
-        <FiInfo className="block" size={24} color={onActive("/notice")} />,
+        ROUTER_PATH.notice,
+        <FiInfo
+          className="block"
+          size={24}
+          color={onActive(ROUTER_PATH.notice)}
+        />,
         "공지사항"
       )}
       {token
         ? renderNavLink(
-            "/mypage",
-            <FiUser className="block" size={24} color={onActive("/mypage")} />,
+            ROUTER_PATH.mypage,
+            <FiUser
+              className="block"
+              size={24}
+              color={onActive(ROUTER_PATH.mypage)}
+            />,
             "마이"
           )
         : renderNavLink(
-            "/login",
-            <FiLock className="block" size={24} color={onActive("/login")} />,
+            ROUTER_PATH.login,
+            <FiLock
+              className="block"
+              size={24}
+              color={onActive(ROUTER_PATH.login)}
+            />,
             "로그인"
           )}
     </nav>

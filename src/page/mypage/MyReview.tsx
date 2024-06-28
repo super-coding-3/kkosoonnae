@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import OuterLayout from "../components/common/OuterLayout";
-import PageTitle from "../components/common/PageTitle";
-import Nav from "../components/common/Nav";
-import MyReviewCard from "../components/myreview/MyReviewCard";
-import PageNothing from "../components/common/PageNothing";
-import ModalDelete from "../components/common/ModalDelete";
-import useAxios from "../hooks/useAxios";
-import useToastMessage from "../hooks/useToastMessage";
+import OuterLayout from "../../components/common/OuterLayout";
+import PageTitle from "../../components/common/PageTitle";
+import Nav from "../../components/common/Nav";
+import MyReviewCard from "../../components/myreview/MyReviewCard";
+import PageNothing from "../../components/common/PageNothing";
+import ModalDelete from "../../components/common/ModalDelete";
+import useAxios from "../../hooks/useAxios";
+import useToastMessage from "../../hooks/useToastMessage";
 
 interface MyReviewType {
   reviewNo: number;

@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Form, Formik } from "formik";
-import { EditMyPetSchema } from "../schema/formSchema";
+import { EditMyPetSchema } from "../../schema/formSchema";
 import { useParams } from "react-router-dom";
 
-import OuterLayout from "../components/common/OuterLayout";
-import PageTitle from "../components/common/PageTitle";
-import Nav from "../components/common/Nav";
-import BtnSubmit from "../components/common/BtnSubmit";
-import ImgMyPet from "../components/mypet/ImgMyPet";
-import InputMyPet from "../components/mypet/InputMyPet";
-import CustomDatePickerMyPet from "../components/mypet/CustomDatePickerMyPet";
-import SelectMyPetGender from "../components/mypet/SelectMyPetGender";
-import ModalDelete from "../components/common/ModalDelete";
-import { MYPET_FORM_LABEL } from "../constants/constants";
-import useAxios from "../hooks/useAxios";
-import useToastMessage from "../hooks/useToastMessage";
+import OuterLayout from "../../components/common/OuterLayout";
+import PageTitle from "../../components/common/PageTitle";
+import Nav from "../../components/common/Nav";
+import BtnSubmit from "../../components/common/BtnSubmit";
+import ImgMyPet from "../../components/mypet/ImgMyPet";
+import InputMyPet from "../../components/mypet/InputMyPet";
+import CustomDatePickerMyPet from "../../components/mypet/CustomDatePickerMyPet";
+import SelectMyPetGender from "../../components/mypet/SelectMyPetGender";
+import ModalDelete from "../../components/common/ModalDelete";
+import { MYPET_FORM_LABEL, ROUTER_PATH } from "../../constants/constants";
+import useAxios from "../../hooks/useAxios";
+import useToastMessage from "../../hooks/useToastMessage";
 
 interface MyPetInfosType {
   name: string;
@@ -69,7 +69,7 @@ const EditMyPet: React.FC = () => {
       showToast({
         message: `${values.name}의 정보가 수정되었습니다`,
         action: () => {
-          window.location.href = "/mypage";
+          window.location.href = ROUTER_PATH.mypage;
         },
       });
     } else {
@@ -105,7 +105,7 @@ const EditMyPet: React.FC = () => {
         showToast({
           message: `${petName}의 정보가 삭제되었습니다`,
           action: () => {
-            window.location.href = "/mypage";
+            window.location.href = ROUTER_PATH.mypage;
           },
         });
       }

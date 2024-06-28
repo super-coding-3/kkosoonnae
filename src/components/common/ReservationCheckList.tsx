@@ -2,6 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { reservationFormValues } from "../reservation/ReservationForm";
 import BtnSubmit from "./BtnSubmit";
+import { ROUTER_PATH } from "../../constants/constants";
 
 interface ReservationCheckListProps {
   reservationData: reservationFormValues | null;
@@ -13,7 +14,10 @@ const ReservationCheckList: React.FC<ReservationCheckListProps> = ({
   onReservationComplete,
 }) => {
   const location = useLocation();
-  const showReservationComponent = location.pathname.startsWith("/reservation");
+  // const showReservationComponent = location.pathname.startsWith("/reservation");
+  const showReservationComponent = location.pathname.startsWith(
+    ROUTER_PATH.reservation
+  );
 
   if (!reservationData) {
     return (

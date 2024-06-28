@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ROUTER_PATH } from "../../constants/constants";
 
 interface pageTitleProps {
   title: React.ReactNode;
@@ -22,7 +23,7 @@ const PageTitle: React.FC<pageTitleProps> = (props) => {
         <p className=" w-6"></p>
       )}
       <p>{props.title}</p>
-      <Link to="/">
+      <Link to={ROUTER_PATH.main}>
         <div>
           <img src="/img/logo.svg" alt="logo" width={"40px"} />
         </div>

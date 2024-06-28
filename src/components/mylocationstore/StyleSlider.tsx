@@ -1,8 +1,9 @@
 import React from "react";
 import Slider from "react-slick";
 
-import { Store } from "../../page/MyLocationStore";
+import { Store } from "../../page/mylocationstore/MyLocationStore";
 import { useNavigate } from "react-router-dom";
+import { ROUTER_PATH } from "../../constants/constants";
 
 interface StoreListProps {
   stores: Store[];
@@ -71,7 +72,7 @@ const StyleSlider: React.FC<StoreListProps> = ({ stores }) => {
                 </p>
                 <button
                   onClick={() => {
-                    navigate(`/salon/${style.storeNo}`);
+                    navigate(`${ROUTER_PATH.salon}${style.storeNo}`);
                   }}
                   className="w-full bg-MAIN_COLOR text-MAIN_IVORY h-10 mt-4 rounded-lg text-lg"
                 >
