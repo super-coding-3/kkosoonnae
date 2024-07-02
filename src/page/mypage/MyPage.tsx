@@ -50,7 +50,7 @@ const MyPage: React.FC = () => {
     setRepresentative(!representative);
   };
 
-  const handlerMainPetEdit = async (petNo: number, petName: string) => {
+  const handleMainPetEdit = async (petNo: number, petName: string) => {
     handleRequest({
       url: `/api/user/pet/main-pet/${petNo}`,
       method: "PUT",
@@ -79,44 +79,36 @@ const MyPage: React.FC = () => {
     return `${age}살`;
   };
 
+  const handleGetMypageData = () => {
+    handleRequest({
+      url: "/api/user/customer/nickname",
+      method: "GET",
+      setData: (data) =>
+        setUserInfos((prevState) => ({
+          ...prevState,
+          userNickname: data,
+        })),
+    });
+
+    handleRequest({
+      url: "/api/user/point",
+      method: "GET",
+      setData: (data) =>
+        setUserInfos((prevState) => ({
+          ...prevState,
+          pointRm: data.pointRm,
+        })),
+    });
+
+    handleRequest({
+      url: "/api/user/pet/allPet-list",
+      method: "GET",
+      setData: setPetInfos,
+    });
+  };
+
   useEffect(() => {
-    if (localStorage.getItem("token") === null) {
-      showToast({
-        message: "로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.",
-        action: () => {
-          window.location.href = ROUTER_PATH.login;
-        },
-      });
-    } else {
-      handleRequest({
-        url: "/api/user/customer/nickname",
-        method: "GET",
-        setData: (data) =>
-          setUserInfos((prevState) => ({
-            ...prevState,
-            userNickname: data,
-          })),
-      });
-
-      handleRequest({
-        url: "/api/user/point",
-        method: "GET",
-        setData: (data) =>
-          setUserInfos((prevState) => ({
-            ...prevState,
-            pointRm: data.pointRm,
-          })),
-      });
-
-      handleRequest({
-        url: "/api/user/pet/allPet-list",
-        method: "GET",
-        setData: setPetInfos,
-      });
-      if (error) {
-        showToast({ message: "오류가 발생했습니다" });
-      }
-    }
+    handleGetMypageData();
   }, []);
 
   var settings = {
@@ -208,7 +200,7 @@ const MyPage: React.FC = () => {
                     mainPet={item.mainPet}
                     representative={representative}
                     onClick={() => {
-                      handlerMainPetEdit(item.petNo, item.name);
+                      handleMainPetEdit(item.petNo, item.name);
                     }}
                   />
                 </div>
