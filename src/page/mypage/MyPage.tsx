@@ -125,14 +125,14 @@ const MyPage: React.FC = () => {
       <PageTitle title="마이페이지" leftBtn={false} />
       {Loading}
       <div className="pt-4 pb-24 px-4">
-        <div className="flex justify-between items-center">
+        <header className="flex justify-between items-center">
           <div className="font-black text-2xl username-size-change">
             {JSON.stringify(userInfos.userNickname) === "{}" ? (
-              <div>익명의 집사님</div>
+              <p>익명의 집사님</p>
             ) : (
               <div className="flex items-center leading w-72 username-width-change">
-                <div className="truncate">{userInfos.userNickname}</div>
-                <div className="w-7">님</div>
+                <h1 className="truncate">{userInfos.userNickname}</h1>
+                <h1 className="w-7">님</h1>
               </div>
             )}
           </div>
@@ -145,27 +145,27 @@ const MyPage: React.FC = () => {
               프로필 수정
             </Link>
           </div>
-        </div>
+        </header>
         <button className="flex justify-between items-center bg-MAIN_COLOR rounded-xl px-5 py-3 mt-5 w-full">
-          <div className="flex justify-between items-center text-MAIN_GRAY gap-1">
-            <div>내 포인트</div>
+          <section className="flex justify-between items-center text-MAIN_GRAY gap-1">
+            <p>내 포인트</p>
             <BiDollarCircle size="20px" />
-          </div>
-          <div>
-            <div className="flex justify-between items-center text-MAIN_GRAY gap-2">
+          </section>
+          <section>
+            <span className="flex justify-between items-center text-MAIN_GRAY gap-2">
               {JSON.stringify(userInfos.pointRm) === "" ? (
-                <div>포인트 없음</div>
+                <p>포인트 없음</p>
               ) : (
-                <div>{userInfos.pointRm}원</div>
+                <p>{userInfos.pointRm}원</p>
               )}
               <SlArrowRight />
-            </div>
-          </div>
+            </span>
+          </section>
         </button>
-        <div>
+        <section>
           <div className="flex justify-between items-center gap-1 mt-7">
             <div className="flex items-center">
-              <div className="font-semibold text-2xl">내 꼬순내</div>
+              <h1 className="font-semibold text-2xl">내 꼬순내</h1>
               <PiPawPrintFill color="#492D28" size="25px" />
             </div>
             <div>
@@ -183,8 +183,8 @@ const MyPage: React.FC = () => {
               )}
             </div>
           </div>
-        </div>
-        <div className="mt-3">
+        </section>
+        <ul className="mt-3">
           {!(petInfos?.length === 0) ? (
             <Slider {...settings}>
               {petInfos?.map((item: PetInfosType) => (
@@ -212,8 +212,8 @@ const MyPage: React.FC = () => {
           ) : (
             <MyPagePetAdd userName={userInfos.userNickname} />
           )}
-        </div>
-        <div className="flex flex-col justify-center items-start mt-7 gap-3">
+        </ul>
+        <section className="flex flex-col justify-center items-start mt-7 gap-3">
           <div className="flex justify-center items-center gap-3 w-full">
             <MyPageMainBtn title="예약내역" link={ROUTER_PATH.myReservation} />
             <MyPageMainBtn title="내가 쓴 리뷰" link={ROUTER_PATH.myReview} />
@@ -222,7 +222,7 @@ const MyPage: React.FC = () => {
             <MyPageMainBtn title="관심매장" link={ROUTER_PATH.myLikeStore} />
             <MyPageMainBtn title="문의하기" link={ROUTER_PATH.registerQnA} />
           </div>
-        </div>
+        </section>
         <Toast />
       </div>
       <Nav />
