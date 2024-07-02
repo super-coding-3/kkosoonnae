@@ -1,7 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
 
-import { Store } from "../../page/mylocationstore/MyLocationStore";
+import { Store } from "../../page/main/MyLocationStore";
 import { useNavigate } from "react-router-dom";
 import { ROUTER_PATH } from "../../constants/constants";
 

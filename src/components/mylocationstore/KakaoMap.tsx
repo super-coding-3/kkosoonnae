@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useEffect, useState } from "react";
-import { Store } from "../../page/mylocationstore/MyLocationStore";
+import { Store } from "../../page/main/MyLocationStore";
 import { ROUTER_PATH } from "../../constants/constants";
 
 declare global {
