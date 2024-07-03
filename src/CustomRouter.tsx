@@ -18,6 +18,7 @@ import MyReview from "./page/mypage/MyReview";
 import MyLikeStore from "./page/mypage/MyLikeStore";
 import RegisterQnA from "./page/mypage/RegisterQnA";
 import MyQnA from "./page/mypage/MyQnA";
+import { checkLogin } from "./utils/checkLogin";
 
 const CustomRouter: React.FC = () => {
   return (
@@ -31,20 +32,47 @@ const CustomRouter: React.FC = () => {
       <Route path={ROUTER_PATH.signup} element={<Signup />} />
       <Route path={ROUTER_PATH.login} element={<Login />} />
       <Route path={ROUTER_PATH.notice} element={<Notice />} />
-      <Route path={ROUTER_PATH.mypage} element={<MyPage />} />
-      <Route path={ROUTER_PATH.editProfile} element={<EditProfile />} />
       <Route path={ROUTER_PATH.myLocationStore} element={<MyLocationStore />} />
-      <Route path={`${ROUTER_PATH.editMyPet}:petNo`} element={<EditMyPet />} />
-      <Route path={ROUTER_PATH.addMyPet} element={<AddMyPet />} />
-      <Route path={ROUTER_PATH.myReservation} element={<MyReservation />} />
+      <Route
+        path={ROUTER_PATH.mypage}
+        element={checkLogin() ? <MyPage /> : <Login />}
+      />
+      <Route
+        path={ROUTER_PATH.editProfile}
+        element={checkLogin() ? <EditProfile /> : <Login />}
+      />
+      <Route
+        path={`${ROUTER_PATH.editMyPet}:petNo`}
+        element={checkLogin() ? <EditMyPet /> : <Login />}
+      />
+      <Route
+        path={ROUTER_PATH.addMyPet}
+        element={checkLogin() ? <AddMyPet /> : <Login />}
+      />
+      <Route
+        path={ROUTER_PATH.myReservation}
+        element={checkLogin() ? <MyReservation /> : <Login />}
+      />
       <Route
         path={`${ROUTER_PATH.myReservationDetail}:reservationNo`}
-        element={<MyReservationDetail />}
+        element={checkLogin() ? <MyReservationDetail /> : <Login />}
       />
-      <Route path={ROUTER_PATH.myReview} element={<MyReview />} />
-      <Route path={ROUTER_PATH.myLikeStore} element={<MyLikeStore />} />
-      <Route path={ROUTER_PATH.registerQnA} element={<RegisterQnA />} />
-      <Route path={ROUTER_PATH.myQnA} element={<MyQnA />} />
+      <Route
+        path={ROUTER_PATH.myReview}
+        element={checkLogin() ? <MyReview /> : <Login />}
+      />
+      <Route
+        path={ROUTER_PATH.myLikeStore}
+        element={checkLogin() ? <MyLikeStore /> : <Login />}
+      />
+      <Route
+        path={ROUTER_PATH.registerQnA}
+        element={checkLogin() ? <RegisterQnA /> : <Login />}
+      />
+      <Route
+        path={ROUTER_PATH.myQnA}
+        element={checkLogin() ? <MyQnA /> : <Login />}
+      />
     </Routes>
   );
 };

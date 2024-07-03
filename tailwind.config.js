@@ -13,6 +13,7 @@ module.exports = {
         MAIN_GRAY: "#F2F3F6",
         MAIN_IVORY: "#F4F6F1",
         COMMONN_BORDER_GRAY: "#DDDDDD",
+        ERROR: "#C2574F",
       },
     },
   },
