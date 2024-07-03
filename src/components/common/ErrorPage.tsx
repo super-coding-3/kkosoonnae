@@ -8,8 +8,8 @@ interface ErrorPageProps {
 const ErrorPage: React.FC<ErrorPageProps> = (props) => {
   return (
     <div className="flex flex-col items-center justify-center h-[80vh]">
-      <BiMessageAltError size={80} color="red" />
-      <p className="font-bold text-red-500 mt-3">{props.errorMessage}</p>
+      <BiMessageAltError size={80} color="ERROR" />
+      <p className="font-bold text-ERROR mt-3">{props.errorMessage}</p>
     </div>
   );
 };
