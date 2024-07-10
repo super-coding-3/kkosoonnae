@@ -1,12 +1,13 @@
 import React from "react";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { LoginSchema } from "../../schema/formSchema";
 
 import useAxios from "../../hooks/useAxios";
 import useToastMessage from "../../hooks/useToastMessage";
 import { ROUTER_PATH } from "../../constants/constants";
+import LoginRequiredMessage from "./LoginRequiredMessage";
 interface LoginType {
   loginId: string;
   password: string;
@@ -14,6 +15,7 @@ interface LoginType {
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { error, handleRequest, Loading } = useAxios();
   const { showToast, Toast } = useToastMessage();
@@ -54,6 +56,7 @@ const LoginPage: React.FC = () => {
     <div className="flex flex-col justify-center items-center w-full h-full px-4 font-bold text-sm max-w-[640px] min-w-[375px] mx-auto">
       {Loading}
       <Toast />
+      {location.pathname !== ROUTER_PATH.login && <LoginRequiredMessage />}
       <Formik
         initialValues={initialValues}
         onSubmit={handleFormSubmit}
