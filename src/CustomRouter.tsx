@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { ROUTER_PATH } from "./constants/constants";
 import Main from "./page/Main";
 import Salon from "./page/Salon";
@@ -21,6 +21,13 @@ import MyQnA from "./page/mypage/MyQnA";
 import { checkLogin } from "./utils/checkLogin";
 
 const CustomRouter: React.FC = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsLoggedIn(checkLogin());
+  }, [navigate]);
+
   return (
     <Routes>
       <Route path={ROUTER_PATH.main} element={<Main />} />
@@ -33,45 +40,46 @@ const CustomRouter: React.FC = () => {
       <Route path={ROUTER_PATH.login} element={<Login />} />
       <Route path={ROUTER_PATH.notice} element={<Notice />} />
       <Route path={ROUTER_PATH.myLocationStore} element={<MyLocationStore />} />
+
       <Route
         path={ROUTER_PATH.mypage}
-        element={checkLogin() ? <MyPage /> : <Login />}
+        element={isLoggedIn ? <MyPage /> : <Login />}
       />
       <Route
         path={ROUTER_PATH.editProfile}
-        element={checkLogin() ? <EditProfile /> : <Login />}
+        element={isLoggedIn ? <EditProfile /> : <Login />}
       />
       <Route
         path={`${ROUTER_PATH.editMyPet}:petNo`}
-        element={checkLogin() ? <EditMyPet /> : <Login />}
+        element={isLoggedIn ? <EditMyPet /> : <Login />}
       />
       <Route
         path={ROUTER_PATH.addMyPet}
-        element={checkLogin() ? <AddMyPet /> : <Login />}
+        element={isLoggedIn ? <AddMyPet /> : <Login />}
       />
       <Route
         path={ROUTER_PATH.myReservation}
-        element={checkLogin() ? <MyReservation /> : <Login />}
+        element={isLoggedIn ? <MyReservation /> : <Login />}
       />
       <Route
         path={`${ROUTER_PATH.myReservationDetail}:reservationNo`}
-        element={checkLogin() ? <MyReservationDetail /> : <Login />}
+        element={isLoggedIn ? <MyReservationDetail /> : <Login />}
       />
       <Route
         path={ROUTER_PATH.myReview}
-        element={checkLogin() ? <MyReview /> : <Login />}
+        element={isLoggedIn ? <MyReview /> : <Login />}
       />
       <Route
         path={ROUTER_PATH.myLikeStore}
-        element={checkLogin() ? <MyLikeStore /> : <Login />}
+        element={isLoggedIn ? <MyLikeStore /> : <Login />}
       />
       <Route
         path={ROUTER_PATH.registerQnA}
-        element={checkLogin() ? <RegisterQnA /> : <Login />}
+        element={isLoggedIn ? <RegisterQnA /> : <Login />}
       />
       <Route
         path={ROUTER_PATH.myQnA}
-        element={checkLogin() ? <MyQnA /> : <Login />}
+        element={isLoggedIn ? <MyQnA /> : <Login />}
       />
     </Routes>
   );
