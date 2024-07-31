@@ -50,7 +50,7 @@ const EditProfile: React.FC = () => {
       showToast({ message: "이미 사용 중인 닉네임으로 수정할 수 없습니다" });
     } else {
       const response = await handleRequest({
-        url: "/api/user/customer/profile/updat",
+        url: "/api/user/customer/profile/update",
         method: "PUT",
         body: values,
       });

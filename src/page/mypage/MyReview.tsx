@@ -32,7 +32,7 @@ const MyReview: React.FC = () => {
 
   const deleteMyReview = async (reviewNo: number) => {
     const response = await handleRequest({
-      url: `/api/user/mypage/my-revie/${reviewNo}`,
+      url: `/api/user/mypage/my-review/${reviewNo}`,
       method: "DELETE",
     });
     setShowModalDelete(false);
