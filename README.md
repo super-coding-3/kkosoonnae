@@ -4,8 +4,8 @@
 
 
 - 배포 URL : [https://www.kkosoonnae.store/](https://www.kkosoonnae.store/)
-- Test ID : test1
-- Test PW : 1234
+- Test ID : Test
+- Test PW : Test1234
 
 <br>
 
