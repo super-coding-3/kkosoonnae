@@ -11,6 +11,7 @@ import MyQnACard from "../../components/myqna/MyQnACard";
 
 import useAxios from "../../hooks/useAxios";
 import useToastMessage from "../../hooks/useToastMessage";
+import ErrorPage from "../../components/common/ErrorPage";
 
 interface MyQnADatasType {
   status?: string;
@@ -26,17 +27,19 @@ const MyQnA: React.FC = () => {
   const [loadingMyQnA, setLoadingMyQnA] = useState<boolean>(false);
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
   const [qnaNo, setQnANo] = useState<number>(0);
+  const [getError, setGetError] = useState<boolean>(false);
 
   const { error, handleRequest, Loading } = useAxios();
   const { showToast, Toast } = useToastMessage();
 
   const deleteMyQnADatas = async (qnaNo: number) => {
-    handleRequest({
+    const response = await handleRequest({
       url: `/api/user/qna/deleteQna/${qnaNo}`,
       method: "DELETE",
     });
     setShowModalDelete(false);
-    if (!error) {
+
+    if (response.status === 200) {
       showToast({
         message: "문의가 취소되었습니다",
         action: () => {
@@ -44,9 +47,7 @@ const MyQnA: React.FC = () => {
         },
       });
     } else {
-      showToast({
-        message: "오류가 발생했습니다.",
-      });
+      showToast({ message: error });
     }
   };
 
@@ -61,60 +62,72 @@ const MyQnA: React.FC = () => {
   };
 
   useEffect(() => {
-    handleRequest({
-      url: "/api/user/qna/all-list",
-      method: "GET",
-      setData: (data) => {
-        setMyQnADatas(data);
-        setLoadingMyQnA(true);
-      },
-    });
-    if (error) {
-      showToast({
-        message: "오류가 발생했습니다. 잠시 후 다시 실행해주세요",
+    const fetchQnA = async () => {
+      const response = await handleRequest({
+        url: "/api/user/qna/all-list",
+        method: "GET",
+        setData: (data) => {
+          setMyQnADatas(data);
+          setLoadingMyQnA(true);
+        },
       });
-    }
+      if (response) {
+        setGetError(true);
+      }
+    };
+    fetchQnA();
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      showToast({ message: error });
+    }
+  }, [error]);
 
   return (
     <OuterLayout>
       <PageTitle title="내 문의내역" leftBtn={true} />
       {Loading}
-      {myQnADatas.length === 0 && loadingMyQnA ? (
-        <PageNothing message="문의내역이 없습니다" />
+      {error && getError ? (
+        <ErrorPage errorMessage={error} />
       ) : (
-        <div className="pt-4 pb-24 px-4">
-          <div className="flex justify-between items-center pb-3 border-b-2 border-COMMONN_BORDER_GRAY">
-            <div className="font-bold text-xl">
-              내 문의내역 총 {myQnADatas.length}개
+        <>
+          {myQnADatas.length === 0 && loadingMyQnA ? (
+            <PageNothing message="문의내역이 없습니다" />
+          ) : (
+            <div className="pt-4 pb-24 px-4">
+              <div className="flex justify-between items-center pb-3 border-b-2 border-COMMONN_BORDER_GRAY">
+                <div className="font-bold text-xl">
+                  내 문의내역 총 {myQnADatas.length}개
+                </div>
+              </div>
+              {myQnADatas.map((item: MyQnADatasType) => (
+                <MyQnACard
+                  key={item.qnaNo}
+                  status="답변 대기중"
+                  title={item.title}
+                  content={item.content}
+                  onClick={() => {
+                    handlerQnACancel(item.qnaNo);
+                  }}
+                  createDt={formatDate(item.createDt)}
+                />
+              ))}
+              <ModalDelete
+                showModalDelete={showModalDelete}
+                setShowModalDelete={setShowModalDelete}
+                onClick={() => {
+                  deleteMyQnADatas(qnaNo);
+                }}
+                description="선택한 문의를 취소하시겠습니까?"
+                delBtnValue="문의취소"
+                cancelBtnValue="선택취소"
+              />
+              <Toast />
             </div>
-          </div>
-          {myQnADatas.map((item: MyQnADatasType) => (
-            <MyQnACard
-              key={item.qnaNo}
-              status="답변 대기중"
-              title={item.title}
-              content={item.content}
-              onClick={() => {
-                handlerQnACancel(item.qnaNo);
-              }}
-              createDt={formatDate(item.createDt)}
-            />
-          ))}
-          <ModalDelete
-            showModalDelete={showModalDelete}
-            setShowModalDelete={setShowModalDelete}
-            onClick={() => {
-              deleteMyQnADatas(qnaNo);
-            }}
-            description="선택한 문의를 취소하시겠습니까?"
-            delBtnValue="문의취소"
-            cancelBtnValue="선택취소"
-          />
-          <Toast />
-        </div>
+          )}
+        </>
       )}
-
       <Nav />
     </OuterLayout>
   );

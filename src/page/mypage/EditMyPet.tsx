@@ -12,6 +12,7 @@ import InputMyPet from "../../components/mypet/InputMyPet";
 import CustomDatePickerMyPet from "../../components/mypet/CustomDatePickerMyPet";
 import SelectMyPetGender from "../../components/mypet/SelectMyPetGender";
 import ModalDelete from "../../components/common/ModalDelete";
+import ErrorPage from "../../components/common/ErrorPage";
 import { MYPET_FORM_LABEL, ROUTER_PATH } from "../../constants/constants";
 import useAxios from "../../hooks/useAxios";
 import useToastMessage from "../../hooks/useToastMessage";
@@ -29,6 +30,7 @@ interface MyPetInfosType {
 const EditMyPet: React.FC = () => {
   const { petNo } = useParams() as { petNo: string };
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
+  const [getError, setGetError] = useState<boolean>(false);
 
   const [myPetInfos, setMyPetInfos] = useState<MyPetInfosType>({
     name: "",
@@ -60,12 +62,12 @@ const EditMyPet: React.FC = () => {
       requestValues.append("petImg", values.petImgData);
     }
 
-    handleRequest({
+    const response = await handleRequest({
       url: `/api/user/pet/update/${parseInt(petNo)}`,
       method: "PUT",
       body: requestValues,
     });
-    if (!error) {
+    if (response.status === 200) {
       showToast({
         message: `${values.name}의 정보가 수정되었습니다`,
         action: () => {
@@ -74,7 +76,7 @@ const EditMyPet: React.FC = () => {
       });
     } else {
       showToast({
-        message: "오류가 발생했습니다",
+        message: error,
       });
     }
   };
@@ -94,14 +96,13 @@ const EditMyPet: React.FC = () => {
       url: `/api/user/pet/deletePet/${petNo}`,
       method: "DELETE",
     });
-    if (!error) {
+    setShowModalDelete(false);
+    if (response.status === 200) {
       if (response?.data.message === "해당 반려동물은 현재 예약 상태입니다.") {
-        setShowModalDelete(false);
         showToast({
           message: `${petName}은 미용이 예약되어 있어 삭제할 수 없습니다`,
         });
       } else {
-        setShowModalDelete(false);
         showToast({
           message: `${petName}의 정보가 삭제되었습니다`,
           action: () => {
@@ -110,7 +111,7 @@ const EditMyPet: React.FC = () => {
         });
       }
     } else {
-      showToast({ message: "오류가 발생했습니다" });
+      showToast({ message: error });
     }
   };
 
@@ -123,20 +124,30 @@ const EditMyPet: React.FC = () => {
         method: "GET",
       });
 
-      const petData = {
-        name: resPetData?.data.name,
-        type: resPetData?.data.type,
-        birthDt: resPetData?.data.birthDt,
-        gender: resPetData?.data.gender,
-        weight: resPetData?.data.weight,
-        petImg: resPetData?.data.img,
-        petImgData: "",
-      };
-      setMyPetInfos(petData);
+      if (resPetData.status === 200) {
+        const petData = {
+          name: resPetData?.data.name,
+          type: resPetData?.data.type,
+          birthDt: resPetData?.data.birthDt,
+          gender: resPetData?.data.gender,
+          weight: resPetData?.data.weight,
+          petImg: resPetData?.data.img,
+          petImgData: "",
+        };
+        setMyPetInfos(petData);
+      } else {
+        setGetError(true);
+      }
     };
 
     fetchPet(setParam);
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      showToast({ message: error });
+    }
+  }, [error]);
 
   const initialValues = myPetInfos;
 
@@ -144,56 +155,60 @@ const EditMyPet: React.FC = () => {
     <OuterLayout>
       <PageTitle title="내꼬순내 수정" leftBtn={true} />
       {Loading}
-      <Formik
-        initialValues={initialValues}
-        onSubmit={handleFormSubmit}
-        validationSchema={EditMyPetSchema}
-        enableReinitialize={true}
-      >
-        {({ setFieldValue, values, dirty }) => (
-          <Form className="pt-4 pb-24 px-4 font-bold">
-            <ImgMyPet img={values.petImg} setFieldValue={setFieldValue} />
-            <InputMyPet name="name" label={MYPET_FORM_LABEL.name} />
-            <InputMyPet name="type" label={MYPET_FORM_LABEL.type} />
-            <CustomDatePickerMyPet
-              selected={values.birthDt}
-              onChange={(date) => setFieldValue("birthDt", date)}
-            />
-            <SelectMyPetGender
-              gender={values.gender}
-              btnValue="남아"
-              setFieldValue={setFieldValue}
-            />
-            <InputMyPet name="weight" label={MYPET_FORM_LABEL.weight} />
-            <BtnSubmit
-              value="수정하기"
-              type={dirty === true ? "submit" : "button"}
-              active={dirty}
-              onClick={() => {
-                handleFormNotChange(dirty);
-              }}
-            />
-            <button
-              type="button"
-              className="w-full text-right mt-3 underline text-gray-400"
-              onClick={handlerClickDelete}
-            >
-              {values.name}의 정보 삭제하기
-            </button>
-            <ModalDelete
-              showModalDelete={showModalDelete}
-              setShowModalDelete={setShowModalDelete}
-              onClick={() => {
-                deleteMyPetDatas(parseInt(petNo), values.name);
-              }}
-              description={`${values.name}의 정보를 삭제하시겠습니까?`}
-              delBtnValue="삭제"
-              cancelBtnValue="취소"
-            />
-            <Toast />
-          </Form>
-        )}
-      </Formik>
+      {error && getError ? (
+        <ErrorPage errorMessage={error} />
+      ) : (
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleFormSubmit}
+          validationSchema={EditMyPetSchema}
+          enableReinitialize={true}
+        >
+          {({ setFieldValue, values, dirty }) => (
+            <Form className="pt-4 pb-24 px-4 font-bold">
+              <ImgMyPet img={values.petImg} setFieldValue={setFieldValue} />
+              <InputMyPet name="name" label={MYPET_FORM_LABEL.name} />
+              <InputMyPet name="type" label={MYPET_FORM_LABEL.type} />
+              <CustomDatePickerMyPet
+                selected={values.birthDt}
+                onChange={(date) => setFieldValue("birthDt", date)}
+              />
+              <SelectMyPetGender
+                gender={values.gender}
+                btnValue="남아"
+                setFieldValue={setFieldValue}
+              />
+              <InputMyPet name="weight" label={MYPET_FORM_LABEL.weight} />
+              <BtnSubmit
+                value="수정하기"
+                type={dirty === true ? "submit" : "button"}
+                active={dirty}
+                onClick={() => {
+                  handleFormNotChange(dirty);
+                }}
+              />
+              <button
+                type="button"
+                className="w-full text-right mt-3 underline text-gray-400"
+                onClick={handlerClickDelete}
+              >
+                {values.name}의 정보 삭제하기
+              </button>
+              <ModalDelete
+                showModalDelete={showModalDelete}
+                setShowModalDelete={setShowModalDelete}
+                onClick={() => {
+                  deleteMyPetDatas(parseInt(petNo), values.name);
+                }}
+                description={`${values.name}의 정보를 삭제하시겠습니까?`}
+                delBtnValue="삭제"
+                cancelBtnValue="취소"
+              />
+              <Toast />
+            </Form>
+          )}
+        </Formik>
+      )}
       <Nav />
     </OuterLayout>
   );

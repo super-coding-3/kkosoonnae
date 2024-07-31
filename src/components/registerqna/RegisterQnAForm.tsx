@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Form, Formik } from "formik";
 
@@ -22,20 +22,24 @@ const RegisterQnAForm: React.FC<RegisterQnAFormProps> = (props) => {
   const { error, handleRequest, Loading } = useAxios();
   const { showToast, Toast } = useToastMessage();
 
-  const handleFormSubmit = (values: QnAType) => {
-    handleRequest({
+  const handleFormSubmit = async (values: QnAType) => {
+    const response = await handleRequest({
       url: "/api/user/qna/create",
       method: "POST",
       body: values,
     });
-    if (!error) {
+    if (response.status === 200) {
       props.setStep(2);
     } else {
-      showToast({
-        message: "오류가 발생했습니다",
-      });
+      showToast({ message: error });
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      showToast({ message: error });
+    }
+  }, [error]);
 
   const initialValues = { title: "", content: "" };
 
