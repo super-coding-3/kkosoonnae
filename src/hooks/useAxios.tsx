@@ -12,7 +12,7 @@ interface RequestParams {
 }
 
 const useAxios = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
   const handleRequest = async ({
@@ -22,10 +22,8 @@ const useAxios = () => {
     setData,
   }: RequestParams) => {
     setIsLoading(true);
-    setError("");
     try {
       let response;
-
       switch (method) {
         case "GET":
           response = await HttpClient.get(url);
@@ -73,6 +71,7 @@ const useAxios = () => {
       } else {
         setError(`요청 중 오류가 발생했습니다: ${error.message}`);
       }
+      return error;
     } finally {
       setIsLoading(false);
     }

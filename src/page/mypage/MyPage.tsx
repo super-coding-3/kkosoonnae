@@ -52,19 +52,18 @@ const MyPage: React.FC = () => {
   };
 
   const handleMainPetEdit = async (petNo: number, petName: string) => {
-    handleRequest({
+    const response = await handleRequest({
       url: `/api/user/pet/main-pet/${petNo}`,
       method: "PUT",
     });
-    if (!error) {
+
+    if (response.status === 200) {
       showToast({
         message: `대표 꼬순내가 ${petName}(으)로 변경되었습니다`,
         action: () => {
           window.location.reload();
         },
       });
-    } else {
-      showToast({ message: "오류가 발생했습니다" });
     }
   };
 

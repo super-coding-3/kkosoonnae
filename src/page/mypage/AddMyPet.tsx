@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Form } from "formik";
 
 import OuterLayout from "../../components/common/OuterLayout";
@@ -25,7 +25,7 @@ interface MyPetInfosType {
 }
 
 const AddMyPet: React.FC = () => {
-  const { error, handleRequest } = useAxios();
+  const { error, handleRequest, Loading } = useAxios();
   const { showToast, Toast } = useToastMessage();
 
   const handleFormSubmit = async (values: MyPetInfosType) => {
@@ -44,12 +44,13 @@ const AddMyPet: React.FC = () => {
       requestValues.append("petAddDto", petAddDtoDatas);
       requestValues.append("petImg", values.petImgData);
 
-      handleRequest({
+      const response = await handleRequest({
         url: "/api/user/pet/addPet",
         method: "POST",
         body: requestValues,
       });
-      if (!error) {
+
+      if (response.status === 200) {
         showToast({
           message: `${values.name}(이)가 등록되었습니다`,
           action: () => {
@@ -57,9 +58,7 @@ const AddMyPet: React.FC = () => {
           },
         });
       } else {
-        showToast({
-          message: "오류가 발생했습니다",
-        });
+        showToast({ message: error });
       }
     } else {
       showToast({
@@ -87,14 +86,20 @@ const AddMyPet: React.FC = () => {
     petImgData: "",
   };
 
+  useEffect(() => {
+    if (error) {
+      showToast({ message: error });
+    }
+  }, [error]);
+
   return (
     <OuterLayout>
       <PageTitle title="내꼬순내 등록" leftBtn={true} />
+      {Loading}
       <Formik
         initialValues={initialValues}
         onSubmit={handleFormSubmit}
         validationSchema={EditMyPetSchema}
-        enableReinitialize={true}
       >
         {({ setFieldValue, values, isValid }) => (
           <Form className="pt-4 pb-24 px-4 font-bold">

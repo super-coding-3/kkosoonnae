@@ -8,6 +8,7 @@ import PageNothing from "../../components/common/PageNothing";
 import ModalDelete from "../../components/common/ModalDelete";
 import useAxios from "../../hooks/useAxios";
 import useToastMessage from "../../hooks/useToastMessage";
+import ErrorPage from "../../components/common/ErrorPage";
 
 interface MyLikeStoreType {
   likeNo: number;
@@ -26,17 +27,20 @@ const MyLikeStore: React.FC = () => {
   const [loadingMyLikeStore, setLoadingMyLikeStore] = useState<boolean>(false);
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
   const [likeNo, setLikeNo] = useState<number>(0);
+  const [getError, setGetError] = useState<boolean>(false);
 
   const { error, handleRequest, Loading } = useAxios();
   const { showToast, Toast } = useToastMessage();
 
   const deleteMyLikeStore = async (likeNo: number) => {
-    handleRequest({
+    const response = await handleRequest({
       url: `/api/user/mypage/like-cancel/${likeNo}`,
       method: "DELETE",
     });
+
     setShowModalDelete(false);
-    if (!error) {
+
+    if (response.status === 200) {
       showToast({
         message: "관심매장이 삭제되었습니다",
         action: () => {
@@ -44,9 +48,7 @@ const MyLikeStore: React.FC = () => {
         },
       });
     } else {
-      showToast({
-        message: "오류가 발생했습니다",
-      });
+      showToast({ message: error });
     }
   };
 
@@ -56,58 +58,70 @@ const MyLikeStore: React.FC = () => {
   };
 
   useEffect(() => {
-    handleRequest({
-      url: "/api/user/mypage/like-store",
-      method: "GET",
-      setData: (data) => {
-        setMyLikeStore(data);
-        setLoadingMyLikeStore(true);
-      },
-    });
-    if (error) {
-      showToast({
-        message: "오류가 발생했습니다. 잠시 후 다시 실행해주세요",
+    const fetchLikeStore = async () => {
+      const response = await handleRequest({
+        url: "/api/user/mypage/like-store",
+        method: "GET",
+        setData: (data) => {
+          setMyLikeStore(data);
+          setLoadingMyLikeStore(true);
+        },
       });
-    }
+      if (response) {
+        setGetError(true);
+      }
+    };
+
+    fetchLikeStore();
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      showToast({ message: error });
+    }
+  }, [error]);
 
   return (
     <OuterLayout>
       <PageTitle title="관심매장" leftBtn={true} />
-      <div className="pt-4 pb-24 px-4">
-        {Loading}
-        {myLikeStore.length === 0 && loadingMyLikeStore ? (
-          <PageNothing message="관심매장이 없습니다" />
-        ) : (
-          myLikeStore.map((item: MyLikeStoreType) => (
-            <MyLikeStoreCard
-              key={item.likeNo}
-              storeNo={item.storeNo}
-              storeImg={item.storeImg}
-              storeName={item.storeName}
-              scope={item.scope}
-              totalLikeCount={item.totalLikeCount}
-              roadAddress={item.roadAddress}
-              openTime={item.openTime}
-              closeTime={item.closeTime}
-              onClick={() => {
-                handlerLikeStoreCancel(item.likeNo);
-              }}
-            />
-          ))
-        )}
-        <ModalDelete
-          showModalDelete={showModalDelete}
-          setShowModalDelete={setShowModalDelete}
-          onClick={() => {
-            deleteMyLikeStore(likeNo);
-          }}
-          description="선택한 관심매장을 삭제하시겠습니까?"
-          delBtnValue="삭제"
-          cancelBtnValue="취소"
-        />
-        <Toast />
-      </div>
+      {error && getError ? (
+        <ErrorPage errorMessage={error} />
+      ) : (
+        <div className="pt-4 pb-24 px-4">
+          {Loading}
+          {myLikeStore.length === 0 && loadingMyLikeStore ? (
+            <PageNothing message="관심매장이 없습니다" />
+          ) : (
+            myLikeStore.map((item: MyLikeStoreType) => (
+              <MyLikeStoreCard
+                key={item.likeNo}
+                storeNo={item.storeNo}
+                storeImg={item.storeImg}
+                storeName={item.storeName}
+                scope={item.scope}
+                totalLikeCount={item.totalLikeCount}
+                roadAddress={item.roadAddress}
+                openTime={item.openTime}
+                closeTime={item.closeTime}
+                onClick={() => {
+                  handlerLikeStoreCancel(item.likeNo);
+                }}
+              />
+            ))
+          )}
+          <ModalDelete
+            showModalDelete={showModalDelete}
+            setShowModalDelete={setShowModalDelete}
+            onClick={() => {
+              deleteMyLikeStore(likeNo);
+            }}
+            description="선택한 관심매장을 삭제하시겠습니까?"
+            delBtnValue="삭제"
+            cancelBtnValue="취소"
+          />
+          <Toast />
+        </div>
+      )}
       <Nav />
     </OuterLayout>
   );

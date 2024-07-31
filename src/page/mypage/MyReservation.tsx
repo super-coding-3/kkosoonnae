@@ -10,6 +10,7 @@ import Nav from "../../components/common/Nav";
 import MyReservationCard from "../../components/myreservation/MyReservationCard";
 import useAxios from "../../hooks/useAxios";
 import useToastMessage from "../../hooks/useToastMessage";
+import ErrorPage from "../../components/common/ErrorPage";
 
 interface MyReservationDatasType {
   reservationNo: number;
@@ -31,16 +32,18 @@ const MyReservation: React.FC = () => {
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
   const { showToast, Toast } = useToastMessage();
   const [reservationNo, setReservationNo] = useState<number>(0);
+  const [getError, setGetError] = useState<boolean>(false);
 
   const { error, handleRequest, Loading } = useAxios();
 
   const deleteMyReservationDatas = async (reservationNo: number) => {
-    handleRequest({
+    const response = await handleRequest({
       url: `/api/user/mypage/avail-cancel/${reservationNo}`,
       method: "DELETE",
     });
-    if (!error) {
-      setShowModalDelete(false);
+    setShowModalDelete(false);
+
+    if (response.status === 200) {
       showToast({
         message: "예약이 취소되었습니다",
         action: () => {
@@ -48,7 +51,7 @@ const MyReservation: React.FC = () => {
         },
       });
     } else {
-      showToast({ message: "오류가 발생했습니다" });
+      showToast({ message: error });
     }
   };
 
@@ -69,57 +72,71 @@ const MyReservation: React.FC = () => {
   };
 
   useEffect(() => {
-    handleRequest({
-      url: "/api/user/mypage/avail-list",
-      method: "GET",
-      setData: (data) => {
-        setMyReservationDatas(data);
-        setLoadingMyReservation(true);
-      },
-    });
-    if (error) {
-      showToast({
-        message: "오류가 발생했습니다. 잠시 후 다시 실행해주세요",
+    const fetchReservation = async () => {
+      const response = await handleRequest({
+        url: "/api/user/mypage/avail-list",
+        method: "GET",
+        setData: (data) => {
+          setMyReservationDatas(data);
+          setLoadingMyReservation(true);
+        },
       });
-    }
+      if (response) {
+        setGetError(true);
+      }
+    };
+
+    fetchReservation();
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      showToast({ message: error });
+    }
+  }, [error]);
 
   return (
     <OuterLayout>
       <PageTitle title="예약내역" leftBtn={true} />
       {Loading}
-      {myReservationDatas.length === 0 && loadingMyReservation ? (
-        <PageNothing message="예약내역이 없습니다" />
+      {error && getError ? (
+        <ErrorPage errorMessage={error} />
       ) : (
-        <div className="pt-4 pb-24 px-4">
-          {myReservationDatas.map((item: MyReservationDatasType) => (
-            <MyReservationCard
-              key={item.reservationNo}
-              reservationNo={item.reservationNo}
-              date={formatDate(item.reservationDate)}
-              time={formatTime(item.reservationTime)}
-              status={item.reservationStatus}
-              storeImg={item.storeImg}
-              storeName={item.storeName}
-              style={item.styleName}
-              price={`${item.price}원`}
-              delBtnOnClick={() => {
-                handlerClickCancel(item.reservationNo);
-              }}
-            />
-          ))}
-          <ModalDelete
-            showModalDelete={showModalDelete}
-            setShowModalDelete={setShowModalDelete}
-            onClick={() => {
-              deleteMyReservationDatas(reservationNo);
-            }}
-            description="선택한 예약을 취소하시겠습니까?"
-            delBtnValue="예약취소"
-            cancelBtnValue="선택취소"
-          />
-          <Toast />
-        </div>
+        <>
+          {myReservationDatas.length === 0 && loadingMyReservation ? (
+            <PageNothing message="예약내역이 없습니다" />
+          ) : (
+            <div className="pt-4 pb-24 px-4">
+              {myReservationDatas.map((item: MyReservationDatasType) => (
+                <MyReservationCard
+                  key={item.reservationNo}
+                  reservationNo={item.reservationNo}
+                  date={formatDate(item.reservationDate)}
+                  time={formatTime(item.reservationTime)}
+                  status={item.reservationStatus}
+                  storeImg={item.storeImg}
+                  storeName={item.storeName}
+                  style={item.styleName}
+                  price={`${item.price}원`}
+                  delBtnOnClick={() => {
+                    handlerClickCancel(item.reservationNo);
+                  }}
+                />
+              ))}
+              <ModalDelete
+                showModalDelete={showModalDelete}
+                setShowModalDelete={setShowModalDelete}
+                onClick={() => {
+                  deleteMyReservationDatas(reservationNo);
+                }}
+                description="선택한 예약을 취소하시겠습니까?"
+                delBtnValue="예약취소"
+                cancelBtnValue="선택취소"
+              />
+              <Toast />
+            </div>
+          )}
+        </>
       )}
       <Nav />
     </OuterLayout>
