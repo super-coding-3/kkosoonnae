@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { ROUTER_PATH } from "./constants/constants";
 import Main from "./page/Main";
-import Salon from "./page/Salon";
+import Salon from "./page/salon/Salon";
 import Reservation from "./page/Reservation";
 import Signup from "./page/auth/Signup";
 import Login from "./page/auth/Login";
