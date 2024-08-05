@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { ROUTER_PATH } from "./constants/constants";
-import Main from "./page/Main";
+import Main from "./page/main/Main";
 import Salon from "./page/salon/Salon";
 import Reservation from "./page/Reservation";
 import Signup from "./page/auth/Signup";
