@@ -3,9 +3,10 @@
 ![꼬순내 우리댕냥이들의 미모비결 (1)](https://github.com/super-coding-3/kkosoonnae/assets/101633842/4b8d5551-bde5-4bf5-820c-3128ff868519)
 
 
-- 배포 URL : [https://www.kkosoonnae.store/](https://www.kkosoonnae.store/)
-- Test ID : Test
-- Test PW : Test1234
+- 배포 URL : [https://www.kkosoonnae.store/](https://www.kkosoonnae.store/) (비용 문제로 인한 서버 종료)
+
+## 시연 영상
+[![Video Label](http://img.youtube.com/vi/xgAnnWNySts/0.jpg)](https://youtu.be/xgAnnWNySts)
 
 <br>
 
